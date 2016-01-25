@@ -74,6 +74,69 @@ class OpeningBalance(AbstractBalance):
     tag = '60F'
 
 
+class StatementLine(Field):
+    tag = '61'
+
+    TYPE_CREDIT = 1
+    TYPE_DEBIT = 2
+
+    def __init__(self, value_date, type, amount, transaction_code,
+                 reference_for_account_owner,
+                 supplementary_details=None,
+                 book_date=None,
+                 ing_transaction_code=None,
+                 transaction_reference=None,
+                 account_servicing_institutions_reference=None):
+        '''
+        EN/NL terms from specs:
+        - value_date - Valutadatum
+        - book_date - Boekdatum
+        - type - Credit/debet
+        - amount - Bedrag
+        - transaction_code - Transactietype
+        - reference_for_account_owner - Betalingskenmerk
+        - ing_transaction_code - ING transactiecode
+        - transaction_reference - Transactiereferentie
+        - supplementary_details - Aanvullende gegevens
+
+        Only MING:
+        - book_date
+        - transaction_reference
+
+        Only IBP:
+        - account_servicing_institutions_reference
+        '''
+
+        # TODO: Check that the right fields are set when adding this to an
+        # actual TM94x document
+
+        if not builtin_type(value_date) == datetime:
+            raise ValueError("The `value_date` value must be a datetime")
+
+        if not builtin_type(book_date) == datetime:
+            raise ValueError("The `book_date` value must be a datetime")
+
+        if type not in (self.TYPE_CREDIT, self.TYPE_DEBIT):
+            raise ValueError("The `type` value must be TYPE_CREDIT or TYPE_DEBIT")
+
+        if not builtin_type(amount) == Decimal:
+            raise ValueError("The `amount` value must be a Decimal")
+
+        # FIXME: check that transaction_code is valid
+        # FIXME: check that ing_transaction_code is valid
+
+        self.value_date = value_date
+        self.type = type
+        self.amount = amount
+        self.transaction_code = transaction_code
+        self.reference_for_account_owner = reference_for_account_owner
+        self.supplementary_details = supplementary_details
+        self.book_date = book_date
+        self.ing_transaction_code = ing_transaction_code
+        self.transaction_reference = transaction_reference
+        self.account_servicing_institutions_reference = account_servicing_institutions_reference
+
+
 class StatementNumber(Field):
     tag = '28C'
 

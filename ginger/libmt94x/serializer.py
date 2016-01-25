@@ -139,3 +139,8 @@ class Tm94xSerializer(object):
         bytes = self.serialize_date('%y%m%d', date)
         self._buffer.append(bytes)
         return self
+
+    def date_mmdd(self, date):
+        bytes = self.serialize_date('%m%d', date)
+        self._buffer.append(bytes)
+        return self

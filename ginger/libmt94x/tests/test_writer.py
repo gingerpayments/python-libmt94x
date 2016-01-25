@@ -8,6 +8,7 @@ from ginger.libmt94x.fields import ClosingBalance
 from ginger.libmt94x.fields import ForwardAvailableBalance
 from ginger.libmt94x.fields import InformationToAccountOwnerTotals
 from ginger.libmt94x.fields import OpeningBalance
+from ginger.libmt94x.fields import StatementLine
 from ginger.libmt94x.fields import StatementNumber
 from ginger.libmt94x.fields import TransactionReferenceNumber
 from ginger.libmt94x.serializer import Tm94xSerializer
@@ -83,6 +84,23 @@ class Tm94xWriterTests(TestCase):
         )
         bytes = self.writer.write_opening_balance(ob)
         self.assertEquals(bytes, b':60F:C140219EUR662,23\r\n')
+
+    def test_statement_line_ming(self):
+        ob = StatementLine(
+            value_date=datetime(2014, 2, 20),
+            book_date=datetime(2000, 2, 20),
+            type=StatementLine.TYPE_CREDIT,
+            amount=Decimal('1.56'),
+            transaction_code='TRF',
+            reference_for_account_owner='EREF',
+            transaction_reference='00000000001005',
+            ing_transaction_code='00100',
+        )
+        bytes = self.writer.write_statement_line_ming(ob)
+        self.assertEquals(
+            bytes,
+            b':61:1402200220C1,56NTRFEREF//00000000001005\r\n/TRCD/00100/\r\n'
+        )
 
     def test_statement_number(self):
         sn = StatementNumber('00000')
