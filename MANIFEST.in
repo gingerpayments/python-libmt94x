@@ -1,0 +1,2 @@
+graft ginger
+include *.cfg *.rst *.in *.txt *.sh
