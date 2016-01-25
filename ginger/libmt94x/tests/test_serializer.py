@@ -3,7 +3,7 @@ from unittest import TestCase
 from ginger.libmt94x.serializer import Tm94xSerializer
 
 
-class SerializerTests(TestCase):
+class Tm94xSerializerTests(TestCase):
     def setUp(self):
         self.ser = Tm94xSerializer()
 
@@ -79,6 +79,6 @@ class SerializerTests(TestCase):
                .chars(3, 'EUR')
                .chars(15, '564,35')
                .newline()
-               .end()
+               .finish()
         )
         self.assertEquals(val, b':65:C140221EUR564,35\r\n')

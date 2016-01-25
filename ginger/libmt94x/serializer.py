@@ -93,7 +93,7 @@ class Tm94xSerializer(object):
         self._buffer.append(bytes)
         return self
 
-    def end(self):
+    def finish(self):
         bytes = b''.join(self._buffer)
         self._buffer = []
         return bytes
