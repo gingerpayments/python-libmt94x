@@ -32,6 +32,9 @@ class Tm94xSerializer(object):
         '$'
     )
 
+    def __init__(self):
+        self._buffer = []
+
 
     # Convenience properties
 
@@ -64,3 +67,33 @@ class Tm94xSerializer(object):
                              % self.swift_charset_numbers)
 
         return value
+
+    def serialize_newline(self):
+        return b'\r\n'
+
+
+    # Chaining API
+
+    def start(self):
+        self._buffer = []
+        return self
+
+    def chars(self, maxlen, value):
+        bytes = self.serialize_value(self.TYPE_CHARACTER, maxlen, value)
+        self._buffer.append(bytes)
+        return self
+
+    def num(self, maxlen, value):
+        bytes = self.serialize_value(self.TYPE_NUMERIC, maxlen, value)
+        self._buffer.append(bytes)
+        return self
+
+    def newline(self):
+        bytes = self.serialize_newline()
+        self._buffer.append(bytes)
+        return self
+
+    def end(self):
+        bytes = b''.join(self._buffer)
+        self._buffer = []
+        return bytes

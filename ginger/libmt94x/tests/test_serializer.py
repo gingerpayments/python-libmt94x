@@ -37,7 +37,7 @@ class SerializerTests(TestCase):
     def test_number_charset_too_long(self):
         # Exceeds field length
         with self.assertRaises(ValueError):
-            self.ser.serialize_value(self.ser.type_num, 3, 'ab3a')
+            self.ser.serialize_value(self.ser.type_num, 3, b'ab3a')
 
     # Numeric tests
 
@@ -50,14 +50,35 @@ class SerializerTests(TestCase):
     def test_number_charset_outside_range(self):
         # Decimal point not allowed
         with self.assertRaises(ValueError):
-            self.ser.serialize_value(self.ser.type_num, 10, '123.10')
+            self.ser.serialize_value(self.ser.type_num, 10, b'123.10')
 
     def test_number_charset_too_long(self):
         # Exceeds field length
         with self.assertRaises(ValueError):
-            self.ser.serialize_value(self.ser.type_num, 3, '1234')
+            self.ser.serialize_value(self.ser.type_num, 3, b'1234')
 
     def test_number_charset_wrong_type(self):
         # Try to write as characters
         with self.assertRaises(ValueError):
-            self.ser.serialize_value(self.ser.type_num, 3, 'abc')
+            self.ser.serialize_value(self.ser.type_num, 3, b'abc')
+
+    # Newline tests
+
+    def test_newline(self):
+        val = self.ser.serialize_newline()
+        self.assertEquals(val, b'\r\n')
+
+    # Chaining tests
+
+    def test_chain_api(self):
+        val = (self.ser
+               .start()
+               .chars(4, ':65:')
+               .chars(1, 'C')
+               .num(6, '140221')
+               .chars(3, 'EUR')
+               .chars(15, '564,35')
+               .newline()
+               .end()
+        )
+        self.assertEquals(val, b':65:C140221EUR564,35\r\n')
