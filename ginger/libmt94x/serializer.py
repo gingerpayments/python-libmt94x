@@ -1,3 +1,6 @@
+from datetime import datetime
+from decimal import Decimal
+
 import re
 
 
@@ -50,7 +53,7 @@ class Tm94xSerializer(object):
         return self.TYPE_NUMERIC
 
 
-    # Public API
+    ## "Immediate" API
 
     def serialize_value(self, type, maxlen, value):
         # Even if the value represents a number it could have leading zeros, so
@@ -74,12 +77,46 @@ class Tm94xSerializer(object):
     def serialize_newline(self):
         return b'\r\n'
 
+    def serialize_amount(self, maxlen, currency, amount):
+        if builtin_type(amount) != Decimal:
+            raise ValueError("Must pass a Decimal")
 
-    # Chaining API
+        # FIXME: Decimal representation is currency and locale specific
+        bytes = b'%.2f' % amount
+        # HACK: Use comma for decimal point
+        bytes = bytes.replace('.', ',')
+
+        # Now that we know how long the formatted bytestring is we can check
+        # against maxlen
+        if len(bytes) > maxlen:
+            raise ValueError("Amount value exceeds maximum length: %s" % maxlen)
+
+        return bytes
+
+    def serialize_date(self, format, value):
+        if builtin_type(value) != datetime:
+            raise ValueError("Must pass a datetime")
+
+        return value.strftime(format)
+
+
+    ## Chaining API
 
     def start(self):
         self._buffer = []
         return self
+
+    def finish(self):
+        bytes = b''.join(self._buffer)
+        self._buffer = []
+        return bytes
+
+    def newline(self):
+        bytes = self.serialize_newline()
+        self._buffer.append(bytes)
+        return self
+
+    # Generic values
 
     def chars(self, maxlen, value):
         bytes = self.serialize_value(self.TYPE_CHARACTER, maxlen, value)
@@ -91,12 +128,14 @@ class Tm94xSerializer(object):
         self._buffer.append(bytes)
         return self
 
-    def newline(self):
-        bytes = self.serialize_newline()
+    # Domain specific values
+
+    def amount(self, maxlen, currency, amount):
+        bytes = self.serialize_amount(maxlen, currency, amount)
         self._buffer.append(bytes)
         return self
 
-    def finish(self):
-        bytes = b''.join(self._buffer)
-        self._buffer = []
-        return bytes
+    def date_yymmdd(self, date):
+        bytes = self.serialize_date('%y%m%d', date)
+        self._buffer.append(bytes)
+        return self

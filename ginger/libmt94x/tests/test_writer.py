@@ -1,6 +1,13 @@
+from datetime import datetime
+from decimal import Decimal
 from unittest import TestCase
 
 from ginger.libmt94x.fields import AccountIdentification
+from ginger.libmt94x.fields import ClosingAvailableBalance
+from ginger.libmt94x.fields import ClosingBalance
+from ginger.libmt94x.fields import ForwardAvailableBalance
+from ginger.libmt94x.fields import InformationToAccountOwnerTotals
+from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementNumber
 from ginger.libmt94x.fields import TransactionReferenceNumber
 from ginger.libmt94x.serializer import Tm94xSerializer
@@ -16,6 +23,66 @@ class Tm94xWriterTests(TestCase):
         ai = AccountIdentification('NL69INGB0123456789', 'EUR')
         bytes = self.writer.write_account_identification(ai)
         self.assertEquals(bytes, b':25:NL69INGB0123456789EUR\r\n')
+
+    def test_closing_available_balance(self):
+        ob = ClosingAvailableBalance(
+            ClosingAvailableBalance.TYPE_CREDIT,
+            datetime(2014, 2, 20),
+            'EUR',
+            Decimal('564.35'),
+        )
+        bytes = self.writer.write_opening_balance(ob)
+        self.assertEquals(bytes, b':64:C140220EUR564,35\r\n')
+
+    def test_closing_balance(self):
+        ob = ClosingBalance(
+            ClosingBalance.TYPE_CREDIT,
+            datetime(2014, 2, 20),
+            'EUR',
+            Decimal('564.35'),
+        )
+        bytes = self.writer.write_opening_balance(ob)
+        self.assertEquals(bytes, b':62F:C140220EUR564,35\r\n')
+
+    def test_forward_available_balance(self):
+        ob = ForwardAvailableBalance(
+            ForwardAvailableBalance.TYPE_CREDIT,
+            datetime(2014, 2, 24),
+            'EUR',
+            Decimal('564.35'),
+        )
+        bytes = self.writer.write_opening_balance(ob)
+        self.assertEquals(bytes, b':65:C140224EUR564,35\r\n')
+
+    def test_information_to_account_owner_totals_ibp(self):
+        info = InformationToAccountOwnerTotals(
+            4,
+            4,
+            Decimal('134.46'),
+            Decimal('36.58'),
+        )
+        bytes = self.writer.write_information_to_account_owner_totals_ibp(info)
+        self.assertEquals(bytes, b':86:D4C4D134,46C36,58\r\n')
+
+    def test_information_to_account_owner_totals_ming(self):
+        info = InformationToAccountOwnerTotals(
+            4,
+            4,
+            Decimal('134.46'),
+            Decimal('36.58'),
+        )
+        bytes = self.writer.write_information_to_account_owner_totals_ming(info)
+        self.assertEquals(bytes, b':86:/SUM/4/4/134,46/36,58/\r\n')
+
+    def test_opening_balance(self):
+        ob = OpeningBalance(
+            OpeningBalance.TYPE_CREDIT,
+            datetime(2014, 2, 19),
+            'EUR',
+            Decimal('662.23'),
+        )
+        bytes = self.writer.write_opening_balance(ob)
+        self.assertEquals(bytes, b':60F:C140219EUR662,23\r\n')
 
     def test_statement_number(self):
         sn = StatementNumber('00000')

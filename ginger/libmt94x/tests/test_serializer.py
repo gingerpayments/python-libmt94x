@@ -1,3 +1,5 @@
+from datetime import datetime
+from decimal import Decimal
 from unittest import TestCase
 
 from ginger.libmt94x.serializer import Tm94xSerializer
@@ -67,6 +69,30 @@ class Tm94xSerializerTests(TestCase):
     def test_newline(self):
         val = self.ser.serialize_newline()
         self.assertEquals(val, b'\r\n')
+
+    # Amount tests
+
+    def test_amount_ok(self):
+        val = self.ser.serialize_amount(15, 'EUR', Decimal('101.45'))
+        self.assertEquals(val, b'101,45')
+
+    def test_amount_too_long(self):
+        with self.assertRaises(ValueError):
+            self.ser.serialize_amount(4, 'EUR', Decimal('101.45'))
+
+    def test_amount_wrong_type(self):
+        with self.assertRaises(ValueError):
+            self.ser.serialize_amount(15, 'EUR', 12.32)
+
+    # Date tests
+
+    def test_date_ok(self):
+        val = self.ser.serialize_date('%y%m%d', datetime(2014, 2, 3))
+        self.assertEquals(val, b'140203')
+
+    def test_date_wrong_type(self):
+        with self.assertRaises(ValueError):
+            self.ser.serialize_date('%y%m%d', '140203')
 
     # Chaining tests
 
