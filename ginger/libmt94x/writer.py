@@ -99,6 +99,24 @@ class Tm94xWriter(object):
         )
         return record
 
+    def write_statement_line_ibp(self, sl):
+        record = (self.ser
+            .start()
+            .chars(4, b':%s:' % sl.tag)
+            .date_yymmdd(sl.value_date)
+            .chars(1, b'C' if sl.type == sl.TYPE_CREDIT else b'D')
+            .amount(15, None, sl.amount)
+            .chars(4, b'N%s' % sl.transaction_code)
+            .chars(16, sl.reference_for_account_owner or b'NONREF')
+            .chars(16, sl.account_servicing_institutions_reference)  # FIXME: optional
+            # Supplementary Details
+            .chars(34, b'/TRCD/%s/' % sl.ing_transaction_code)
+            # FIXME: /OCMT/USD1234,50/
+            .newline()
+            .finish()
+        )
+        return record
+
     def write_statement_line_ming(self, sl):
         record = (self.ser
             .start()

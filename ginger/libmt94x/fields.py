@@ -113,7 +113,7 @@ class StatementLine(Field):
         if not builtin_type(value_date) == datetime:
             raise ValueError("The `value_date` value must be a datetime")
 
-        if not builtin_type(book_date) == datetime:
+        if book_date is not None and not builtin_type(book_date) == datetime:
             raise ValueError("The `book_date` value must be a datetime")
 
         if type not in (self.TYPE_CREDIT, self.TYPE_DEBIT):

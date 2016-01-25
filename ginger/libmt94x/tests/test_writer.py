@@ -85,6 +85,23 @@ class Tm94xWriterTests(TestCase):
         bytes = self.writer.write_opening_balance(ob)
         self.assertEquals(bytes, b':60F:C140219EUR662,23\r\n')
 
+    def test_statement_line_ibp(self):
+        # FIXME: Supply realistic data
+        ob = StatementLine(
+            value_date=datetime(2014, 2, 20),
+            type=StatementLine.TYPE_CREDIT,
+            amount=Decimal('1.56'),
+            transaction_code='TRF',
+            reference_for_account_owner='EREF',
+            account_servicing_institutions_reference='INGA00000XXXX',
+            ing_transaction_code='00100',
+        )
+        bytes = self.writer.write_statement_line_ibp(ob)
+        self.assertEquals(
+            bytes,
+            b':61:140220C1,56NTRFEREFINGA00000XXXX/TRCD/00100/\r\n'
+        )
+
     def test_statement_line_ming(self):
         ob = StatementLine(
             value_date=datetime(2014, 2, 20),
