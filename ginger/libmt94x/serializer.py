@@ -1,5 +1,8 @@
 import re
 
+
+# NOTE: Module level binding since we want to use the name "type" in method
+# signatures
 builtin_type = type
 
 
