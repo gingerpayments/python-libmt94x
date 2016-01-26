@@ -1,7 +1,8 @@
 from datetime import datetime
 from decimal import Decimal
 
-from ginger.libmt94x.transaction_codes import TransactionCodes
+from ginger.libmt94x.transaction_codes import IngTransactionCodes
+from ginger.libmt94x.transaction_codes import SwiftTransactionCodes
 
 
 # NOTE: Module level binding since we want to use the name "type" in method
@@ -135,11 +136,16 @@ class StatementLine(Field):
         if not builtin_type(amount) == Decimal:
             raise ValueError("The `amount` value must be a Decimal")
 
-        transaction_codes = TransactionCodes.get_instance()
-        if not transaction_codes.code_is_valid(transaction_code):
-            raise ValueError("Value `transaction_code` is invalid: %s" % transaction_code)
+        swift_transaction_codes = SwiftTransactionCodes.get_instance()
+        if not swift_transaction_codes.code_is_valid(transaction_code):
+            raise ValueError(
+                "Value `transaction_code` is invalid: %s" % transaction_code)
 
-        # FIXME: check that ing_transaction_code is valid
+        if ing_transaction_code is not None:
+            ing_transaction_codes = IngTransactionCodes.get_instance()
+            if not ing_transaction_codes.code_is_valid(ing_transaction_code):
+                raise ValueError(
+                    "Value `ing_transaction_code` is invalid: %s" % ing_transaction_code)
 
         self.value_date = value_date
         self.type = type
