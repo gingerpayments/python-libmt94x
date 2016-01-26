@@ -69,7 +69,7 @@ class TransferFailedSEPA(AbstractTransferFailed):
         'RR03': 'Voor wet of regelgeving benodigde naam/enof adres van de crediteur ontbreekt.',
         'RR04': 'Wet of regelgeving',
         'SL01': 'Specifieke dienstverlening bank (bv selectieve incassoblokkade)',
-        'TM01': 'Bestand aangeleverd na cut-off tijd (uiterste aanlevertijdstip)'
+        'TM01': 'Bestand aangeleverd na cut-off tijd (uiterste aanlevertijdstip)',
     }
 
 
@@ -115,7 +115,7 @@ class TransferFailedMisc(AbstractTransferFailed):
         'XT78': 'Controle op saldo niet gelukt',
         'XT79': 'Debiteur agent niet gemachtigd',
         'XT80': 'Crediteur agent niet gemachtigd',
-        'XT87': 'Terugboeking volgt andere weg'
+        'XT87': 'Terugboeking volgt andere weg',
     }
 
 

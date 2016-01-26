@@ -1,6 +1,8 @@
 from datetime import datetime
 from decimal import Decimal
 
+from ginger.libmt94x.transaction_codes import TransactionCodes
+
 
 # NOTE: Module level binding since we want to use the name "type" in method
 # signatures
@@ -8,6 +10,7 @@ builtin_type = type
 
 
 class Field(object):
+    '''Abstract base class for all fields'''
     pass
 
 
@@ -54,6 +57,12 @@ class ForwardAvailableBalance(AbstractBalance):
     tag = '65'
 
 
+class InformationToAcccountOwner(Field):
+    tag = '86'
+
+    # TODO
+
+
 class InformationToAccountOwnerTotals(Field):
     tag = '86'
 
@@ -80,7 +89,11 @@ class StatementLine(Field):
     TYPE_CREDIT = 1
     TYPE_DEBIT = 2
 
-    def __init__(self, value_date, type, amount, transaction_code,
+    def __init__(self,
+                 value_date,
+                 type,
+                 amount,
+                 transaction_code,
                  reference_for_account_owner,
                  supplementary_details=None,
                  book_date=None,
@@ -122,7 +135,10 @@ class StatementLine(Field):
         if not builtin_type(amount) == Decimal:
             raise ValueError("The `amount` value must be a Decimal")
 
-        # FIXME: check that transaction_code is valid
+        transaction_codes = TransactionCodes.get_instance()
+        if not transaction_codes.code_is_valid(transaction_code):
+            raise ValueError("Value `transaction_code` is invalid: %s" % transaction_code)
+
         # FIXME: check that ing_transaction_code is valid
 
         self.value_date = value_date
