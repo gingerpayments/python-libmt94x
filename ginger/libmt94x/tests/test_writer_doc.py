@@ -2,6 +2,7 @@ from collections import OrderedDict
 from datetime import datetime
 from decimal import Decimal
 from unittest import TestCase
+import os
 
 from ginger.libmt94x.document import Tm94xDocument
 from ginger.libmt94x.fields import AccountIdentification
@@ -296,4 +297,11 @@ class Tm94xWriterTests(TestCase):
         )
 
         bytes = self.writer.write_document_ming(doc)
-        print bytes
+
+        # Load spec file
+        fp_spec = os.path.join(
+            os.path.dirname(__file__), 'examples', 'ming-from-spec.txt')
+        with open(fp_spec, 'rb+') as f:
+            expected = f.read()
+
+        self.assertEquals(bytes, expected)
