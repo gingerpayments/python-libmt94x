@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ginger.libmt94x.transfer_failed_codes import InvalidCodeError
+from ginger.libmt94x.transfer_failed_codes import InvalidTransferFailedCodeError
 from ginger.libmt94x.transfer_failed_codes import TransferFailed
 from ginger.libmt94x.transfer_failed_codes import TransferFailedMisc
 from ginger.libmt94x.transfer_failed_codes import TransferFailedSEPA
@@ -23,7 +23,7 @@ class TransferFailedTests(TestCase):
 
     def test_sepa_code_invalid(self):
         # This code belongs to the Misc category
-        with self.assertRaises(InvalidCodeError):
+        with self.assertRaises(InvalidTransferFailedCodeError):
             self.sepa.resolve_code('AC03')
 
         rv = self.sepa.code_is_valid('AC03')
@@ -40,7 +40,7 @@ class TransferFailedTests(TestCase):
 
     def test_misc_code_invalid(self):
         # This code belongs to the SEPA category
-        with self.assertRaises(InvalidCodeError):
+        with self.assertRaises(InvalidTransferFailedCodeError):
             self.misc.resolve_code('AC01')
 
         rv = self.misc.code_is_valid('AC01')
@@ -66,7 +66,7 @@ class TransferFailedTests(TestCase):
 
     def test_any_code_invalid(self):
         # This code is not defined for either SEPA nor Misc
-        with self.assertRaises(InvalidCodeError):
+        with self.assertRaises(InvalidTransferFailedCodeError):
             self.any.resolve_code('AC00')
 
         rv = self.any.code_is_valid('AC00')

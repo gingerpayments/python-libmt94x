@@ -1,4 +1,4 @@
-class InvalidCodeError(Exception):
+class InvalidTransferFailedCodeError(Exception):
     pass
 
 
@@ -23,14 +23,14 @@ class AbstractTransferFailed(object):
         try:
             self.resolve_code(code)
             return True
-        except InvalidCodeError:
+        except InvalidTransferFailedCodeError:
             return False
 
     def resolve_code(self, code):
         try:
             return self.codes[code]
         except KeyError:
-            raise InvalidCodeError("Code not found: %s" % code)
+            raise InvalidTransferFailedCodeError("Code not found: %s" % code)
 
 
 class TransferFailedSEPA(AbstractTransferFailed):
@@ -133,5 +133,5 @@ class TransferFailed(AbstractTransferFailed):
     def resolve_code(self, code):
         try:
             return self.sepa.resolve_code(code)
-        except InvalidCodeError:
+        except InvalidTransferFailedCodeError:
             return self.misc.resolve_code(code)
