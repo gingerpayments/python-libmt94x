@@ -7,6 +7,17 @@ class AbstractTransferFailed(object):
 
     # Populate this in derived classes
     codes = {}
+    instance = None
+
+    @classmethod
+    def get_instance(cls):
+        '''This class stores no state, so we can store a global instance in the
+        class and give it out on demand.'''
+
+        if cls.instance is None:
+            cls.instance = cls()
+
+        return cls.instance
 
     def code_is_valid(self, code):
         try:
@@ -113,8 +124,8 @@ class TransferFailed(AbstractTransferFailed):
     provides a matching API.'''
 
     def __init__(self):
-        self.sepa = TransferFailedSEPA()
-        self.misc = TransferFailedMisc()
+        self.sepa = TransferFailedSEPA.get_instance()
+        self.misc = TransferFailedMisc.get_instance()
 
     def code_is_valid(self, code):
         return self.sepa.code_is_valid(code) or self.misc.code_is_valid(code)

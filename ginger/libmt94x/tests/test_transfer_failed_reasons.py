@@ -8,9 +8,9 @@ from ginger.libmt94x.transfer_failed_reasons import TransferFailedSEPA
 
 class TransferFailedTests(TestCase):
     def setUp(self):
-        self.sepa = TransferFailedSEPA()
-        self.misc = TransferFailedMisc()
-        self.any = TransferFailed()
+        self.sepa = TransferFailedSEPA.get_instance()
+        self.misc = TransferFailedMisc.get_instance()
+        self.any = TransferFailed.get_instance()
 
     # SEPA codes tests
 
