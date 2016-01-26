@@ -258,10 +258,36 @@ class Tm94xWriter(object):
             .finish())
         return block
 
+    def write_export_info_ming(self):
+        # NOTE: This appears to be a constant value
+        block = (self.ser
+            .start()
+            .chars(29, b'{1:F01INGBNL2ABXXX0000000000}')
+            .newline()
+            .finish())
+        return block
+
+    def write_import_info_ming(self):
+        # NOTE: This appears to be a constant value
+        block = (self.ser
+            .start()
+            .chars(20, b'{2:I940INGBNL2AXXXN}')
+            .newline()
+            .finish())
+        return block
+
     # Document
 
     def write_document_ming(self, doc):
         blocks = []
+
+        # {1:...}
+        export = self.write_export_info_ming()
+        blocks.append(export)
+
+        # {2:...}
+        import_ = self.write_import_info_ming()
+        blocks.append(import_)
 
         # {4:
         prolog = self.write_prolog_ming()
