@@ -16,14 +16,8 @@ from ginger.libmt94x.info_account_owner_subfields import CounterPartyID
 from ginger.libmt94x.info_account_owner_subfields import CreditorID
 from ginger.libmt94x.info_account_owner_subfields import EndToEndReference
 from ginger.libmt94x.info_account_owner_subfields import MandateReference
-from ginger.libmt94x.info_account_owner_subfields import PaymentInformationID
 from ginger.libmt94x.info_account_owner_subfields import PurposeCode
 from ginger.libmt94x.info_account_owner_subfields import RemittanceInformation
-from ginger.libmt94x.info_account_owner_subfields import ReturnReason
-from ginger.libmt94x.info_account_owner_subfields import UltimateCreditor
-from ginger.libmt94x.info_account_owner_subfields import UltimateDebtor
-from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
-from ginger.libmt94x.remittance_info import IsoStructuredRemittanceInfo
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
 from ginger.libmt94x.serializer import Tm94xSerializer
 from ginger.libmt94x.writer import Tm94xWriter
@@ -31,8 +25,9 @@ from ginger.libmt94x.writer import Tm94xWriter
 
 class Tm94xWriterTests(TestCase):
     def setUp(self):
-        serializer = Tm94xSerializer()
-        self.writer = Tm94xWriter(serializer)
+        self.serializer = Tm94xSerializer()
+        self.writer = Tm94xWriter(self.serializer)
+
 
     def test_account_identification(self):
         ai = AccountIdentification('NL69INGB0123456789', 'EUR')
@@ -81,8 +76,6 @@ class Tm94xWriterTests(TestCase):
                     name='T-Mobile Netherlands BV',
                 ),
                 RemittanceInformation(
-                    code=None,
-                    issuer=None,
                     remittance_info=UnstructuredRemittanceInfo('Factuurnummer 901258406560'),
                 ),
                 PurposeCode('OTHR'),

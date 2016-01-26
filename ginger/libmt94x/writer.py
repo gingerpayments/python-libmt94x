@@ -34,9 +34,9 @@ class Tm94xWriter(object):
         elif isinstance(code_word, CreditorID):
             serializer.chars(35, b'/%s' % code_word.creditor_id)
         elif isinstance(code_word, CounterPartyID):
-            serializer.chars(36, b'/%s' % code_word.account_number)
-            serializer.chars(12, b'/%s' % code_word.bic)
-            serializer.chars(51, b'/%s' % code_word.name)
+            serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
+            serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
+            serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
             serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
         elif isinstance(code_word, RemittanceInformation):
             if isinstance(code_word.remittance_info, UnstructuredRemittanceInfo):
@@ -51,11 +51,11 @@ class Tm94xWriter(object):
         elif isinstance(code_word, PurposeCode):
             serializer.chars(5, b'/%s' % code_word.purpose_of_collection)
         elif isinstance(code_word, UltimateCreditor):
-            serializer.chars(71, b'/%s' % code_word.name)
-            serializer.chars(36, b'/%s' % code_word.id)
+            serializer.chars(71, b'/%s' % (code_word.name if code_word.name else ''))
+            serializer.chars(36, b'/%s' % (code_word.id if code_word.id else ''))
         elif isinstance(code_word, UltimateDebtor):
-            serializer.chars(71, b'/%s' % code_word.name)
-            serializer.chars(36, b'/%s' % code_word.id)
+            serializer.chars(71, b'/%s' % (code_word.name if code_word.name else ''))
+            serializer.chars(36, b'/%s' % (code_word.id if code_word.id else ''))
 
         serializer.chars(1, b'/')
 

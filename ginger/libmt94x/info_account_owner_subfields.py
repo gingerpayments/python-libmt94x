@@ -1,4 +1,5 @@
 from ginger.libmt94x.remittance_info import AbstractRemittanceInfo
+from ginger.libmt94x.transfer_failed_codes import TransferFailed
 
 
 class InfoToAcccountOwnerSubField(object):
@@ -11,7 +12,7 @@ class CounterPartyID(InfoToAcccountOwnerSubField):
 
     tag = 'CNTP'
 
-    def __init__(self, account_number, bic, name, city=None):
+    def __init__(self, account_number=None, bic=None, name=None, city=None):
         self.account_number = account_number
         self.bic = bic
         self.name = name
@@ -38,7 +39,7 @@ class EndToEndReference(InfoToAcccountOwnerSubField):
 
 class MandateReference(InfoToAcccountOwnerSubField):
     '''NL term: Machtigingskenmerk'''
-    
+
     tag = 'MARF'
 
     def __init__(self, mandate_reference):
@@ -68,15 +69,17 @@ class RemittanceInformation(InfoToAcccountOwnerSubField):
 
     tag = 'REMI'
 
-    def __init__(self, code, issuer, remittance_info):
+    def __init__(self, remittance_info, code=None, issuer=None):
         if not isinstance(remittance_info, AbstractRemittanceInfo):
             raise ValueError(
                 "Value for `remittance_info` must be instance of AbstractRemittanceInfo")
 
-        # TODO: Are these first two even used???
+        self.remittance_info = remittance_info
+
+        # TODO: Are these two even used??? They are in the spec but do not
+        # appear in examples
         self.code = code
         self.issuer = issuer
-        self.remittance_info = remittance_info
 
 
 class ReturnReason(InfoToAcccountOwnerSubField):
@@ -85,7 +88,7 @@ class ReturnReason(InfoToAcccountOwnerSubField):
     tag = 'RTRN'
 
     def __init__(self, reason_code):
-        transfer_failed = TransferFailed()
+        transfer_failed = TransferFailed.get_instance()
         if not transfer_failed.code_is_valid(reason_code):
             raise ValueError("Value `reason_code` is invalid: %s" % reason_code)
 
@@ -97,7 +100,7 @@ class UltimateCreditor(InfoToAcccountOwnerSubField):
 
     tag = 'ULTC'
 
-    def __init__(self, name, id):
+    def __init__(self, name=None, id=None):
         self.name = name
         self.id = id
 
@@ -107,7 +110,7 @@ class UltimateDebtor(InfoToAcccountOwnerSubField):
 
     tag = 'ULTD'
 
-    def __init__(self, name, id):
+    def __init__(self, name=None, id=None):
         self.name = name
         self.id = id
 

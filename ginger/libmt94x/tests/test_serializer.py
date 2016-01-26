@@ -36,10 +36,10 @@ class Tm94xSerializerTests(TestCase):
         with self.assertRaises(ValueError):
             self.ser.serialize_value(self.ser.type_char, 3, b'\x00\x01')
 
-    def test_number_charset_too_long(self):
+    def test_char_charset_too_long(self):
         # Exceeds field length
         with self.assertRaises(ValueError):
-            self.ser.serialize_value(self.ser.type_num, 3, b'ab3a')
+            self.ser.serialize_value(self.ser.type_char, 3, b'ab3a')
 
     # Numeric tests
 
