@@ -34,19 +34,19 @@ class Tm94xWriter(object):
         elif isinstance(code_word, CreditorID):
             serializer.chars(35, b'/%s' % code_word.creditor_id)
         elif isinstance(code_word, CounterPartyID):
-            serializer.chars(512, b'/%s' % code_word.account_number)
-            serializer.chars(512, b'/%s' % code_word.bic)
-            serializer.chars(512, b'/%s' % code_word.name)
-            serializer.chars(512, b'/%s' % (code_word.city if code_word.city else ''))
+            serializer.chars(36, b'/%s' % code_word.account_number)
+            serializer.chars(12, b'/%s' % code_word.bic)
+            serializer.chars(51, b'/%s' % code_word.name)
+            serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
         elif isinstance(code_word, RemittanceInformation):
             if isinstance(code_word.remittance_info, UnstructuredRemittanceInfo):
-                serializer.chars(512, b'/USTD//%s'
+                serializer.chars(256, b'/USTD//%s'
                                  % code_word.remittance_info.remittance_info)
             if isinstance(code_word.remittance_info, DutchStructuredRemittanceInfo):
-                serializer.chars(512, b'/STRD/CUR/%s'
+                serializer.chars(256, b'/STRD/CUR/%s'
                                  % code_word.remittance_info.payment_reference)
             if isinstance(code_word.remittance_info, IsoStructuredRemittanceInfo):
-                serializer.chars(512, b'/STRD/ISO/%s'
+                serializer.chars(256, b'/STRD/ISO/%s'
                                  % code_word.remittance_info.iso_reference)
         elif isinstance(code_word, PurposeCode):
             serializer.chars(5, b'/%s' % code_word.purpose_of_collection)

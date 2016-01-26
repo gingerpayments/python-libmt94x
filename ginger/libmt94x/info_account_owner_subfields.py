@@ -73,6 +73,7 @@ class RemittanceInformation(InfoToAcccountOwnerSubField):
             raise ValueError(
                 "Value for `remittance_info` must be instance of AbstractRemittanceInfo")
 
+        # TODO: Are these first two even used???
         self.code = code
         self.issuer = issuer
         self.remittance_info = remittance_info

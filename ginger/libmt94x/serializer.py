@@ -1,7 +1,8 @@
 from datetime import datetime
 from decimal import Decimal
-
 import re
+
+from ginger.libmt94x.textutil import format_amount
 
 
 # NOTE: Module level binding since we want to use the name "type" in method
@@ -38,7 +39,12 @@ class Tm94xSerializer(object):
         '$'
     )
 
-    def __init__(self):
+    def __init__(self, locale='nl_NL'):
+        if locale not in ('nl_NL',):
+            raise ValueError("Locale not implemented: %s" % locale)
+
+        self.locale = locale
+
         self._buffer = []
 
 
@@ -82,9 +88,7 @@ class Tm94xSerializer(object):
             raise ValueError("Must pass a Decimal")
 
         # FIXME: Decimal representation is currency and locale specific
-        bytes = b'%.2f' % amount
-        # HACK: Use comma for decimal point
-        bytes = bytes.replace('.', ',')
+        bytes = format_amount(amount, self.locale)
 
         # Now that we know how long the formatted bytestring is we can check
         # against maxlen
