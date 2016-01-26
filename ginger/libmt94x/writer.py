@@ -59,6 +59,7 @@ class Tm94xWriter(object):
 
         serializer.chars(1, b'/')
 
+    # Fields
 
     def write_account_identification(self, ai):
         record = (self.ser
@@ -239,3 +240,79 @@ class Tm94xWriter(object):
             .finish()
         )
         return record
+
+    # Prolog and Epilog
+
+    def write_prolog_ming(self):
+        block = (self.ser
+            .start()
+            .chars(3, b'{4:')
+            .newline()
+            .finish())
+        return block
+
+    def write_epilog_ming(self):
+        block = (self.ser
+            .start()
+            .chars(2, b'-}')
+            .finish())
+        return block
+
+    # Document
+
+    def write_document_ming(self, doc):
+        blocks = []
+
+        # {4:
+        prolog = self.write_prolog_ming()
+        blocks.append(prolog)
+
+        # :20:
+        trn = self.write_transaction_reference_number(
+            doc.transaction_reference_number)
+        blocks.append(trn)
+
+        # :25:
+        ai = self.write_account_identification(doc.account_identification)
+        blocks.append(ai)
+
+        # :28:
+        sn = self.write_statement_number(doc.statement_number)
+        blocks.append(sn)
+
+        # :60F:
+        ob = self.write_opening_balance(doc.opening_balance)
+        blocks.append(ob)
+
+        # entries: :61: & :86:
+        for statement_line, infos in doc.entries.items():
+            sl = self.write_statement_line_ming(statement_line)
+            blocks.append(sl)
+            for info in infos:
+                inf = self.write_information_to_account_owner_ming(info)
+                blocks.append(inf)
+
+        # :62F:
+        cb = self.write_closing_balance(doc.closing_balance)
+        blocks.append(cb)
+
+        # :64:
+        cab = self.write_closing_available_balance(doc.closing_available_balance)
+        blocks.append(cab)
+
+        # :65:
+        for forward_available_balance in doc.forward_available_balances:
+            fab = self.write_forward_available_balance(forward_available_balance)
+            blocks.append(fab)
+
+        # :86:
+        info_tot = self.write_information_to_account_owner_totals_ming(
+            doc.info_to_acct_owner_totals)
+        blocks.append(info_tot)
+
+        # -}
+        epilog = self.write_epilog_ming()
+        blocks.append(epilog)
+
+        block = ''.join(blocks)
+        return block

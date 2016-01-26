@@ -139,8 +139,8 @@ class StatementLine(Field):
         - account_servicing_institutions_reference
         '''
 
-        # TODO: Check that the right fields are set when adding this to an
-        # actual TM94x document
+        # TODO: Check that the right fields are set when writing this out in a
+        # concrete format
 
         if not builtin_type(value_date) == datetime:
             raise ValueError("The `value_date` value must be a datetime")
