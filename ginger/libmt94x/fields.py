@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from ginger.libmt94x.info_account_owner_subfields import InfoToAcccountOwnerSubField
+from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubField
 from ginger.libmt94x.transaction_codes import IngTransactionCodes
 from ginger.libmt94x.transaction_codes import SwiftTransactionCodes
 
