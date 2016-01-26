@@ -6,11 +6,25 @@ from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
 from ginger.libmt94x.fields import ForwardAvailableBalance
+from ginger.libmt94x.fields import InformationToAccountOwner
 from ginger.libmt94x.fields import InformationToAccountOwnerTotals
 from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementLine
 from ginger.libmt94x.fields import StatementNumber
 from ginger.libmt94x.fields import TransactionReferenceNumber
+from ginger.libmt94x.info_account_owner_subfields import CounterPartyID
+from ginger.libmt94x.info_account_owner_subfields import CreditorID
+from ginger.libmt94x.info_account_owner_subfields import EndToEndReference
+from ginger.libmt94x.info_account_owner_subfields import MandateReference
+from ginger.libmt94x.info_account_owner_subfields import PaymentInformationID
+from ginger.libmt94x.info_account_owner_subfields import PurposeCode
+from ginger.libmt94x.info_account_owner_subfields import RemittanceInformation
+from ginger.libmt94x.info_account_owner_subfields import ReturnReason
+from ginger.libmt94x.info_account_owner_subfields import UltimateCreditor
+from ginger.libmt94x.info_account_owner_subfields import UltimateDebtor
+from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
+from ginger.libmt94x.remittance_info import IsoStructuredRemittanceInfo
+from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
 from ginger.libmt94x.serializer import Tm94xSerializer
 from ginger.libmt94x.writer import Tm94xWriter
 
@@ -54,6 +68,33 @@ class Tm94xWriterTests(TestCase):
         )
         bytes = self.writer.write_opening_balance(ob)
         self.assertEquals(bytes, b':65:C140224EUR564,35\r\n')
+
+    def test_information_to_account_owner_ming(self):
+        info = InformationToAccountOwner(
+            code_words=[
+                EndToEndReference('500411584454'),
+                MandateReference('1.15791632'),
+                CreditorID('NL93ZZZ332656790051'),
+                CounterPartyID(
+                    account_number='NL12COBA0733959555',
+                    bic='COBANL2XXXX',
+                    name='T-Mobile Netherlands BV',
+                ),
+                RemittanceInformation(
+                    code=None,
+                    issuer=None,
+                    remittance_info=UnstructuredRemittanceInfo('Factuurnummer 901258406560'),
+                ),
+                PurposeCode('OTHR'),
+            ],
+        )
+        bytes = self.writer.write_information_to_account_owner_ming(info)
+        expected = (
+            b':86:/EREF/500411584454//MARF/1.15791632//CSID/NL93ZZZ332656790051\r\n'
+            b'//CNTP/NL12COBA0733959555/COBANL2XXXX/T-Mobile Netherlands BV///R\r\n'
+            b'EMI/USTD//Factuurnummer 901258406560//PURP/OTHR/\r\n'
+        )
+        self.assertEquals(bytes, expected)
 
     def test_information_to_account_owner_totals_ibp(self):
         info = InformationToAccountOwnerTotals(
@@ -114,10 +155,11 @@ class Tm94xWriterTests(TestCase):
             ing_transaction_code='00100',
         )
         bytes = self.writer.write_statement_line_ming(ob)
-        self.assertEquals(
-            bytes,
-            b':61:1402200220C1,56NTRFEREF//00000000001005\r\n/TRCD/00100/\r\n'
+        expected = (
+            b':61:1402200220C1,56NTRFEREF//00000000001005\r\n'
+            b'/TRCD/00100/\r\n'
         )
+        self.assertEquals(bytes, expected)
 
     def test_statement_number(self):
         sn = StatementNumber('00000')

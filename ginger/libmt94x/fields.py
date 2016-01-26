@@ -1,6 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
+from ginger.libmt94x.info_account_owner_subfields import InfoToAcccountOwnerSubField
 from ginger.libmt94x.transaction_codes import IngTransactionCodes
 from ginger.libmt94x.transaction_codes import SwiftTransactionCodes
 
@@ -23,7 +24,8 @@ class AbstractBalance(Field):
 
     def __init__(self, type, date, currency, amount):
         if type not in (self.TYPE_CREDIT, self.TYPE_DEBIT):
-            raise ValueError("The `type` value must be TYPE_CREDIT or TYPE_DEBIT")
+            raise ValueError(
+                "The `type` value must be TYPE_CREDIT or TYPE_DEBIT")
 
         if not builtin_type(date) == datetime:
             raise ValueError("The `date` value must be a datetime")
@@ -58,10 +60,26 @@ class ForwardAvailableBalance(AbstractBalance):
     tag = '65'
 
 
-class InformationToAcccountOwner(Field):
+class InformationToAccountOwner(Field):
     tag = '86'
 
-    # TODO
+    def __init__(self, code_words):
+        for code_word in code_words:
+            if not isinstance(code_word, InfoToAcccountOwnerSubField):
+                raise ValueError(
+                    "All values for `code_words` must be "
+                    "instances of InfoToAcccountOwnerSubField")
+
+        self.code_words = code_words
+
+        # Build dictionary mapping the class -> code_word
+        by_class = {}
+        for code_word in code_words:
+            by_class[code_word.__class__] = code_word
+        self.by_class = by_class
+
+    def get_code_word_by_cls(self, cls_obj):
+        return self.by_class.get(cls_obj)
 
 
 class InformationToAccountOwnerTotals(Field):

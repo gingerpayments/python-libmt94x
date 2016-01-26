@@ -1,4 +1,4 @@
-from ginger.libmt94x.transfer_failed_reasons import AbstractTransferFailed
+from ginger.libmt94x.remittance_info import AbstractRemittanceInfo
 
 
 class InfoToAcccountOwnerSubField(object):
@@ -9,9 +9,9 @@ class InfoToAcccountOwnerSubField(object):
 class CounterPartyID(InfoToAcccountOwnerSubField):
     '''NL term: Tegenpartij ID'''
 
-    code_word = 'CNTP'
+    tag = 'CNTP'
 
-    def __init__(self, account_number, bic, name, city):
+    def __init__(self, account_number, bic, name, city=None):
         self.account_number = account_number
         self.bic = bic
         self.name = name
@@ -21,7 +21,7 @@ class CounterPartyID(InfoToAcccountOwnerSubField):
 class CreditorID(InfoToAcccountOwnerSubField):
     '''NL term: Incassant ID'''
 
-    code_word = 'CSID'
+    tag = 'CSID'
 
     def __init__(self, creditor_id):
         self.creditor_id = creditor_id
@@ -30,7 +30,7 @@ class CreditorID(InfoToAcccountOwnerSubField):
 class EndToEndReference(InfoToAcccountOwnerSubField):
     '''NL term: Uniek kenmerk'''
 
-    code_word = 'EREF'
+    tag = 'EREF'
 
     def __init__(self, end_to_end_reference):
         self.end_to_end_reference = end_to_end_reference
@@ -39,7 +39,7 @@ class EndToEndReference(InfoToAcccountOwnerSubField):
 class MandateReference(InfoToAcccountOwnerSubField):
     '''NL term: Machtigingskenmerk'''
     
-    code_word = 'MARF'
+    tag = 'MARF'
 
     def __init__(self, mandate_reference):
         self.mandate_reference = mandate_reference
@@ -48,7 +48,7 @@ class MandateReference(InfoToAcccountOwnerSubField):
 class PaymentInformationID(InfoToAcccountOwnerSubField):
     '''NL term: Batch ID'''
 
-    code_word = 'PREF'
+    tag = 'PREF'
 
     def __init__(self, payment_information_id):
         self.payment_information_id = payment_information_id
@@ -57,7 +57,7 @@ class PaymentInformationID(InfoToAcccountOwnerSubField):
 class PurposeCode(InfoToAcccountOwnerSubField):
     '''NL term: Speciale verwerkingscode'''
 
-    code_word = 'PURP'
+    tag = 'PURP'
 
     def __init__(self, purpose_of_collection):
         self.purpose_of_collection = purpose_of_collection
@@ -66,19 +66,22 @@ class PurposeCode(InfoToAcccountOwnerSubField):
 class RemittanceInformation(InfoToAcccountOwnerSubField):
     '''NL term: Omschrijvingsregels'''
 
-    code_word = 'REMI'
+    tag = 'REMI'
 
-    def __init__(self, code, issuer, remittance_info, purpose_of_collection):
+    def __init__(self, code, issuer, remittance_info):
+        if not isinstance(remittance_info, AbstractRemittanceInfo):
+            raise ValueError(
+                "Value for `remittance_info` must be instance of AbstractRemittanceInfo")
+
         self.code = code
         self.issuer = issuer
-        self.remittance_info = remittance_info  # TODO: this is structured data
-        self.purpose_of_collection = purpose_of_collection
+        self.remittance_info = remittance_info
 
 
 class ReturnReason(InfoToAcccountOwnerSubField):
     '''NL term: Uitval reden'''
 
-    code_word = 'RTRN'
+    tag = 'RTRN'
 
     def __init__(self, reason_code):
         transfer_failed = TransferFailed()
@@ -91,18 +94,38 @@ class ReturnReason(InfoToAcccountOwnerSubField):
 class UltimateCreditor(InfoToAcccountOwnerSubField):
     '''NL term: Uiteindelijke incassant'''
 
-    code_word = 'ULTC'
+    tag = 'ULTC'
 
     def __init__(self, name, id):
         self.name = name
         self.id = id
 
 
-class UltimateDebitor(InfoToAcccountOwnerSubField):
+class UltimateDebtor(InfoToAcccountOwnerSubField):
     '''NL term: Uiteindelijke geincasseerde'''
 
-    code_word = 'ULTD'
+    tag = 'ULTD'
 
     def __init__(self, name, id):
         self.name = name
         self.id = id
+
+
+class InfoToAcccountOwnerSubFieldOrder(object):
+    # This is the order in which the fields must be written
+    fields = (
+        ReturnReason,
+        EndToEndReference,
+        PaymentInformationID,
+        MandateReference,
+        CreditorID,
+        CounterPartyID,
+        RemittanceInformation,
+        PurposeCode,
+        UltimateCreditor,
+        UltimateDebtor,
+    )
+
+    @classmethod
+    def get_field_classes(cls):
+        return cls.fields
