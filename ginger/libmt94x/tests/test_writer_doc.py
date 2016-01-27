@@ -4,7 +4,7 @@ from decimal import Decimal
 from unittest import TestCase
 import os
 
-from ginger.libmt94x.document import Tm94xDocument
+from ginger.libmt94x.document import Tm940Document
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
@@ -251,7 +251,7 @@ class Tm94xWriterTests(TestCase):
             (line8, [info8]),
         ])
 
-        doc = Tm94xDocument(
+        doc = Tm940Document(
             transaction_reference_number=TransactionReferenceNumber('P140220000000001'),
             account_identification=AccountIdentification('NL69INGB0123456789', 'EUR'),
             statement_number=StatementNumber('00000'),

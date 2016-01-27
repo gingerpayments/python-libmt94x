@@ -8,7 +8,7 @@ from ginger.libmt94x.fields import StatementNumber
 from ginger.libmt94x.fields import TransactionReferenceNumber
 
 
-class Tm94xDocument(object):
+class Tm940Document(object):
     def __init__(self,
                  transaction_reference_number=None,
                  account_identification=None,
