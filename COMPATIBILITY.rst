@@ -32,7 +32,7 @@ Testing against accounting software
 ========== =============== ============
 Input file e-boekhouden.nl exact online
 ========== =============== ============
-    (1)        OK
-    (2)        OK
-    (3)        OK
+    (1)        OK               OK
+    (2)        OK               OK
+    (3)        OK               OK
 ========== =============== ============
