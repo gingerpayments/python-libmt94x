@@ -102,21 +102,21 @@ The SWIFT data format (cited in the specs) defines two data types:
 The purpose of the serializer is to enforce that all bytes written to the
 document respect these definitions, and that no field or subfield exceeds
 its maximum size. *All bytes written to the document pass through the 
-serializer*, you can also think of it as a filter.
+serializer* - you can also think of it as a filter.
 
 The serializer API exposes methods to serialize single values, but it also
 exposes a chaining API that makes writing fields in a style very similar to
 the way it's defined in the spec::
 
-        val = (self.serializer
-               .start()
-               .chars(4, ':65:')            # Tag
-               .chars(1, 'C')               # Credit/Debit type
-               .num(6, '140221')            # Date YYMMDD
-               .chars(3, 'EUR')             # Currency
-               .chars(15, '564,35')         # Amount
-               .newline()                   # \r\n
-               .finish()
+        field = (self.serializer
+                    .start()
+                    .chars(4, ':65:')            # 4-char tag
+                    .chars(1, 'C')               # 1-char credit/debit type
+                    .num(6, '140221')            # 6-digit date YYMMDD
+                    .chars(3, 'EUR')             # 3-char currency
+                    .chars(15, '564,35')         # 15-char amount
+                    .newline()                   # \r\n
+                    .finish()
         )
 
 
