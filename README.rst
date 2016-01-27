@@ -77,6 +77,10 @@ and debit entries::
     :86:/SUM/6/2/8448,01/1414,00/       # 6 debit, 2 credit, debit amount, credit amount
     -}                                  # message terminator
 
+Note that the fact that the tag ``86`` appears both in an entry *and* in the
+summary part of the document is not an error. It is actually two different
+fields with the same tag.
+
 For a detailed description refer to the specification documents:
 
 * Mijn ING Zakelijk (dubbed ``ming``): ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
@@ -97,7 +101,7 @@ Serializer
 The SWIFT data format (cited in the specs) defines two data types:
 
 * characters (with a restricted character set)
-* digits
+* numbers (digits)
 
 The purpose of the serializer is to enforce that all bytes written to the
 document respect these definitions, and that no field or subfield exceeds
@@ -105,7 +109,7 @@ its maximum size. *All bytes written to the document pass through the
 serializer* - you can also think of it as a filter.
 
 The serializer API exposes methods to serialize single values, but it also
-exposes a chaining API that makes writing fields in a style very similar to
+exposes a chaining API that allows writing fields in a style very similar to
 the way it's defined in the spec::
 
         field = (self.serializer
@@ -118,6 +122,17 @@ the way it's defined in the spec::
                     .newline()                   # \r\n
                     .finish()
         )
+
+Fields
+~~~~~~
+
+Fields are modeled as classes with each of their data items as attributes.
+Fields validate their input data where possible (dates must be ``datetime``
+objects, amount values must be ``Decimal`` objects, transaction codes are
+checked against a list of valid codes).
+
+Note that fields do not contain information about the sizes of their data,
+this is handled by the ``Writer``.
 
 
 Release versioning
