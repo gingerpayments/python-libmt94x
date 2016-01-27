@@ -15,12 +15,17 @@ account between a *start date* and an *end date*. The document is built up of
 
     :01:<item1>/<item2>/<item3>/
 
-Here, ``01`` is the *tag* of the field, which uniquely identifies the format
-and content of the field. These fields are modeled in ``fields.py``. The tag is
-followed by items delimited with slashes. The items permitted for each field
-are defined in the field definition, and items have a type and a maximum
-length. A field does not exceed 65 characters, but may span multiple lines.
-Lines are terminated with ``\r\n``.
+TM940 is a line-based format and each field begins on a new line. Here, ``01``
+is the *tag* of the field, which uniquely identifies the format and content of
+the field. These fields are modeled in ``fields.py``. The tag is followed by
+items delimited with slashes. The items permitted for each field are defined in
+the field definition, and items have a type and a maximum length. A field does
+not exceed 65 characters, but may span multiple lines.  Lines are terminated
+with ``\r\n``.
+
+
+Document structure
+------------------
 
 The document opens with things like the bank account number and the opening
 balance.
