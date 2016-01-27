@@ -23,8 +23,6 @@ the field definition, and items have a type and a maximum length. A field does
 not exceed 65 characters, but may span multiple lines.  Lines are terminated
 with ``\r\n``.
 
-You can see example documents in ``ginger/libmt94x/tests/examples``.
-
 
 Document structure
 ------------------
@@ -59,6 +57,8 @@ For a detailed description refer to the specification documents:
 
 * Mijn ING Zakelijk (dubbed ``ming``): ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
 * Inside Business Payments (dubbed ``ibp``): ``docs/spec-mt94x-inside-business-payments-aug-2015.pdf``
+
+You can find example documents in ``ginger/libmt94x/tests/examples``.
 
 
 Release versioning
