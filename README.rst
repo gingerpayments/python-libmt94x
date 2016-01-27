@@ -54,10 +54,14 @@ composed of::
 
 * A statement line (tag ``61``):
 
-  * Date of transaction
+  * Value date of transaction (here ``140103``)
+  * Book date of transaction (here ``0103``)
   * Type: Credit or Debit (``C`` or ``D``)
   * Amount (here ``12,00``)
   * SWIFT Transaction code (four characters, begins with ``N``, here ``NTRF``)
+  * Reference for account owner (here ``EREF``)
+  * Transaction reference (here ``00000000000003``)
+  * ING constant keyword (``TRCD``)
   * ING Transaction code (five digits, here ``01025``)
 
 * Information to account owner (tag ``86``):
