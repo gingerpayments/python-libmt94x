@@ -55,14 +55,14 @@ composed of::
 
   * Date of transaction
   * Type: Credit or Debit (``C`` or ``D``)
-  * Amount
-  * SWIFT Transaction code (four characters, begins with ``N``)
+  * Amount (here ``12,00``)
+  * SWIFT Transaction code (four characters, begins with ``N``, here ``NTRF``)
   * ING Transaction code (five digits, here ``01025``)
 
 * Information to account owner (tag ``86``):
 
   * Return reason (if the transfer represents a return)
-  * Counter party id (account number, bic, name of the counter party)
+  * Counter party id ``CNTP`` (account number, bic, name of the counter party)
   * Purpose code (what does the transfer concern?)
   * ...
 
@@ -70,11 +70,11 @@ The document is terminated with multiple closing balances and a summary line
 that shows the number of transactions in the document, and totals for credit
 and debit entries::
 
-    :62F:C160115EUR2149,31
-    :64:C160115EUR2149,31
-    :65:C160116EUR2149,31
-    :65:C160117EUR2149,31
-    :86:/SUM/6/2/8448,01/1414,00/
+    :62F:C160115EUR2149,31              # closing balance
+    :64:C160115EUR2149,31               # closing available balance
+    :65:C160116EUR2149,31               # forward available balance
+    :65:C160117EUR2149,31               # forward available balance
+    :86:/SUM/6/2/8448,01/1414,00/       # 6 debit, 2 credit, debit amount, credit amount
     -}                                  # message terminator
 
 For a detailed description refer to the specification documents:
