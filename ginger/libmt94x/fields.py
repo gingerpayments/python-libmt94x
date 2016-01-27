@@ -56,8 +56,24 @@ class ClosingBalance(AbstractBalance):
     tag = '62F'
 
 
+class ExportInformation(Field):
+    def __init__(self, export_address, export_number, export_time=None, export_day=None):
+        self.export_address = export_address
+        self.export_number = export_number
+        self.export_time = export_time
+        self.export_day = export_day
+
+
 class ForwardAvailableBalance(AbstractBalance):
     tag = '65'
+
+
+class ImportInformation(Field):
+    def __init__(self, import_address, import_number, import_time=None, import_day=None):
+        self.import_address = import_address
+        self.import_number = import_number
+        self.import_time = import_time
+        self.import_day = import_day
 
 
 class InformationToAccountOwner(Field):

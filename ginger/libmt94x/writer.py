@@ -253,7 +253,7 @@ class Tm94xWriter(object):
 
     # Prolog and Epilog
 
-    def write_prolog_ibp(self):
+    def write_message_information_ibp(self):
         block = (self.ser
             .start()
             .chars(6, b'940 00')
@@ -283,11 +283,37 @@ class Tm94xWriter(object):
             .finish())
         return block
 
+    def write_export_info_ibp(self, info):
+        # Some of these values are constants
+        block = (self.ser
+            .start()
+            .chars(4, b'0000')
+            .chars(1, b' ')
+            .chars(2, b'01')
+            .chars(12, info.export_address)
+            .chars(5, info.export_number)
+            .newline()
+            .finish())
+        return block
+
     def write_export_info_ming(self):
         # NOTE: This appears to be a constant value
         block = (self.ser
             .start()
             .chars(29, b'{1:F01INGBNL2ABXXX0000000000}')
+            .newline()
+            .finish())
+        return block
+
+    def write_import_info_ibp(self, info):
+        # Some of these values are constants
+        block = (self.ser
+            .start()
+            .chars(4, b'0000')
+            .chars(1, b' ')
+            .chars(2, b'01')
+            .chars(12, info.import_address)
+            .chars(5, info.import_number)
             .newline()
             .finish())
         return block
@@ -306,8 +332,16 @@ class Tm94xWriter(object):
     def write_document_ibp(self, doc):
         block = []
 
+        # export info
+        export = self.write_export_info_ibp(doc.export_info)
+        blocks.append(export)
+
+        # import info
+        import_ = self.write_import_info_ibp(doc.import_info)
+        blocks.append(import_)
+
         # 940 00
-        prolog = self.write_prolog_ibp()
+        prolog = self.write_message_information_ibp()
         blocks.append(prolog)
 
         # :20:

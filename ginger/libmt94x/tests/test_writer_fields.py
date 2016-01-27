@@ -5,9 +5,11 @@ from unittest import TestCase
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
+from ginger.libmt94x.fields import ExportInformation
 from ginger.libmt94x.fields import ForwardAvailableBalance
 from ginger.libmt94x.fields import InformationToAccountOwner
 from ginger.libmt94x.fields import InformationToAccountOwnerTotals
+from ginger.libmt94x.fields import ImportInformation
 from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementLine
 from ginger.libmt94x.fields import StatementNumber
@@ -28,11 +30,14 @@ class Tm94xWriterTests(TestCase):
         self.serializer = Tm94xSerializer()
         self.writer = Tm94xWriter(self.serializer)
 
+    # AccountIdentification
 
     def test_account_identification(self):
         ai = AccountIdentification('NL69INGB0123456789', 'EUR')
         bytes = self.writer.write_account_identification(ai)
         self.assertEquals(bytes, b':25:NL69INGB0123456789EUR\r\n')
+
+    # ClosingAvailableBalance
 
     def test_closing_available_balance(self):
         ob = ClosingAvailableBalance(
@@ -44,6 +49,8 @@ class Tm94xWriterTests(TestCase):
         bytes = self.writer.write_closing_available_balance(ob)
         self.assertEquals(bytes, b':64:C140220EUR564,35\r\n')
 
+    # ClosingBalance
+
     def test_closing_balance(self):
         ob = ClosingBalance(
             ClosingBalance.TYPE_CREDIT,
@@ -54,6 +61,18 @@ class Tm94xWriterTests(TestCase):
         bytes = self.writer.write_closing_balance(ob)
         self.assertEquals(bytes, b':62F:C140220EUR564,35\r\n')
 
+    # ExportInformation
+
+    def test_export_info_ibp(self):
+        ei = ExportInformation(
+            export_address='INGBNL2AXXXX',
+            export_number='00001',
+        )
+        bytes = self.writer.write_export_info_ibp(ei)
+        self.assertEquals(bytes, b'0000 01INGBNL2AXXXX00001\r\n')
+
+    # ForwardAvailableBalance
+
     def test_forward_available_balance(self):
         ob = ForwardAvailableBalance(
             ForwardAvailableBalance.TYPE_CREDIT,
@@ -63,6 +82,8 @@ class Tm94xWriterTests(TestCase):
         )
         bytes = self.writer.write_forward_available_balance(ob)
         self.assertEquals(bytes, b':65:C140224EUR564,35\r\n')
+
+    # InformationToAccountOwner
 
     def test_information_to_account_owner_ming(self):
         info = InformationToAccountOwner(
@@ -89,6 +110,8 @@ class Tm94xWriterTests(TestCase):
         )
         self.assertEquals(bytes, expected)
 
+    # InformationToAccountOwnerTotals
+
     def test_information_to_account_owner_totals_ibp(self):
         info = InformationToAccountOwnerTotals(
             4,
@@ -109,6 +132,18 @@ class Tm94xWriterTests(TestCase):
         bytes = self.writer.write_information_to_account_owner_totals_ming(info)
         self.assertEquals(bytes, b':86:/SUM/4/4/134,46/36,58/\r\n')
 
+    # ImportInformation
+
+    def test_import_info_ibp(self):
+        ii = ImportInformation(
+            import_address='INGBNL2AXXXX',
+            import_number='00001',
+        )
+        bytes = self.writer.write_import_info_ibp(ii)
+        self.assertEquals(bytes, b'0000 01INGBNL2AXXXX00001\r\n')
+
+    # OpeningBalance
+
     def test_opening_balance(self):
         ob = OpeningBalance(
             OpeningBalance.TYPE_CREDIT,
@@ -128,6 +163,8 @@ class Tm94xWriterTests(TestCase):
         )
         bytes = self.writer.write_opening_balance(ob)
         self.assertEquals(bytes, b':60F:C140219EURC\r\n')
+
+    # StatementLine
 
     def test_statement_line_ibp(self):
         # FIXME: Supply realistic data
@@ -164,10 +201,14 @@ class Tm94xWriterTests(TestCase):
         )
         self.assertEquals(bytes, expected)
 
+    # StatementNumber
+
     def test_statement_number(self):
         sn = StatementNumber('00000')
         bytes = self.writer.write_statement_number(sn)
         self.assertEquals(bytes, b':28C:00000\r\n')
+
+    # TransactionReferenceNumber
 
     def test_transaction_reference_number_ibp(self):
         trn = TransactionReferenceNumber()
