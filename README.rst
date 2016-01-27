@@ -50,7 +50,7 @@ and debit entries.
 
 For a detailed description refer to the specification documents:
 
-* Mijn ING (dubbed ``ming``): ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
+* Mijn ING Zakelijk (dubbed ``ming``): ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
 * Inside Business Payments (dubbed ``ibp``): ``docs/spec-mt94x-inside-business-payments-aug-2015.pdf``
 
 
