@@ -25,24 +25,41 @@ with ``\r\n``.
 
 
 Document structure
-------------------
+==================
+
+The document has a prolog::
+
+    {1:F01INGBNL2ABXXX0000000000}   # export information
+    {2:I940INGBNL2AXXXN}            # import information
+    {4:                             # start of message information
 
 The document opens with things like the bank account number and the opening
-balance.
+balance::
+
+    :20:P140104000009999            # transaction reference number
+    :25:NL20INGB0001234567EUR       # account identification
+    :28C:3                          # statement number
+    :60F:C140102EUR1000,00          # opening balance
 
 The bulk of the document is the ``entries`` section, which contains all the
 transactions that occurred between the two dates. Each ``entry`` is typically
-composed of:
+composed of::
 
-* A statement line:
-    
+    :61:1401030103D12,00NTRFEREF//00000000000003
+    /TRCD/01025/
+    :86:/EREF/E2E420140103318//MARF/MNDTID012545488665//CSID/NL99ZZZ99999
+    9999999//CNTP/NL08INGB0000001234/INGBNL2A/ING Testrekening/AMSTER
+    DAM//REMI/USTD//INGB20140103UstrdRemiInf454655GHF/
+
+* A statement line (tag ``61``):
+
   * Date of transaction
-  * Type: Credit or Debit
+  * Type: Credit or Debit (``C`` or ``D``)
   * Amount
-  * SWIFT Transaction code
-  * ING Transaction code
+  * SWIFT Transaction code (four characters, begins with ``N``)
+  * ING Transaction code (five digits, here ``01025``)
 
-* Information to account owner:
+* Information to account owner (tag ``86``):
 
   * Return reason (if the transfer represents a return)
   * Counter party id (account number, bic, name of the counter party)
@@ -51,7 +68,14 @@ composed of:
 
 The document is terminated with multiple closing balances and a summary line
 that shows the number of transactions in the document, and totals for credit
-and debit entries.
+and debit entries::
+
+    :62F:C160115EUR2149,31
+    :64:C160115EUR2149,31
+    :65:C160116EUR2149,31
+    :65:C160117EUR2149,31
+    :86:/SUM/6/2/8448,01/1414,00/
+    -}                                  # message terminator
 
 For a detailed description refer to the specification documents:
 
