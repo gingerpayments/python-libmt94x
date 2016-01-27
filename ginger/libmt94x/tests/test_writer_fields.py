@@ -169,7 +169,12 @@ class Tm94xWriterTests(TestCase):
         bytes = self.writer.write_statement_number(sn)
         self.assertEquals(bytes, b':28C:00000\r\n')
 
-    def test_transaction_reference_number(self):
+    def test_transaction_reference_number_ibp(self):
+        trn = TransactionReferenceNumber()
+        bytes = self.writer.write_transaction_reference_number_ibp(trn)
+        self.assertEquals(bytes, b':20:ING\r\n')
+
+    def test_transaction_reference_number_ming(self):
         trn = TransactionReferenceNumber('P140220000000001')
-        bytes = self.writer.write_transaction_reference_number(trn)
+        bytes = self.writer.write_transaction_reference_number_ming(trn)
         self.assertEquals(bytes, b':20:P140220000000001\r\n')

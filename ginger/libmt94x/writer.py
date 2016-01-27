@@ -241,8 +241,7 @@ class Tm94xWriter(object):
         )
         return record
 
-    # TODO: add _ming suffix
-    def write_transaction_reference_number(self, trn):
+    def write_transaction_reference_number_ming(self, trn):
         record = (self.ser
             .start()
             .chars(4, b':%s:' % trn.tag)
@@ -312,7 +311,7 @@ class Tm94xWriter(object):
         blocks.append(prolog)
 
         # :20:
-        trn = self.write_transaction_reference_number(
+        trn = self.write_transaction_reference_number_ibp(
             doc.transaction_reference_number)
         blocks.append(trn)
 
@@ -369,7 +368,7 @@ class Tm94xWriter(object):
         blocks.append(prolog)
 
         # :20:
-        trn = self.write_transaction_reference_number(
+        trn = self.write_transaction_reference_number_ming(
             doc.transaction_reference_number)
         blocks.append(trn)
 
