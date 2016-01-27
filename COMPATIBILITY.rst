@@ -2,6 +2,9 @@
 libmt94x compatibility
 ======================
 
+This file documents the compatibility testing we have done for our
+implementation, and known variations in the wild.
+
 
 MT940 MING dialect
 ==================
@@ -26,8 +29,8 @@ in the spec::
     :86:/NAME/ING BANK N.V.//BIC/INGBNL2A// SUM/1/0/15,00/0,/
 
 
-Testing against accounting software
------------------------------------
+Importing in accounting software
+--------------------------------
 
 ========== =============== ============
 Input file e-boekhouden.nl exact online
