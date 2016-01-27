@@ -2,7 +2,39 @@
 libmt94x
 ====================
 
-This library generates bank statements in MT940/MT942 format
+This library generates bank statements in MT940/MT942 format (for now we only
+implement MT940, although the difference between the two is not great.
+
+
+Concepts
+========
+
+A TM940 `document` is a file the represents a bank statement for a single
+account between a start date and an end date. The document is built up of
+`fields`, where a field has the format:
+
+    :01:<item1>/<item2>/<item3>/
+
+Here, `01` is the *tag* of the field, which uniquely identifies the format and
+content of the field. These fields are modeled in `fields.py`. The tag is
+followed by items delimited with slashes. The items permitted for each field
+are defined in the field definition, and items have a type and a maximum
+length. A field may span multiple lines.
+
+The document opens with things like the bank account number and the opening
+balance.
+
+The bulk of the document is the `entries` section, which contains all the
+transactions that occurred between the two dates. Each `entry` is typically
+composed of:
+
+* a statement line (contains the 
+* information to account owner
+
+The document is terminated with multiple closing balances and a summary line
+that shows the number of transactions in the document, and totals for credit
+and debit entries.
+
 
 Release versioning
 ==================
