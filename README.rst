@@ -104,6 +104,7 @@ to the spec, so there is some uncertainty involved.
 Implementation
 ==============
 
+
 Components
 ----------
 
@@ -158,6 +159,16 @@ Writer
 The writer knows how to write fields and documents. It does this through the
 ``Serializer``. In the case of variations in the output format (``ming`` vs
 ``ibp``), the writer is the ultimate authority on what must be written.
+
+
+Tests
+-----
+
+Unit tests are provided for each component and whenever we model a new field or
+subfield (or a new dialect), tests need to be added.
+
+Tests also provide the most accurate documentation on how the APIs are intended
+to be used.
 
 
 Release versioning
