@@ -27,14 +27,14 @@ class Tm94xSerializer(object):
     rx_chars = re.compile(
         '^' +
         '(?:' +
-        '|'.join([re.escape(c) for c in swift_charset_chars]) + 
+        '|'.join([re.escape(c) for c in swift_charset_chars]) +
         ')*' +
         '$'
     )
     rx_nums = re.compile(
         '^' +
         '(?:' +
-        '|'.join([re.escape(c) for c in swift_charset_numbers]) + 
+        '|'.join([re.escape(c) for c in swift_charset_numbers]) +
         ')*' +
         '$'
     )
@@ -59,7 +59,7 @@ class Tm94xSerializer(object):
         return self.TYPE_NUMERIC
 
 
-    ## "Immediate" API
+    # "Immediate" API
 
     def serialize_value(self, type, maxlen, value):
         # Even if the value represents a number it could have leading zeros, so
@@ -104,7 +104,7 @@ class Tm94xSerializer(object):
         return value.strftime(format)
 
 
-    ## Chaining API
+    # Chaining API
 
     def start(self):
         self._buffer = []

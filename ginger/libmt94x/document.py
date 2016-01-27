@@ -18,8 +18,7 @@ class Tm940Document(object):
                  closing_balance=None,
                  closing_available_balance=None,
                  forward_available_balances=None,
-                 info_to_acct_owner_totals=None,
-                ):
+                 info_to_acct_owner_totals=None):
 
         # TODO: clarify & enforce the type here
         entries = entries or []

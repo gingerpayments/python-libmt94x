@@ -12,6 +12,7 @@ def break_at_width(text, width=65, newline='\r\n'):
     block = ''.join(lines)
     return block
 
+
 def format_amount(amount, locale):
     if locale == 'nl_NL':
         bytes = b'%.2f' % amount

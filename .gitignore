@@ -1,9 +1,11 @@
+.coverage
 *.egg-info/
 *.pyc
 .env
 /bin/
 /build/
 /dist/
+/htmlcov/
 /include/
 /lib/
 /local/

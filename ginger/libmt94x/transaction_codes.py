@@ -1,6 +1,7 @@
 class InvalidIngTransactionCodeError(Exception):
     pass
 
+
 class InvalidSwiftTransactionCodeError(Exception):
     pass
 

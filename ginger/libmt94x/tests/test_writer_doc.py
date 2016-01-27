@@ -20,7 +20,6 @@ from ginger.libmt94x.info_acct_owner_subfields import CreditorID
 from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
 from ginger.libmt94x.info_acct_owner_subfields import MandateReference
 from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
-from ginger.libmt94x.info_acct_owner_subfields import PurposeCode
 from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
 from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
 from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
