@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
@@ -20,7 +22,7 @@ class Tm940Document(object):
                  forward_available_balances=None,
                  info_to_acct_owner_totals=None):
 
-        # TODO: clarify & enforce the type here
+        # entries: { statement_line -> [ info_to_acct_owner] }
         entries = entries or []
         forward_available_balances = forward_available_balances or []
 
@@ -43,6 +45,19 @@ class Tm940Document(object):
             raise ValueError(
                 "Value `opening_balance` must be "
                 "an instance of OpeningBalance")
+
+        # NOTE: We say OrderedDict, not just dict, otherwise the order of the
+        # entries in the document is undefined
+        if not isinstance(entries, OrderedDict):
+            raise ValueError(
+                "Value `entries` must be "
+                "an OrderedDict whose values are lists")
+        # Here we just probe the first value
+        # We could make this less strict and just require that it be an iterable
+        if not isinstance(entries.values()[0], list):
+            raise ValueError(
+                "Value `entries` must be "
+                "an OrderedDict whose values are lists")
 
         if not isinstance(closing_balance, ClosingBalance):
             raise ValueError(
