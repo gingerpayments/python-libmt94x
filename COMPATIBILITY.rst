@@ -6,13 +6,12 @@ libmt94x compatibility
 MT940 MING dialect
 ==================
 
-1. ming-from-spec.txt
-2. ing-provided-example-single-message.txt
-3. ing-provided-example-multiple-messages.txt
+Examples we have:
 
-(1) is the document included in the spec ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
-(2) is an example document provided by ING (one message per file)
-(3) is an example document provided by ING (multiple messages per file)
+1. ``ming-from-spec.txt``. This is the document included in the spec ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
+2. ``ing-provided-example-single-message.txt`` is an example document provided by ING (one message per file)
+3. ``ing-provided-example-multiple-messages.txt`` is an example document provided by ING (multiple messages per file)
+
 
 Variations between (1) and (2)/(3)
 ----------------------------------
@@ -25,6 +24,7 @@ The info to account owner summary field contains items ``NAME`` and ``BIC`` not 
 in the spec::
 
     :86:/NAME/ING BANK N.V.//BIC/INGBNL2A// SUM/1/0/15,00/0,/
+
 
 Testing against accounting software
 -----------------------------------
