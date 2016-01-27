@@ -74,7 +74,7 @@ class Tm94xWriter(object):
     def write_closing_available_balance(self, cab):
         record = (self.ser
             .start()
-            .chars(5, b':%s:' % cab.tag)
+            .chars(4, b':%s:' % cab.tag)
             .chars(1, b'C' if cab.type == cab.TYPE_CREDIT else b'D')
             .date_yymmdd(cab.date)
             .chars(3, cab.currency)
@@ -100,7 +100,7 @@ class Tm94xWriter(object):
     def write_forward_available_balance(self, fab):
         record = (self.ser
             .start()
-            .chars(5, b':%s:' % fab.tag)
+            .chars(4, b':%s:' % fab.tag)
             .chars(1, b'C' if fab.type == fab.TYPE_CREDIT else b'D')
             .date_yymmdd(fab.date)
             .chars(3, fab.currency)
@@ -231,6 +231,17 @@ class Tm94xWriter(object):
         )
         return record
 
+    def write_transaction_reference_number_ibp(self, trn):
+        record = (self.ser
+            .start()
+            .chars(4, b':%s:' % trn.tag)
+            .chars(16, b'ING')
+            .newline()
+            .finish()
+        )
+        return record
+
+    # TODO: add _ming suffix
     def write_transaction_reference_number(self, trn):
         record = (self.ser
             .start()
@@ -243,11 +254,26 @@ class Tm94xWriter(object):
 
     # Prolog and Epilog
 
+    def write_prolog_ibp(self):
+        block = (self.ser
+            .start()
+            .chars(6, b'940 00')
+            .newline()
+            .finish())
+        return block
+
     def write_prolog_ming(self):
         block = (self.ser
             .start()
             .chars(3, b'{4:')
             .newline()
+            .finish())
+        return block
+
+    def write_epilog_ibp(self):
+        block = (self.ser
+            .start()
+            .chars(4, b'-XXX')
             .finish())
         return block
 
@@ -278,6 +304,55 @@ class Tm94xWriter(object):
 
     # Document
 
+    def write_document_ibp(self, doc):
+        block = []
+
+        # 940 00
+        prolog = self.write_prolog_ibp()
+        blocks.append(prolog)
+
+        # :20:
+        trn = self.write_transaction_reference_number(
+            doc.transaction_reference_number)
+        blocks.append(trn)
+
+        # :25:
+        ai = self.write_account_identification(doc.account_identification)
+        blocks.append(ai)
+
+        # :28C:
+        sn = self.write_statement_number(doc.statement_number)
+        blocks.append(sn)
+
+        # :60F:
+        ob = self.write_opening_balance(doc.opening_balance)
+        blocks.append(ob)
+
+        # TODO: entries
+
+        # :62F:
+        cb = self.write_closing_balance(doc.closing_balance)
+        blocks.append(cb)
+
+        # :64:
+        cab = self.write_closing_available_balance(doc.closing_available_balance)
+        blocks.append(cab)
+
+        # :65:
+        for forward_available_balance in doc.forward_available_balances:
+            fab = self.write_forward_available_balance(forward_available_balance)
+            blocks.append(fab)
+
+        # :86:
+        # TODO
+
+        # -XXX
+        epilog = self.write_epilog_ibp()
+        blocks.append(epilog)
+
+        block = ''.join(blocks)
+        return block
+
     def write_document_ming(self, doc):
         blocks = []
 
@@ -302,7 +377,7 @@ class Tm94xWriter(object):
         ai = self.write_account_identification(doc.account_identification)
         blocks.append(ai)
 
-        # :28:
+        # :28C:
         sn = self.write_statement_number(doc.statement_number)
         blocks.append(sn)
 

@@ -187,5 +187,5 @@ class StatementNumber(Field):
 class TransactionReferenceNumber(Field):
     tag = '20'
 
-    def __init__(self, transaction_reference_number):
+    def __init__(self, transaction_reference_number=None):
         self.transaction_reference_number = transaction_reference_number

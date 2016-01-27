@@ -87,8 +87,12 @@ class Tm94xSerializer(object):
         if builtin_type(amount) != Decimal:
             raise ValueError("Must pass a Decimal")
 
-        # FIXME: Decimal representation is currency and locale specific
-        bytes = format_amount(amount, self.locale)
+        # A zero amount has a special representation as 'C'
+        if amount == Decimal('0'):
+            bytes = 'C'
+        else:
+            # FIXME: Decimal representation is currency and locale specific
+            bytes = format_amount(amount, self.locale)
 
         # Now that we know how long the formatted bytestring is we can check
         # against maxlen

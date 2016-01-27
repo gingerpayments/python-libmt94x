@@ -41,7 +41,7 @@ class Tm94xWriterTests(TestCase):
             'EUR',
             Decimal('564.35'),
         )
-        bytes = self.writer.write_opening_balance(ob)
+        bytes = self.writer.write_closing_available_balance(ob)
         self.assertEquals(bytes, b':64:C140220EUR564,35\r\n')
 
     def test_closing_balance(self):
@@ -51,7 +51,7 @@ class Tm94xWriterTests(TestCase):
             'EUR',
             Decimal('564.35'),
         )
-        bytes = self.writer.write_opening_balance(ob)
+        bytes = self.writer.write_closing_balance(ob)
         self.assertEquals(bytes, b':62F:C140220EUR564,35\r\n')
 
     def test_forward_available_balance(self):
@@ -61,7 +61,7 @@ class Tm94xWriterTests(TestCase):
             'EUR',
             Decimal('564.35'),
         )
-        bytes = self.writer.write_opening_balance(ob)
+        bytes = self.writer.write_forward_available_balance(ob)
         self.assertEquals(bytes, b':65:C140224EUR564,35\r\n')
 
     def test_information_to_account_owner_ming(self):
@@ -118,6 +118,16 @@ class Tm94xWriterTests(TestCase):
         )
         bytes = self.writer.write_opening_balance(ob)
         self.assertEquals(bytes, b':60F:C140219EUR662,23\r\n')
+
+    def test_opening_balance_zero(self):
+        ob = OpeningBalance(
+            OpeningBalance.TYPE_CREDIT,
+            datetime(2014, 2, 19),
+            'EUR',
+            Decimal('0.00'),
+        )
+        bytes = self.writer.write_opening_balance(ob)
+        self.assertEquals(bytes, b':60F:C140219EURC\r\n')
 
     def test_statement_line_ibp(self):
         # FIXME: Supply realistic data
