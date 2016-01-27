@@ -2,6 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubField
+from ginger.libmt94x.statement_line_subfields import OriginalAmountOfTransaction
 from ginger.libmt94x.transaction_codes import IngTransactionCodes
 from ginger.libmt94x.transaction_codes import SwiftTransactionCodes
 
@@ -57,6 +58,8 @@ class ClosingBalance(AbstractBalance):
 
 
 class ExportInformation(Field):
+    '''This is part of the IBP header'''
+
     def __init__(self, export_address, export_number, export_time=None, export_day=None):
         self.export_address = export_address
         self.export_number = export_number
@@ -69,6 +72,8 @@ class ForwardAvailableBalance(AbstractBalance):
 
 
 class ImportInformation(Field):
+    '''This is part of the IBP header'''
+
     def __init__(self, import_address, import_number, import_time=None, import_day=None):
         self.import_address = import_address
         self.import_number = import_number
@@ -134,7 +139,8 @@ class StatementLine(Field):
                  book_date=None,
                  ing_transaction_code=None,
                  transaction_reference=None,
-                 account_servicing_institutions_reference=None):
+                 account_servicing_institutions_reference=None,
+                 original_amount_of_transaction=None):
         '''
         EN/NL terms from specs:
         - value_date - Valutadatum
@@ -153,10 +159,8 @@ class StatementLine(Field):
 
         Only IBP:
         - account_servicing_institutions_reference
+        - original_amount_of_transaction
         '''
-
-        # TODO: Check that the right fields are set when writing this out in a
-        # concrete format
 
         if not builtin_type(value_date) == datetime:
             raise ValueError("The `value_date` value must be a datetime")
@@ -181,16 +185,22 @@ class StatementLine(Field):
                 raise ValueError(
                     "Value `ing_transaction_code` is invalid: %s" % ing_transaction_code)
 
+        if (original_amount_of_transaction is not None and
+            not builtin_type(original_amount_of_transaction) == OriginalAmountOfTransaction):
+            raise ValueError("The `original_amount_of_transaction` value must "
+                             "be an instance of OriginalAmountOfTransaction")
+
         self.value_date = value_date
         self.type = type
         self.amount = amount
         self.transaction_code = transaction_code
         self.reference_for_account_owner = reference_for_account_owner
-        self.supplementary_details = supplementary_details
+        self.supplementary_details = supplementary_details  # not actually used
         self.book_date = book_date
         self.ing_transaction_code = ing_transaction_code
         self.transaction_reference = transaction_reference
         self.account_servicing_institutions_reference = account_servicing_institutions_reference
+        self.original_amount_of_transaction = original_amount_of_transaction
 
 
 class StatementNumber(Field):

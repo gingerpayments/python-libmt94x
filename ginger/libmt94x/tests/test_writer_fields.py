@@ -20,6 +20,7 @@ from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
 from ginger.libmt94x.info_acct_owner_subfields import MandateReference
 from ginger.libmt94x.info_acct_owner_subfields import PurposeCode
 from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
+from ginger.libmt94x.statement_line_subfields import OriginalAmountOfTransaction
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
 from ginger.libmt94x.serializer import Tm94xSerializer
 from ginger.libmt94x.writer import Tm94xWriter
@@ -167,7 +168,6 @@ class Tm94xWriterTests(TestCase):
     # StatementLine
 
     def test_statement_line_ibp(self):
-        # FIXME: Supply realistic data
         ob = StatementLine(
             value_date=datetime(2014, 2, 20),
             type=StatementLine.TYPE_CREDIT,
@@ -176,11 +176,29 @@ class Tm94xWriterTests(TestCase):
             reference_for_account_owner='EREF',
             account_servicing_institutions_reference='INGA00000XXXX',
             ing_transaction_code='00100',
+            original_amount_of_transaction=OriginalAmountOfTransaction(
+                currency='USD',
+                amount=Decimal('1234.50'),
+            ),
         )
         bytes = self.writer.write_statement_line_ibp(ob)
         self.assertEquals(
             bytes,
-            b':61:140220C1,56NTRFEREFINGA00000XXXX/TRCD/00100/\r\n'
+            b':61:140220C1,56NTRFEREFINGA00000XXXX/TRCD/00100//OCMT/USD1234,50/\r\n'
+        )
+
+    def test_statement_line_ibp_minimalist(self):
+        ob = StatementLine(
+            value_date=datetime(2013, 11, 04),
+            type=StatementLine.TYPE_DEBIT,
+            amount=Decimal('0.02'),
+            transaction_code='036',
+            reference_for_account_owner='EREF',
+        )
+        bytes = self.writer.write_statement_line_ibp(ob)
+        self.assertEquals(
+            bytes,
+            b':61:131104D0,02N036EREF\r\n',
         )
 
     def test_statement_line_ming(self):

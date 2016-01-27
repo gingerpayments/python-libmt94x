@@ -13,10 +13,12 @@ from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
 from ginger.libmt94x.remittance_info import IsoStructuredRemittanceInfo
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
 from ginger.libmt94x.textutil import break_at_width
+from ginger.libmt94x.textutil import format_amount
 
 
 class Tm94xWriter(object):
     def __init__(self, serializer):
+        # TODO: just use the full name
         self.ser = serializer
 
 
@@ -186,6 +188,18 @@ class Tm94xWriter(object):
         return record
 
     def write_statement_line_ibp(self, sl):
+        supplementary_details = b''
+        if sl.ing_transaction_code:
+            supplementary_details = b'/TRCD/%s/' % sl.ing_transaction_code
+            if sl.original_amount_of_transaction:
+                amount = format_amount(sl.original_amount_of_transaction.amount,
+                                    self.ser.locale)
+                supplementary_details = b'%s/OCMT/%s%s/' % (
+                    supplementary_details,
+                    sl.original_amount_of_transaction.currency,
+                    amount,
+                )
+
         record = (self.ser
             .start()
             .chars(4, b':%s:' % sl.tag)
@@ -194,10 +208,10 @@ class Tm94xWriter(object):
             .amount(15, None, sl.amount)
             .chars(4, b'N%s' % sl.transaction_code)
             .chars(16, sl.reference_for_account_owner or b'NONREF')
-            .chars(16, sl.account_servicing_institutions_reference)  # FIXME: optional
+            .chars(16, (sl.account_servicing_institutions_reference
+                        if sl.account_servicing_institutions_reference else ''))
             # Supplementary Details
-            .chars(34, b'/TRCD/%s/' % sl.ing_transaction_code)
-            # FIXME: /OCMT/USD1234,50/
+            .chars(34, supplementary_details)
             .newline()
             .finish()
         )
