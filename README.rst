@@ -83,10 +83,22 @@ fields with the same tag.
 
 For a detailed description refer to the specification documents:
 
-* Mijn ING Zakelijk (dubbed ``ming``): ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
-* Inside Business Payments (dubbed ``ibp``): ``docs/spec-mt94x-inside-business-payments-aug-2015.pdf``
+* Mijn ING Zakelijk: ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
+* Inside Business Payments: ``docs/spec-mt94x-inside-business-payments-aug-2015.pdf``
 
 You can find example documents in ``ginger/libmt94x/tests/examples``.
+
+Dialects
+--------
+
+The story is complicated slightly by the fact that we have to handle two
+dialects of TM940:
+
+* Mijn ING Zakelijk (dubbed ``ming``)
+* Inside Business Payments (dubbed ``ibp``)
+
+Each is described in the spec, but not all example documents adhere exactly
+to the spec, so there is some uncertainty involved.
 
 
 Implementation
@@ -139,6 +151,13 @@ Document
 
 The class ``Tm940Document`` models an MT940 document and enforces which fields
 must be provided.
+
+Writer
+~~~~~~
+
+The writer knows how to write fields and documents. It does this through the
+``Serializer``. In the case of variations in the output format (``ming`` vs
+``ibp``), the writer is the ultimate authority on what must be written.
 
 
 Release versioning
