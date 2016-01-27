@@ -23,6 +23,8 @@ the field definition, and items have a type and a maximum length. A field does
 not exceed 65 characters, but may span multiple lines.  Lines are terminated
 with ``\r\n``.
 
+You can see example documents in ``ginger/libmt94x/tests/examples``.
+
 
 Document structure
 ------------------
