@@ -15,11 +15,12 @@ account between a *start date* and an *end date*. The document is built up of
 
     :01:<item1>/<item2>/<item3>/
 
-Here, ``01`` is the *tag* of the field, which uniquely identifies the format and
-content of the field. These fields are modeled in ``fields.py``. The tag is
+Here, ``01`` is the *tag* of the field, which uniquely identifies the format
+and content of the field. These fields are modeled in ``fields.py``. The tag is
 followed by items delimited with slashes. The items permitted for each field
 are defined in the field definition, and items have a type and a maximum
-length. A field may span multiple lines.
+length. A field does not exceed 65 characters, but may span multiple lines.
+Lines are terminated with ``\r\n``.
 
 The document opens with things like the bank account number and the opening
 balance.
@@ -38,11 +39,19 @@ composed of:
 
 * Information to account owner:
 
-  * 
+  * Return reason (if the transfer represents a return)
+  * Counter party id (account number, bic, name of the counter party)
+  * Purpose code (what does the transfer concern?)
+  * ...
 
 The document is terminated with multiple closing balances and a summary line
 that shows the number of transactions in the document, and totals for credit
 and debit entries.
+
+For a detailed description refer to the specification documents:
+
+* Mijn ING (dubbed ``ming``): ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
+* Inside Business Payments (dubbed ``ibp``): ``docs/spec-mt94x-inside-business-payments-aug-2015.pdf``
 
 
 Release versioning
