@@ -344,7 +344,7 @@ class Tm94xWriter(object):
     # Document
 
     def write_document_ibp(self, doc):
-        block = []
+        blocks = []
 
         # export info
         if doc.export_info is None:

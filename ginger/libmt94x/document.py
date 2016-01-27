@@ -3,7 +3,9 @@ from collections import OrderedDict
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
+from ginger.libmt94x.fields import ExportInformation
 from ginger.libmt94x.fields import ForwardAvailableBalance
+from ginger.libmt94x.fields import ImportInformation
 from ginger.libmt94x.fields import InformationToAccountOwnerTotals
 from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementNumber
