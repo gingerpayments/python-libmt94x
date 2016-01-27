@@ -126,13 +126,19 @@ the way it's defined in the spec::
 Fields
 ~~~~~~
 
-Fields are modeled as classes with each of their data items as attributes.
-Fields validate their input data where possible (dates must be ``datetime``
-objects, amount values must be ``Decimal`` objects, transaction codes are
-checked against a list of valid codes).
+Fields are modeled as classes derived from the abstract ``Field`` base, with
+each of their data items as attributes.  Fields validate their input data where
+possible (dates must be ``datetime`` objects, amount values must be ``Decimal``
+objects, transaction codes are checked against a list of valid codes).
 
 Note that fields do not contain information about the sizes of their data,
 this is handled by the ``Writer``.
+
+Document
+~~~~~~~~
+
+The class ``Tm940Document`` models an MT940 document and enforces which fields
+must be provided.
 
 
 Release versioning
