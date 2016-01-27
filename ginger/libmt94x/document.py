@@ -12,6 +12,8 @@ from ginger.libmt94x.fields import TransactionReferenceNumber
 
 class Tm940Document(object):
     def __init__(self,
+                 export_info=None,  # optional
+                 import_info=None,  # optional
                  transaction_reference_number=None,
                  account_identification=None,
                  statement_number=None,
@@ -25,6 +27,16 @@ class Tm940Document(object):
         # entries: { statement_line -> [ info_to_acct_owner] }
         entries = entries or []
         forward_available_balances = forward_available_balances or []
+
+        if export_info is not None and not isinstance(export_info, ExportInformation):
+            raise ValueError(
+                "Value `export_info` must be "
+                "an instance of ExportInformation")
+
+        if import_info is not None and not isinstance(import_info, ImportInformation):
+            raise ValueError(
+                "Value `import_info` must be "
+                "an instance of ImportInformation")
 
         if not isinstance(transaction_reference_number, TransactionReferenceNumber):
             raise ValueError(

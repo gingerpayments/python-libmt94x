@@ -333,10 +333,16 @@ class Tm94xWriter(object):
         block = []
 
         # export info
+        if doc.export_info is None:
+            raise ValueError("Document missing export_info")
+
         export = self.write_export_info_ibp(doc.export_info)
         blocks.append(export)
 
         # import info
+        if doc.import_info is None:
+            raise ValueError("Document missing import_info")
+
         import_ = self.write_import_info_ibp(doc.import_info)
         blocks.append(import_)
 
