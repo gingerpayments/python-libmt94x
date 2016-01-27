@@ -3,14 +3,14 @@ libmt94x
 ====================
 
 This library generates bank statements in MT940/MT942 format (for now we only
-implement MT940, although the difference between the two is not great.
+implement MT940, although the difference between the two is not major).
 
 
 Concepts
 ========
 
-A TM940 `document` is a file the represents a bank statement for a single
-account between a start date and an end date. The document is built up of
+A TM940 ``document`` is a file the represents a bank statement for a single
+account between a *start date* and an *end date*. The document is built up of
 `fields`, where a field has the format:
 
     :01:<item1>/<item2>/<item3>/
