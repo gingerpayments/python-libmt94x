@@ -110,23 +110,6 @@ class Tm94xWriter(object):
         )
         return record
 
-    def write_information_to_account_owner_totals_ibp(self, info):
-        record = (self.ser
-            .start()
-            .chars(5, b':%s:' % info.tag)
-            .chars(1, b'D')
-            .num(6, b'%s' % info.num_debit)
-            .chars(1, b'C')
-            .num(6, b'%s' % info.num_credit)
-            .chars(1, b'D')
-            .amount(15, None, info.amount_debit)
-            .chars(1, b'C')
-            .amount(15, None, info.amount_credit)
-            .newline()
-            .finish()
-        )
-        return record
-
     def write_information_to_account_owner_ming(self, info):
         # Write out the tag
         (self.ser
@@ -152,6 +135,23 @@ class Tm94xWriter(object):
         # Break lines at character 65
         record = break_at_width(record, width=65, newline='\r\n')
 
+        return record
+
+    def write_information_to_account_owner_totals_ibp(self, info):
+        record = (self.ser
+            .start()
+            .chars(5, b':%s:' % info.tag)
+            .chars(1, b'D')
+            .num(6, b'%s' % info.num_debit, leading_zero=True)
+            .chars(1, b'C')
+            .num(6, b'%s' % info.num_credit, leading_zero=True)
+            .chars(1, b'D')
+            .amount(15, None, info.amount_debit)
+            .chars(1, b'C')
+            .amount(15, None, info.amount_credit)
+            .newline()
+            .finish()
+        )
         return record
 
     def write_information_to_account_owner_totals_ming(self, info):
@@ -343,7 +343,9 @@ class Tm94xWriter(object):
             blocks.append(fab)
 
         # :86:
-        # TODO
+        info_tot = self.write_information_to_account_owner_totals_ibp(
+            doc.info_to_acct_owner_totals)
+        blocks.append(info_tot)
 
         # -XXX
         epilog = self.write_epilog_ibp()

@@ -97,7 +97,7 @@ class Tm94xWriterTests(TestCase):
             Decimal('36.58'),
         )
         bytes = self.writer.write_information_to_account_owner_totals_ibp(info)
-        self.assertEquals(bytes, b':86:D4C4D134,46C36,58\r\n')
+        self.assertEquals(bytes, b':86:D000004C000004D134,46C36,58\r\n')
 
     def test_information_to_account_owner_totals_ming(self):
         info = InformationToAccountOwnerTotals(
