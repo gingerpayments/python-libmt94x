@@ -10,8 +10,9 @@ Concepts
 ========
 
 A TM940 ``document`` is a file the represents a bank statement for a single
-account between a *start date* and an *end date*. The document is built up of
-``fields``, where a field has the format:
+account between a *start date* and an *end date* (the dates themselves are not
+stored in the document). The document is built up of ``fields``, where a field
+has the format:
 
     :01:<item1>/<item2>/<item3>/
 
