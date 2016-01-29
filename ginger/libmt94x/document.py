@@ -95,6 +95,8 @@ class Tm940Document(object):
                 "Value `info_to_acct_owner_totals` must be "
                 "an instance of InformationToAccountOwnerTotals")
 
+        self.export_info = export_info
+        self.import_info = import_info
         self.transaction_reference_number = transaction_reference_number
         self.account_identification = account_identification
         self.statement_number = statement_number

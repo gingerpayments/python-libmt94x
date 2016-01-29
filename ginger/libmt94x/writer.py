@@ -422,7 +422,13 @@ class Tm94xWriter(object):
         ob = self.write_opening_balance(doc.opening_balance)
         blocks.append(ob)
 
-        # TODO: entries
+        # entries: :61: & :86:
+        for statement_line, infos in doc.entries.items():
+            sl = self.write_statement_line_ibp(statement_line)
+            blocks.append(sl)
+            for info in infos:
+                inf = self.write_information_to_account_owner_ibp(info)
+                blocks.append(inf)
 
         # :62F:
         cb = self.write_closing_balance(doc.closing_balance)

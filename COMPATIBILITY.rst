@@ -12,8 +12,8 @@ MT940 MING dialect
 Examples we have:
 
 1. ``ming-from-spec.txt``. This is the document included in the spec ``docs/spec-mt940-mijn-ing-zakelijk-aug-2014.pdf``
-2. ``ing-provided-example-single-message.txt`` is an example document provided by ING (one message per file)
-3. ``ing-provided-example-multiple-messages.txt`` is an example document provided by ING (multiple messages per file)
+2. ``ming-ing-provided-example-single-message.txt`` is an example document provided by ING (one message per file)
+3. ``ming-ing-provided-example-multiple-messages.txt`` is an example document provided by ING (multiple messages per file)
 
 
 Variations between (1) and (2)/(3)
@@ -35,7 +35,9 @@ Importing in accounting software
 ========== =============== ==============
 Input file e-boekhouden.nl exactonline.nl
 ========== =============== ==============
-    (1)        OK               OK
-    (2)        OK               OK
-    (3)        OK               OK
+    (1)        OK*              OK*
+    (2)        OK*              OK*
+    (3)        OK*              OK*
 ========== =============== ==============
+
+* Tested on Jan 27, 2016
