@@ -174,7 +174,7 @@ class Tm94xWriterTests(TestCase):
 
         # Load spec file
         fp_spec = os.path.join(
-            os.path.dirname(__file__), 'examples', 'ibp-ing-provided-example.txt')
+            os.path.dirname(__file__), 'examples', 'ibp-unstructured-ing-provided-example.txt')
         with open(fp_spec, 'rb+') as f:
             expected = f.read()
 

@@ -50,7 +50,7 @@ MT940 IBP dialect
 
 Examples we have:
 
-1. ``ibp-ing-provided-example.txt`` is an example document provided by ING
+1. ``ibp-unstructured-ing-provided-example.txt`` is an example unstructured document provided by ING
 
 
 Importing in accounting software
