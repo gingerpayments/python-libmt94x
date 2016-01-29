@@ -6,6 +6,7 @@ This file documents the compatibility testing we have done for our
 implementation, and known variations in the wild.
 
 
+
 MT940 MING dialect
 ==================
 
@@ -41,3 +42,24 @@ Input file e-boekhouden.nl exactonline.nl
 ========== =============== ==============
 
 * Tested on Jan 27, 2016
+
+
+
+MT940 IBP dialect
+=================
+
+Examples we have:
+
+1. ``ibp-ing-provided-example.txt`` is an example document provided by ING
+
+
+Importing in accounting software
+--------------------------------
+
+========== =============== ==============
+Input file e-boekhouden.nl exactonline.nl
+========== =============== ==============
+    (1)        OK*              OK*
+========== =============== ==============
+
+* Tested on Jan 29, 2016
