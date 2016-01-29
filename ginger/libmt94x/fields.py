@@ -84,7 +84,17 @@ class ImportInformation(Field):
 class InformationToAccountOwner(Field):
     tag = '86'
 
-    def __init__(self, code_words):
+    def __init__(self, code_words=None, free_form_text=None):
+        '''The parameters `code_words` and `free_form_text` are exclusively,
+        meaning the content of this field is either structured (code_words) or
+        unstructured.  The unstructured form is commonly used in the IBP
+        dialect.'''
+
+        if all((code_words, free_form_text)):
+            raise ValueError("Only one of `code_words` or `free_form_text` may be provided")
+
+        code_words = code_words or []
+
         for code_word in code_words:
             if not isinstance(code_word, InfoToAcccountOwnerSubField):
                 raise ValueError(
@@ -92,6 +102,7 @@ class InformationToAccountOwner(Field):
                     "instances of InfoToAcccountOwnerSubField")
 
         self.code_words = code_words
+        self.free_form_text = free_form_text
 
         # Build dictionary mapping the class -> code_word
         by_class = {}

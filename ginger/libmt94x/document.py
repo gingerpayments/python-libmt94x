@@ -72,6 +72,7 @@ class Tm940Document(object):
             raise ValueError(
                 "Value `entries` must be "
                 "an OrderedDict whose values are lists")
+        # TODO: type check fully here, including list elements
 
         if not isinstance(closing_balance, ClosingBalance):
             raise ValueError(

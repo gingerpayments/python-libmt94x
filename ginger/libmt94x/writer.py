@@ -111,7 +111,37 @@ class Tm94xWriter(object):
         )
         return record
 
+    def write_information_to_account_owner_ibp(self, info):
+        maxlen = 6 * 65
+
+        # Write out the tag
+        (self.serializer
+            .start()
+            .chars(5, b':%s:' % info.tag))
+
+        # TODO: Write out all the subfields
+
+        # Write out the free form text (note that this excludes subfields above)
+        if info.free_form_text:
+            self.serializer.chars(maxlen, info.free_form_text)
+
+        # Terminate the record
+        record = (self.serializer
+            .newline()
+            .finish())
+
+        # Check max length
+        if len(record) > maxlen:
+            raise ValueError("Record exceeds maximum length: %s" % maxlen)
+
+        # Break lines at character 65
+        record = break_at_width(record, width=65, newline='\r\n')
+
+        return record
+
     def write_information_to_account_owner_ming(self, info):
+        maxlen = 6 * 65
+
         # Write out the tag
         (self.serializer
             .start()
@@ -123,13 +153,16 @@ class Tm94xWriter(object):
             if code_word is not None:
                 self._write_code_word(self.serializer, code_word)
 
+        # Write out the free form text (note that this excludes subfields above)
+        if info.free_form_text:
+            self.serializer.chars(maxlen, info.free_form_text)
+
         # Terminate the record
         record = (self.serializer
             .newline()
             .finish())
 
         # Check max length
-        maxlen = 6 * 65
         if len(record) > maxlen:
             raise ValueError("Record exceeds maximum length: %s" % maxlen)
 

@@ -86,6 +86,32 @@ class Tm94xWriterTests(TestCase):
 
     # InformationToAccountOwner
 
+    def test_information_to_account_owner_ibp_both_types(self):
+        # Cannot pass both code_words and free_form_text
+        with self.assertRaises(ValueError):
+            InformationToAccountOwner(
+                code_words=[
+                    EndToEndReference('500411584454'),
+                ],
+                free_form_text=b'a',
+            )
+
+    def test_information_to_account_owner_ibp_unstructured(self):
+        info = InformationToAccountOwner(
+            free_form_text=(
+                b'NL20INGB0002222222 INGBNL2A Creditor Name 11 E2ENA0101b4ULT241020'
+                b'13T1100xxxx1xxx 2062542165530231 ULTCREDNM08 SECT01014 ULTDEBTNM0'
+                b'4 SECT01014'
+            )
+        )
+        bytes = self.writer.write_information_to_account_owner_ibp(info)
+        expected = (
+            b':86:NL20INGB0002222222 INGBNL2A Creditor Name 11 E2ENA0101b4ULT24\r\n'
+            b'102013T1100xxxx1xxx 2062542165530231 ULTCREDNM08 SECT01014 ULTDEB\r\n'
+            b'TNM04 SECT01014\r\n'
+        )
+        self.assertEquals(bytes, expected)
+
     def test_information_to_account_owner_ming(self):
         info = InformationToAccountOwner(
             code_words=[
