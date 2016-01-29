@@ -106,6 +106,24 @@ Each is described in the spec, but not all example documents adhere exactly
 to the spec, so there is some uncertainty involved.
 
 
+
+Implementation assumptions
+==========================
+
+* We only implement MT940, not MT942. MT940 is used to generate "final" bank
+  statements, whereas MT942 is used to obtain tentative bank statements - these
+  are much less useful to us.
+* We do not implement the Consolidated Statement, because this is an aggregate
+  statement for all the transactions, whereas we want to export all the
+  transactions one by one.
+* The IBP spec mentions two formats: pre-autumn 2014 (legacy) and post-autumn
+  2014 (current). We do not care about the legacy format.
+* The library does not perform any semantic support, it only implements a data
+  format. This means totals for transactions are not checked, nor inferred.
+  Whatever data you provide will be written - the library just enforces that
+  the output format is correct.
+
+
 Implementation
 ==============
 
