@@ -6,6 +6,7 @@ from ginger.libmt94x.fields import ClosingBalance
 from ginger.libmt94x.fields import ExportInformation
 from ginger.libmt94x.fields import ForwardAvailableBalance
 from ginger.libmt94x.fields import ImportInformation
+from ginger.libmt94x.fields import InformationToAccountOwner
 from ginger.libmt94x.fields import InformationToAccountOwnerTotals
 from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementNumber
@@ -65,14 +66,20 @@ class Tm940Document(object):
         if not isinstance(entries, OrderedDict):
             raise ValueError(
                 "Value `entries` must be "
-                "an OrderedDict whose values are lists")
-        # Here we just probe the first value
-        # We could make this less strict and just require that it be an iterable
-        if not isinstance(entries.values()[0], list):
-            raise ValueError(
-                "Value `entries` must be "
-                "an OrderedDict whose values are lists")
-        # TODO: type check fully here, including list elements
+                "an OrderedDict whose values are lists of "
+                "InformationToAccountOwnerTotals")
+        for infos in entries.values():
+            if not isinstance(infos, list):
+                raise ValueError(
+                    "Value `entries` must be "
+                    "an OrderedDict whose values are lists of "
+                    "InformationToAccountOwnerTotals")
+            for info in infos:
+                if not isinstance(info, InformationToAccountOwner):
+                    raise ValueError(
+                        "Value `entries` must be "
+                        "an OrderedDict whose values are lists of "
+                        "InformationToAccountOwnerTotals")
 
         if not isinstance(closing_balance, ClosingBalance):
             raise ValueError(
