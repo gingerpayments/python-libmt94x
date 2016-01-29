@@ -17,15 +17,6 @@ from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementLine
 from ginger.libmt94x.fields import StatementNumber
 from ginger.libmt94x.fields import TransactionReferenceNumber
-from ginger.libmt94x.info_acct_owner_subfields import CounterPartyID
-from ginger.libmt94x.info_acct_owner_subfields import CreditorID
-from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
-from ginger.libmt94x.info_acct_owner_subfields import MandateReference
-from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
-from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
-from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
-from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
-from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
 from ginger.libmt94x.serializer import Tm94xSerializer
 from ginger.libmt94x.writer import Tm94xWriter
 
