@@ -106,9 +106,9 @@ class Tm94xWriterTests(TestCase):
         )
         bytes = self.writer.write_information_to_account_owner_ibp(info)
         expected = (
-            b':86:NL20INGB0002222222 INGBNL2A Creditor Name 11 E2ENA0101b4ULT24\r\n'
-            b'102013T1100xxxx1xxx 2062542165530231 ULTCREDNM08 SECT01014 ULTDEB\r\n'
-            b'TNM04 SECT01014\r\n'
+            b':86:NL20INGB0002222222 INGBNL2A Creditor Name 11 E2ENA0101b4ULT241020\r\n'
+            b'13T1100xxxx1xxx 2062542165530231 ULTCREDNM08 SECT01014 ULTDEBTNM0\r\n'
+            b'4 SECT01014\r\n'
         )
         self.assertEquals(bytes, expected)
 

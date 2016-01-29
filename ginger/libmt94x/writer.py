@@ -116,8 +116,7 @@ class Tm94xWriter(object):
 
         # Write out the tag
         (self.serializer
-            .start()
-            .chars(5, b':%s:' % info.tag))
+            .start())
 
         # TODO: Write out all the subfields
 
@@ -125,17 +124,27 @@ class Tm94xWriter(object):
         if info.free_form_text:
             self.serializer.chars(maxlen, info.free_form_text)
 
-        # Terminate the record
-        record = (self.serializer
+        # Terminate the value
+        info_part = (self.serializer
             .newline()
             .finish())
 
-        # Check max length
-        if len(record) > maxlen:
+        # Check max length (note that this applies to the info part only, not
+        # the whole record)
+        if len(info_part) > maxlen:
             raise ValueError("Record exceeds maximum length: %s" % maxlen)
 
         # Break lines at character 65
-        record = break_at_width(record, width=65, newline='\r\n')
+        info_part = break_at_width(info_part, width=65, newline='\r\n')
+
+        # Write out the tag
+        tag_part = (self.serializer
+            .start()
+            .chars(5, b':%s:' % info.tag)
+            .finish())
+
+        # Concat tag and info part
+        record = b'%s%s' % (tag_part, info_part)
 
         return record
 
