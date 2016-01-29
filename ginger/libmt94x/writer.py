@@ -18,8 +18,7 @@ from ginger.libmt94x.textutil import format_amount
 
 class Tm94xWriter(object):
     def __init__(self, serializer):
-        # TODO: just use the full name
-        self.ser = serializer
+        self.serializer = serializer
 
 
     def _write_code_word(self, serializer, code_word):
@@ -64,7 +63,7 @@ class Tm94xWriter(object):
     # Fields
 
     def write_account_identification(self, ai):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % ai.tag)
             .chars(35, b'%s%s' % (ai.iban, ai.iso_currency_code))
@@ -74,7 +73,7 @@ class Tm94xWriter(object):
         return record
 
     def write_closing_available_balance(self, cab):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % cab.tag)
             .chars(1, b'C' if cab.type == cab.TYPE_CREDIT else b'D')
@@ -87,7 +86,7 @@ class Tm94xWriter(object):
         return record
 
     def write_closing_balance(self, cb):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(5, b':%s:' % cb.tag)
             .chars(1, b'C' if cb.type == cb.TYPE_CREDIT else b'D')
@@ -100,7 +99,7 @@ class Tm94xWriter(object):
         return record
 
     def write_forward_available_balance(self, fab):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % fab.tag)
             .chars(1, b'C' if fab.type == fab.TYPE_CREDIT else b'D')
@@ -114,7 +113,7 @@ class Tm94xWriter(object):
 
     def write_information_to_account_owner_ming(self, info):
         # Write out the tag
-        (self.ser
+        (self.serializer
             .start()
             .chars(5, b':%s:' % info.tag))
 
@@ -122,10 +121,10 @@ class Tm94xWriter(object):
         for code_word_cls in InfoToAcccountOwnerSubFieldOrder.get_field_classes():
             code_word = info.get_code_word_by_cls(code_word_cls)
             if code_word is not None:
-                self._write_code_word(self.ser, code_word)
+                self._write_code_word(self.serializer, code_word)
 
         # Terminate the record
-        record = (self.ser
+        record = (self.serializer
             .newline()
             .finish())
 
@@ -140,7 +139,7 @@ class Tm94xWriter(object):
         return record
 
     def write_information_to_account_owner_totals_ibp(self, info):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(5, b':%s:' % info.tag)
             .chars(1, b'D')
@@ -157,7 +156,7 @@ class Tm94xWriter(object):
         return record
 
     def write_information_to_account_owner_totals_ming(self, info):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(5, b':%s:' % info.tag)
             .chars(5, b'/SUM/')
@@ -175,7 +174,7 @@ class Tm94xWriter(object):
         return record
 
     def write_opening_balance(self, ob):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(5, b':%s:' % ob.tag)
             .chars(1, b'C' if ob.type == ob.TYPE_CREDIT else b'D')
@@ -193,14 +192,14 @@ class Tm94xWriter(object):
             supplementary_details = b'/TRCD/%s/' % sl.ing_transaction_code
             if sl.original_amount_of_transaction:
                 amount = format_amount(sl.original_amount_of_transaction.amount,
-                                    self.ser.locale)
+                                       self.serializer.locale)
                 supplementary_details = b'%s/OCMT/%s%s/' % (
                     supplementary_details,
                     sl.original_amount_of_transaction.currency,
                     amount,
                 )
 
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % sl.tag)
             .date_yymmdd(sl.value_date)
@@ -218,7 +217,7 @@ class Tm94xWriter(object):
         return record
 
     def write_statement_line_ming(self, sl):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % sl.tag)
             .date_yymmdd(sl.value_date)
@@ -236,7 +235,7 @@ class Tm94xWriter(object):
         return record
 
     def write_statement_number(self, sn):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(5, b':%s:' % sn.tag)
             .num(5, sn.statement_number)
@@ -246,7 +245,7 @@ class Tm94xWriter(object):
         return record
 
     def write_transaction_reference_number_ibp(self, trn):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % trn.tag)
             .chars(16, b'ING')
@@ -256,7 +255,7 @@ class Tm94xWriter(object):
         return record
 
     def write_transaction_reference_number_ming(self, trn):
-        record = (self.ser
+        record = (self.serializer
             .start()
             .chars(4, b':%s:' % trn.tag)
             .chars(16, trn.transaction_reference_number)
@@ -268,7 +267,7 @@ class Tm94xWriter(object):
     # Prolog and Epilog
 
     def write_message_information_ibp(self):
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(6, b'940 00')
             .newline()
@@ -276,7 +275,7 @@ class Tm94xWriter(object):
         return block
 
     def write_prolog_ming(self):
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(3, b'{4:')
             .newline()
@@ -284,14 +283,14 @@ class Tm94xWriter(object):
         return block
 
     def write_epilog_ibp(self):
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(4, b'-XXX')
             .finish())
         return block
 
     def write_epilog_ming(self):
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(2, b'-}')
             .finish())
@@ -299,7 +298,7 @@ class Tm94xWriter(object):
 
     def write_export_info_ibp(self, info):
         # Some of these values are constants
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(4, b'0000')
             .chars(1, b' ')
@@ -312,7 +311,7 @@ class Tm94xWriter(object):
 
     def write_export_info_ming(self):
         # NOTE: This appears to be a constant value
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(29, b'{1:F01INGBNL2ABXXX0000000000}')
             .newline()
@@ -321,7 +320,7 @@ class Tm94xWriter(object):
 
     def write_import_info_ibp(self, info):
         # Some of these values are constants
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(4, b'0000')
             .chars(1, b' ')
@@ -334,7 +333,7 @@ class Tm94xWriter(object):
 
     def write_import_info_ming(self):
         # NOTE: This appears to be a constant value
-        block = (self.ser
+        block = (self.serializer
             .start()
             .chars(20, b'{2:I940INGBNL2AXXXN}')
             .newline()
