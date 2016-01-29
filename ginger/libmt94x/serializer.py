@@ -61,7 +61,7 @@ class Tm94xSerializer(object):
 
     # "Immediate" API
 
-    def serialize_value(self, type, maxlen, value):
+    def serialize_value(self, type, maxlen, value, leading_zeroes=0):
         # Even if the value represents a number it could have leading zeros, so
         # we manipulate it as a bytestring
         if builtin_type(value) != bytes:
@@ -77,6 +77,9 @@ class Tm94xSerializer(object):
         if type == self.TYPE_NUMERIC and not self.rx_nums.match(value):
             raise ValueError("Numeric value can only contain the bytes: %s"
                              % self.swift_charset_numbers)
+
+        if type == self.TYPE_NUMERIC and leading_zeroes:
+            value = value.zfill(leading_zeroes)
 
         return value
 
@@ -127,8 +130,9 @@ class Tm94xSerializer(object):
         self._buffer.append(bytes)
         return self
 
-    def num(self, maxlen, value):
-        bytes = self.serialize_value(self.TYPE_NUMERIC, maxlen, value)
+    def num(self, maxlen, value, leading_zero=False):
+        bytes = self.serialize_value(self.TYPE_NUMERIC, maxlen, value,
+                                     leading_zeroes=maxlen if leading_zero else False)
         self._buffer.append(bytes)
         return self
 

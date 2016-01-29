@@ -3,7 +3,10 @@ from collections import OrderedDict
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
+from ginger.libmt94x.fields import ExportInformation
 from ginger.libmt94x.fields import ForwardAvailableBalance
+from ginger.libmt94x.fields import ImportInformation
+from ginger.libmt94x.fields import InformationToAccountOwner
 from ginger.libmt94x.fields import InformationToAccountOwnerTotals
 from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementNumber
@@ -12,6 +15,8 @@ from ginger.libmt94x.fields import TransactionReferenceNumber
 
 class Tm940Document(object):
     def __init__(self,
+                 export_info=None,  # optional
+                 import_info=None,  # optional
                  transaction_reference_number=None,
                  account_identification=None,
                  statement_number=None,
@@ -25,6 +30,16 @@ class Tm940Document(object):
         # entries: { statement_line -> [ info_to_acct_owner] }
         entries = entries or []
         forward_available_balances = forward_available_balances or []
+
+        if export_info is not None and not isinstance(export_info, ExportInformation):
+            raise ValueError(
+                "Value `export_info` must be "
+                "an instance of ExportInformation")
+
+        if import_info is not None and not isinstance(import_info, ImportInformation):
+            raise ValueError(
+                "Value `import_info` must be "
+                "an instance of ImportInformation")
 
         if not isinstance(transaction_reference_number, TransactionReferenceNumber):
             raise ValueError(
@@ -51,13 +66,20 @@ class Tm940Document(object):
         if not isinstance(entries, OrderedDict):
             raise ValueError(
                 "Value `entries` must be "
-                "an OrderedDict whose values are lists")
-        # Here we just probe the first value
-        # We could make this less strict and just require that it be an iterable
-        if not isinstance(entries.values()[0], list):
-            raise ValueError(
-                "Value `entries` must be "
-                "an OrderedDict whose values are lists")
+                "an OrderedDict whose values are lists of "
+                "InformationToAccountOwnerTotals")
+        for infos in entries.values():
+            if not isinstance(infos, list):
+                raise ValueError(
+                    "Value `entries` must be "
+                    "an OrderedDict whose values are lists of "
+                    "InformationToAccountOwnerTotals")
+            for info in infos:
+                if not isinstance(info, InformationToAccountOwner):
+                    raise ValueError(
+                        "Value `entries` must be "
+                        "an OrderedDict whose values are lists of "
+                        "InformationToAccountOwnerTotals")
 
         if not isinstance(closing_balance, ClosingBalance):
             raise ValueError(
@@ -80,6 +102,8 @@ class Tm940Document(object):
                 "Value `info_to_acct_owner_totals` must be "
                 "an instance of InformationToAccountOwnerTotals")
 
+        self.export_info = export_info
+        self.import_info = import_info
         self.transaction_reference_number = transaction_reference_number
         self.account_identification = account_identification
         self.statement_number = statement_number

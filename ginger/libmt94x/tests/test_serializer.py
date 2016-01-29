@@ -49,6 +49,11 @@ class Tm94xSerializerTests(TestCase):
         val = self.ser.serialize_value(self.ser.type_num, len(value_range), value_range)
         self.assertEquals(val, value_range)
 
+    def test_number_charset_leading_zeroes(self):
+        value = b'123'
+        val = self.ser.serialize_value(self.ser.type_num, 6, value, leading_zeroes=6)
+        self.assertEquals(val, '000123')
+
     def test_number_charset_outside_range(self):
         # Decimal point not allowed
         with self.assertRaises(ValueError):

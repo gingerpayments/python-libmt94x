@@ -33,7 +33,7 @@ coverage report -m
 coverage xml
 
 # Performs PEP8, pyflakes and other checks
-flake8 ginger --max-line-length=120 --ignore=E124,E128,E303,F403
+flake8 ginger --max-line-length=120 --ignore=E124,E128,E129,E303,F403
 
 # Coverage-less testing (not used anymore)
 #nosetests --with-xunit --nologcapture --nocapture $@
