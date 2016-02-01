@@ -1,13 +1,22 @@
 from unittest import TestCase
 
+from ginger.libmt94x.info_acct_owner_subfields import BeneficiaryParty
+from ginger.libmt94x.info_acct_owner_subfields import BusinessPurpose
+from ginger.libmt94x.info_acct_owner_subfields import Charges
+from ginger.libmt94x.info_acct_owner_subfields import ClientReference
 from ginger.libmt94x.info_acct_owner_subfields import CounterPartyID
+from ginger.libmt94x.info_acct_owner_subfields import CounterPartyIdentification
 from ginger.libmt94x.info_acct_owner_subfields import CreditorID
 from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
+from ginger.libmt94x.info_acct_owner_subfields import ExchangeRate
+from ginger.libmt94x.info_acct_owner_subfields import InstructionID
 from ginger.libmt94x.info_acct_owner_subfields import MandateReference
+from ginger.libmt94x.info_acct_owner_subfields import OrderingParty
 from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
 from ginger.libmt94x.info_acct_owner_subfields import PurposeCode
 from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
 from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
+from ginger.libmt94x.info_acct_owner_subfields import UltimateBeneficiary
 from ginger.libmt94x.info_acct_owner_subfields import UltimateCreditor
 from ginger.libmt94x.info_acct_owner_subfields import UltimateDebtor
 from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
@@ -22,7 +31,75 @@ class Tm94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
         self.serializer = Tm94xSerializer()
         self.writer = Tm94xWriter(self.serializer)
 
-    # Counter party tests
+    # Beneficiary party tests
+
+    def test_beneficiary_party(self):
+        benm = BeneficiaryParty(
+            account_number='NL12COBA0733959555',
+            bic='COBANL2XXXX',
+            name='T-Mobile Netherlands BV',
+            city='AMSTERDAM',
+        )
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, benm)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(
+            bytes,
+            b'/BENM/NL12COBA0733959555/COBANL2XXXX/T-Mobile Netherlands BV/AMSTERDAM/',
+        )
+
+    # Business purpose tests
+
+    def test_business_purpose(self):
+        busp = BusinessPurpose(
+            id_code='Europese Incasso',
+            sepa_transaction_type='eenmalig',
+        )
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, busp)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(
+            bytes,
+            b'/BUSP/Europese Incasso/eenmalig/'
+        )
+
+    # Charges tests
+
+    def test_charges(self):
+        chgs = Charges(
+            charges='5',  # we have no example data for this
+        )
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, chgs)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(
+            bytes,
+            b'/CHGS/5/'
+        )
+
+    # Client reference tests
+
+    def test_client_reference(self):
+        cref = ClientReference(
+            client_reference='IADS2342',  # we have no example data for this
+        )
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, cref)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(
+            bytes,
+            b'/CREF/IADS2342/'
+        )
+
+    # Counter party ID tests
 
     def test_counter_party_id(self):
         cntp = CounterPartyID(
@@ -105,6 +182,18 @@ class Tm94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
             b'/CNTP/NL12COBA0733959555/COBANL2XXXX/T-Mobile Netherlands BV//',
         )
 
+    # Counter party identification tests
+
+    def test_counter_party_identification(self):
+        # we have no example data for this
+        id = CounterPartyIdentification('IDA2341')
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, id)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(bytes, b'/ID/IDA2341/')
+
     # Creditor ID tests
 
     def test_creditor_id(self):
@@ -127,6 +216,30 @@ class Tm94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
 
         self.assertEquals(bytes, b'/EREF/500411584454/')
 
+    # Exchange rate tests
+
+    def test_exchange_rate(self):
+        # we have no example data for this
+        exch = ExchangeRate('4')
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, exch)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(bytes, b'/EXCH/4/')
+
+    # Instruction id tests
+
+    def test_instruction_id(self):
+        # we have no example data for this
+        iref = InstructionID('INS123')
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, iref)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(bytes, b'/IREF/INS123/')
+
     # MandateReference tests
 
     def test_mandate_reference(self):
@@ -137,6 +250,25 @@ class Tm94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
         bytes = self.serializer.finish()
 
         self.assertEquals(bytes, b'/MARF/1.15791632/')
+
+    # Ordering party tests
+
+    def test_ordering_party(self):
+        ordp = OrderingParty(
+            account_number='NL12COBA0733959555',
+            bic='COBANL2XXXX',
+            name='T-Mobile Netherlands BV',
+            city='AMSTERDAM',
+        )
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, ordp)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(
+            bytes,
+            b'/ORDP/NL12COBA0733959555/COBANL2XXXX/T-Mobile Netherlands BV/AMSTERDAM/',
+        )
 
     # PaymentInformationID tests
 
@@ -217,6 +349,17 @@ class Tm94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
         bytes = self.serializer.finish()
 
         self.assertEquals(bytes, b'/RTRN/MD04/')
+
+    # UltimateBeneficiary tests
+
+    def test_ultimate_beneficiary(self):
+        ultb = UltimateBeneficiary('George')
+
+        self.serializer.start()
+        self.writer._write_code_word(self.serializer, ultb)
+        bytes = self.serializer.finish()
+
+        self.assertEquals(bytes, b'/ULTB/George/')
 
     # UltimateCreditor tests
 

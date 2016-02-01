@@ -32,6 +32,13 @@ class Charges(InfoToAcccountOwnerSubField):
         self.charges = charges
 
 
+class ClientReference(InfoToAcccountOwnerSubField):
+    tag = 'CREF'
+
+    def __init__(self, client_reference):
+        self.client_reference = client_reference
+
+
 class CounterPartyID(InfoToAcccountOwnerSubField):
     '''NL term: Tegenpartij ID'''
 
@@ -49,13 +56,6 @@ class CounterPartyIdentification(InfoToAcccountOwnerSubField):
 
     def __init__(self, id_code):
         self.id_code = id_code
-
-
-class ClientReference(InfoToAcccountOwnerSubField):
-    tag = 'CREF'
-
-    def __init__(self, client_reference):
-        self.client_reference = client_reference
 
 
 class CreditorID(InfoToAcccountOwnerSubField):

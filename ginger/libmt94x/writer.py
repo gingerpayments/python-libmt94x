@@ -154,7 +154,7 @@ class Tm94xWriter(object):
         (self.serializer
             .start())
 
-        # Write out all the subfields
+        # Write out all the subfields (order is undefined)
         for code_word in info.code_words:
             self._write_code_word(self.serializer, code_word)
 
@@ -194,7 +194,7 @@ class Tm94xWriter(object):
             .start()
             .chars(5, b':%s:' % info.tag))
 
-        # Write out all the subfields
+        # Write out all the subfields (order is defined)
         for code_word_cls in InfoToAcccountOwnerSubFieldOrder.get_field_classes():
             code_word = info.get_code_word_by_cls(code_word_cls)
             if code_word is not None:
