@@ -28,7 +28,7 @@ from ginger.libmt94x.serializer import Tm94xSerializer
 from ginger.libmt94x.writer import Tm94xWriter
 
 
-class Tm94xWriterTests(TestCase):
+class Tm94xWriterMINGTests(TestCase):
     def setUp(self):
         self.serializer = Tm94xSerializer()
         self.writer = Tm94xWriter(self.serializer)
