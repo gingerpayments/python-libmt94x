@@ -5,6 +5,9 @@ libmt94x
 This library generates bank statements in MT940/MT942 format (for now we only
 implement MT940, although the difference between the two is not major).
 
+Note that this library is written based mostly on ING specifications, so it is
+(heavily) slanted towards ING usage of the MT940 format.
+
 
 Concepts
 ========
