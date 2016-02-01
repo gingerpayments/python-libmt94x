@@ -4,7 +4,7 @@ from decimal import Decimal
 from unittest import TestCase
 import os
 
-from ginger.libmt94x.document import Tm940Document
+from ginger.libmt94x.document import Mt940Document
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
@@ -26,14 +26,14 @@ from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
 from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
 from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
-from ginger.libmt94x.serializer import Tm94xSerializer
-from ginger.libmt94x.writer import Tm94xWriter
+from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger.libmt94x.writer import Mt94xWriter
 
 
-class Tm94xWriterIBPStructuredTests(TestCase):
+class Mt94xWriterIBPStructuredTests(TestCase):
     def setUp(self):
-        self.serializer = Tm94xSerializer()
-        self.writer = Tm94xWriter(self.serializer)
+        self.serializer = Mt94xSerializer()
+        self.writer = Mt94xWriter(self.serializer)
 
 
     def test_doc_ibp_structured_spec(self):
@@ -120,7 +120,7 @@ class Tm94xWriterIBPStructuredTests(TestCase):
             (line3, [info3]),
         ])
 
-        doc = Tm940Document(
+        doc = Mt940Document(
             export_info=ExportInformation(
                 export_address='INGBNL2AXXXX',
                 export_number='00001',

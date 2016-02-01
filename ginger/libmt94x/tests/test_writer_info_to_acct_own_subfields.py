@@ -22,14 +22,14 @@ from ginger.libmt94x.info_acct_owner_subfields import UltimateDebtor
 from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
 from ginger.libmt94x.remittance_info import IsoStructuredRemittanceInfo
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
-from ginger.libmt94x.serializer import Tm94xSerializer
-from ginger.libmt94x.writer import Tm94xWriter
+from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger.libmt94x.writer import Mt94xWriter
 
 
-class Tm94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
+class Mt94xWriterInfoToAcctOwnerSubfieldsTests(TestCase):
     def setUp(self):
-        self.serializer = Tm94xSerializer()
-        self.writer = Tm94xWriter(self.serializer)
+        self.serializer = Mt94xSerializer()
+        self.writer = Mt94xWriter(self.serializer)
 
     # Beneficiary party tests
 

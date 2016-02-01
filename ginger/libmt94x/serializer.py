@@ -10,7 +10,7 @@ from ginger.libmt94x.textutil import format_amount
 builtin_type = type
 
 
-class Tm94xSerializer(object):
+class Mt94xSerializer(object):
     TYPE_CHARACTER = 1
     TYPE_NUMERIC = 2
 

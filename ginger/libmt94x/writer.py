@@ -25,7 +25,7 @@ from ginger.libmt94x.textutil import break_at_width
 from ginger.libmt94x.textutil import format_amount
 
 
-class Tm94xWriter(object):
+class Mt94xWriter(object):
     def __init__(self, serializer):
         self.serializer = serializer
 

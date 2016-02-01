@@ -22,14 +22,14 @@ from ginger.libmt94x.info_acct_owner_subfields import PurposeCode
 from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
 from ginger.libmt94x.statement_line_subfields import OriginalAmountOfTransaction
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
-from ginger.libmt94x.serializer import Tm94xSerializer
-from ginger.libmt94x.writer import Tm94xWriter
+from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger.libmt94x.writer import Mt94xWriter
 
 
-class Tm94xWriterTests(TestCase):
+class Mt94xWriterTests(TestCase):
     def setUp(self):
-        self.serializer = Tm94xSerializer()
-        self.writer = Tm94xWriter(self.serializer)
+        self.serializer = Mt94xSerializer()
+        self.writer = Mt94xWriter(self.serializer)
 
     # AccountIdentification
 

@@ -4,7 +4,7 @@ from decimal import Decimal
 from unittest import TestCase
 import os
 
-from ginger.libmt94x.document import Tm940Document
+from ginger.libmt94x.document import Mt940Document
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
@@ -24,14 +24,14 @@ from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
 from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
 from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
 from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
-from ginger.libmt94x.serializer import Tm94xSerializer
-from ginger.libmt94x.writer import Tm94xWriter
+from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger.libmt94x.writer import Mt94xWriter
 
 
-class Tm94xWriterMINGTests(TestCase):
+class Mt94xWriterMINGTests(TestCase):
     def setUp(self):
-        self.serializer = Tm94xSerializer()
-        self.writer = Tm94xWriter(self.serializer)
+        self.serializer = Mt94xSerializer()
+        self.writer = Mt94xWriter(self.serializer)
 
 
     def test_doc_ming_spec(self):
@@ -250,7 +250,7 @@ class Tm94xWriterMINGTests(TestCase):
             (line8, [info8]),
         ])
 
-        doc = Tm940Document(
+        doc = Mt940Document(
             transaction_reference_number=TransactionReferenceNumber('P140220000000001'),
             account_identification=AccountIdentification('NL69INGB0123456789', 'EUR'),
             statement_number=StatementNumber('00000'),

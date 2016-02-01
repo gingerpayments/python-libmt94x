@@ -12,14 +12,14 @@ Note that this library is written based mostly on ING specifications, so it is
 Concepts
 ========
 
-A TM940 ``document`` is a file the represents a bank statement for a single
+A MT940 ``document`` is a file the represents a bank statement for a single
 account between a *start date* and an *end date* (the dates themselves are not
 stored in the document). The document is built up of ``fields``, where a field
 has the format:
 
     :01:<item1>/<item2>/<item3>/
 
-TM940 is a line-based format and each field begins on a new line. Here, ``01``
+MT940 is a line-based format and each field begins on a new line. Here, ``01``
 is the *tag* of the field, which uniquely identifies the format and content of
 the field. These fields are modeled in ``fields.py``. The tag is followed by
 items delimited with slashes. The items permitted for each field are defined in
@@ -100,7 +100,7 @@ Dialects
 --------
 
 The story is complicated slightly by the fact that we have to handle two
-dialects of TM940:
+dialects of MT940:
 
 * Mijn ING Zakelijk (dubbed ``ming``)
 * Inside Business Payments (dubbed ``ibp``)
@@ -176,7 +176,7 @@ this is handled by the ``Writer``.
 Document
 ~~~~~~~~
 
-The class ``Tm940Document`` models an MT940 document and enforces which fields
+The class ``Mt940Document`` models an MT940 document and enforces which fields
 must be provided.
 
 Writer

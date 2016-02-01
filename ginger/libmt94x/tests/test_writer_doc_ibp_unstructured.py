@@ -4,7 +4,7 @@ from decimal import Decimal
 from unittest import TestCase
 import os
 
-from ginger.libmt94x.document import Tm940Document
+from ginger.libmt94x.document import Mt940Document
 from ginger.libmt94x.fields import AccountIdentification
 from ginger.libmt94x.fields import ClosingAvailableBalance
 from ginger.libmt94x.fields import ClosingBalance
@@ -17,14 +17,14 @@ from ginger.libmt94x.fields import OpeningBalance
 from ginger.libmt94x.fields import StatementLine
 from ginger.libmt94x.fields import StatementNumber
 from ginger.libmt94x.fields import TransactionReferenceNumber
-from ginger.libmt94x.serializer import Tm94xSerializer
-from ginger.libmt94x.writer import Tm94xWriter
+from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger.libmt94x.writer import Mt94xWriter
 
 
-class Tm94xWriterIBPUnstructuredTests(TestCase):
+class Mt94xWriterIBPUnstructuredTests(TestCase):
     def setUp(self):
-        self.serializer = Tm94xSerializer()
-        self.writer = Tm94xWriter(self.serializer)
+        self.serializer = Mt94xSerializer()
+        self.writer = Mt94xWriter(self.serializer)
 
 
     def test_doc_ibp_unstructured_spec(self):
@@ -114,7 +114,7 @@ class Tm94xWriterIBPUnstructuredTests(TestCase):
             (line5, [info5]),
         ])
 
-        doc = Tm940Document(
+        doc = Mt940Document(
             export_info=ExportInformation(
                 export_address='INGBNL2AXXXX',
                 export_number='00001',

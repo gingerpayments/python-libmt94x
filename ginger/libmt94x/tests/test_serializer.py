@@ -2,12 +2,12 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import TestCase
 
-from ginger.libmt94x.serializer import Tm94xSerializer
+from ginger.libmt94x.serializer import Mt94xSerializer
 
 
-class Tm94xSerializerTests(TestCase):
+class Mt94xSerializerTests(TestCase):
     def setUp(self):
-        self.ser = Tm94xSerializer()
+        self.ser = Mt94xSerializer()
 
     # Character tests
 
