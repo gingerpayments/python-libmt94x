@@ -51,6 +51,20 @@ MT940 IBP dialect
 Examples we have:
 
 1. ``ibp-unstructured-ing-provided-example.txt`` is an example unstructured document provided by ING
+2. ``ibp-structured-ing-provided-example.txt`` is an example structured document provided by ING
+3. ``ibp-structured-ing-provided-example-edited.txt`` is an edited version (2)
+
+
+Variations between (2) and (3)
+------------------------------
+
+The provided example contains unstructured REMI fields::
+
+    /REMI///EV1551551REP180112T1544/
+
+This is a pre-autumn 2014 format and has been edited to the current::
+
+    /REMI/USTD//EV1551551REP180112T1544/
 
 
 Importing in accounting software
@@ -60,6 +74,9 @@ Importing in accounting software
 Input file e-boekhouden.nl exactonline.nl
 ========== =============== ==============
     (1)        OK*              OK*
+    (2)        OK+              OK+
+    (3)        OK+              OK+
 ========== =============== ==============
 
 * Tested on Jan 29, 2016
++ Tested on Feb 1, 2016

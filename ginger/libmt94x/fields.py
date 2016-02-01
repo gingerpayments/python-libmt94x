@@ -44,7 +44,7 @@ class AbstractBalance(Field):
 class AccountIdentification(Field):
     tag = '25'
 
-    def __init__(self, iban, iso_currency_code):
+    def __init__(self, iban, iso_currency_code=None):
         self.iban = iban
         self.iso_currency_code = iso_currency_code
 
