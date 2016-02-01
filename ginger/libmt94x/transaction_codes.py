@@ -237,6 +237,11 @@ class IngTransactionCodes(AbstractTransactionCodes):
         '09900': 'Rectification',
         '09901': 'Rectification Value date',
         '09902': 'Rectification Cost/Charges',
+
+        # legacy codes
+        'SALA': 'Salary Payments',
+        'INTC': 'Intracompany Payments',
+        'TREA': 'Treasury Payments',
     }
 
     def code_is_valid(self, code):
