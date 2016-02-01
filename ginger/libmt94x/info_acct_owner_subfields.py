@@ -7,14 +7,22 @@ class InfoToAcccountOwnerSubField(object):
     pass
 
 
+class BeneficiaryParty(InfoToAcccountOwnerSubField):
+    tag = 'BENM'
 
-# NOTE: Sub fields from the IBP spec marked as deprecated (not implemented here):
-# - BUSP - BusinessPurpose
-# - BENM - BeneficiaryParty
-# - ORDP - OrderingParty
-# - ID - CounterPartyIdentification
-# - ULTB - UltimateBeneficiary
-# - ULTD - UltimateDebtor (though we implemented this already based on the MING spec)
+    def __init__(self, account_number=None, bic=None, name=None, city=None):
+        self.account_number = account_number
+        self.bic = bic
+        self.name = name
+        self.city = city
+
+
+class BusinessPurpose(InfoToAcccountOwnerSubField):
+    tag = 'BUSP'
+
+    def __init__(self, id_code=None, sepa_transaction_type=None):
+        self.id_code = id_code
+        self.sepa_transaction_type = sepa_transaction_type
 
 
 class Charges(InfoToAcccountOwnerSubField):
@@ -34,6 +42,13 @@ class CounterPartyID(InfoToAcccountOwnerSubField):
         self.bic = bic
         self.name = name
         self.city = city
+
+
+class CounterPartyIdentification(InfoToAcccountOwnerSubField):
+    tag = 'ID'
+
+    def __init__(self, id_code):
+        self.id_code = id_code
 
 
 class ClientReference(InfoToAcccountOwnerSubField):
@@ -82,6 +97,16 @@ class MandateReference(InfoToAcccountOwnerSubField):
 
     def __init__(self, mandate_reference):
         self.mandate_reference = mandate_reference
+
+
+class OrderingParty(InfoToAcccountOwnerSubField):
+    tag = 'ORDP'
+
+    def __init__(self, account_number=None, bic=None, name=None, city=None):
+        self.account_number = account_number
+        self.bic = bic
+        self.name = name
+        self.city = city
 
 
 class PaymentInformationID(InfoToAcccountOwnerSubField):
@@ -144,6 +169,13 @@ class ReturnReason(InfoToAcccountOwnerSubField):
         self.reason_code = reason_code
 
 
+class UltimateBeneficiary(InfoToAcccountOwnerSubField):
+    tag = 'ULTB'
+
+    def __init__(self, name):
+        self.name = name
+
+
 class UltimateCreditor(InfoToAcccountOwnerSubField):
     '''NL term: Uiteindelijke incassant'''
 
@@ -168,6 +200,7 @@ class InfoToAcccountOwnerSubFieldOrder(object):
     # This is the order in which the fields must be written
     fields = (
         ReturnReason,
+        BusinessPurpose,
         ClientReference,
         EndToEndReference,
         PaymentInformationID,
@@ -175,8 +208,12 @@ class InfoToAcccountOwnerSubFieldOrder(object):
         MandateReference,
         CreditorID,
         CounterPartyID,
+        BeneficiaryParty,
+        OrderingParty,
         RemittanceInformation,
+        CounterPartyIdentification,
         PurposeCode,
+        UltimateBeneficiary,
         UltimateCreditor,
         UltimateDebtor,
         ExchangeRate,

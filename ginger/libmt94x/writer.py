@@ -1,12 +1,21 @@
+from ginger.libmt94x.info_acct_owner_subfields import BeneficiaryParty
+from ginger.libmt94x.info_acct_owner_subfields import BusinessPurpose
+from ginger.libmt94x.info_acct_owner_subfields import Charges
+from ginger.libmt94x.info_acct_owner_subfields import ClientReference
 from ginger.libmt94x.info_acct_owner_subfields import CounterPartyID
+from ginger.libmt94x.info_acct_owner_subfields import CounterPartyIdentification
 from ginger.libmt94x.info_acct_owner_subfields import CreditorID
 from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
+from ginger.libmt94x.info_acct_owner_subfields import ExchangeRate
+from ginger.libmt94x.info_acct_owner_subfields import InstructionID
 from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubFieldOrder
 from ginger.libmt94x.info_acct_owner_subfields import MandateReference
+from ginger.libmt94x.info_acct_owner_subfields import OrderingParty
 from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
 from ginger.libmt94x.info_acct_owner_subfields import PurposeCode
 from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
 from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
+from ginger.libmt94x.info_acct_owner_subfields import UltimateBeneficiary
 from ginger.libmt94x.info_acct_owner_subfields import UltimateCreditor
 from ginger.libmt94x.info_acct_owner_subfields import UltimateDebtor
 from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
@@ -24,21 +33,45 @@ class Tm94xWriter(object):
     def _write_code_word(self, serializer, code_word):
         serializer.chars(5, b'/%s' % code_word.tag)
 
-        if isinstance(code_word, ReturnReason):
-            serializer.chars(5, b'/%s' % code_word.reason_code)
-        elif isinstance(code_word, EndToEndReference):
-            serializer.chars(35, b'/%s' % code_word.end_to_end_reference)
-        elif isinstance(code_word, PaymentInformationID):
-            serializer.chars(35, b'/%s' % code_word.payment_information_id)
-        elif isinstance(code_word, MandateReference):
-            serializer.chars(35, b'/%s' % code_word.mandate_reference)
-        elif isinstance(code_word, CreditorID):
-            serializer.chars(35, b'/%s' % code_word.creditor_id)
+        if isinstance(code_word, BeneficiaryParty):
+            serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
+            serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
+            serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
+            serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
+        elif isinstance(code_word, BusinessPurpose):
+            serializer.chars(35, b'/%s/%s' % ((code_word.id_code if code_word.id_code else ''),
+                                              (code_word.sepa_transaction_type if
+                                               code_word.sepa_transaction_type else '')))
+        elif isinstance(code_word, Charges):
+            serializer.chars(15, b'/%s' % code_word.charges)
+        elif isinstance(code_word, ClientReference):
+            serializer.chars(35, b'/%s' % code_word.client_reference)
         elif isinstance(code_word, CounterPartyID):
             serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
             serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
             serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
             serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
+        elif isinstance(code_word, CounterPartyIdentification):
+            serializer.chars(35, b'/%s' % code_word.id_code)
+        elif isinstance(code_word, CreditorID):
+            serializer.chars(35, b'/%s' % code_word.creditor_id)
+        elif isinstance(code_word, EndToEndReference):
+            serializer.chars(35, b'/%s' % code_word.end_to_end_reference)
+        elif isinstance(code_word, ExchangeRate):
+            serializer.chars(12, b'/%s' % code_word.exchange_rate)
+        elif isinstance(code_word, InstructionID):
+            serializer.chars(35, b'/%s' % code_word.instruction_id)
+        elif isinstance(code_word, MandateReference):
+            serializer.chars(35, b'/%s' % code_word.mandate_reference)
+        elif isinstance(code_word, OrderingParty):
+            serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
+            serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
+            serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
+            serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
+        elif isinstance(code_word, PaymentInformationID):
+            serializer.chars(35, b'/%s' % code_word.payment_information_id)
+        elif isinstance(code_word, PurposeCode):
+            serializer.chars(5, b'/%s' % code_word.purpose_of_collection)
         elif isinstance(code_word, RemittanceInformation):
             if isinstance(code_word.remittance_info, UnstructuredRemittanceInfo):
                 serializer.chars(256, b'/USTD//%s'
@@ -49,8 +82,10 @@ class Tm94xWriter(object):
             if isinstance(code_word.remittance_info, IsoStructuredRemittanceInfo):
                 serializer.chars(256, b'/STRD/ISO/%s'
                                  % code_word.remittance_info.iso_reference)
-        elif isinstance(code_word, PurposeCode):
-            serializer.chars(5, b'/%s' % code_word.purpose_of_collection)
+        elif isinstance(code_word, ReturnReason):
+            serializer.chars(5, b'/%s' % code_word.reason_code)
+        elif isinstance(code_word, UltimateBeneficiary):
+            serializer.chars(35, b'/%s' % code_word.name)
         elif isinstance(code_word, UltimateCreditor):
             serializer.chars(71, b'/%s' % (code_word.name if code_word.name else ''))
             serializer.chars(36, b'/%s' % (code_word.id if code_word.id else ''))
@@ -66,7 +101,8 @@ class Tm94xWriter(object):
         record = (self.serializer
             .start()
             .chars(4, b':%s:' % ai.tag)
-            .chars(35, b'%s%s' % (ai.iban, ai.iso_currency_code))
+            .chars(35, b'%s%s' % (ai.iban, (ai.iso_currency_code if
+                                            ai.iso_currency_code else '')))
             .newline()
             .finish()
         )
@@ -118,7 +154,9 @@ class Tm94xWriter(object):
         (self.serializer
             .start())
 
-        # TODO: Write out all the subfields
+        # Write out all the subfields
+        for code_word in info.code_words:
+            self._write_code_word(self.serializer, code_word)
 
         # Write out the free form text (note that this excludes subfields above)
         if info.free_form_text:
