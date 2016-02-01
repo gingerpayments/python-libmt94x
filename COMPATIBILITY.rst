@@ -54,7 +54,7 @@ Examples we have:
 
 1. ``ibp-unstructured-ing-provided-example.txt`` is an example unstructured document provided by ING
 2. ``ibp-structured-ing-provided-example.txt`` is an example structured document provided by ING
-3. ``ibp-structured-ing-provided-example-edited.txt`` is an edited version (2)
+3. ``ibp-structured-ing-provided-example-edited.txt`` is an edited version of (2)
 
 We implement (1) and (3).
 
