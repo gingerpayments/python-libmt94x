@@ -16,6 +16,8 @@ Examples we have:
 2. ``ming-ing-provided-example-single-message.txt`` is an example document provided by ING (one message per file)
 3. ``ming-ing-provided-example-multiple-messages.txt`` is an example document provided by ING (multiple messages per file)
 
+We implement (1).
+
 
 Variations between (1) and (2)/(3)
 ----------------------------------
@@ -53,6 +55,8 @@ Examples we have:
 1. ``ibp-unstructured-ing-provided-example.txt`` is an example unstructured document provided by ING
 2. ``ibp-structured-ing-provided-example.txt`` is an example structured document provided by ING
 3. ``ibp-structured-ing-provided-example-edited.txt`` is an edited version (2)
+
+We implement (1) and (3).
 
 
 Variations between (2) and (3)
