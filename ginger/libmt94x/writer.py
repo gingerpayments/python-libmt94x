@@ -29,7 +29,6 @@ class Mt94xWriter(object):
     def __init__(self, serializer):
         self.serializer = serializer
 
-
     def _write_code_word(self, serializer, code_word):
         serializer.chars(5, b'/%s' % code_word.tag)
 
