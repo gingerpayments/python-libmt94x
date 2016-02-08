@@ -28,10 +28,10 @@ class AbstractBalance(Field):
             raise ValueError(
                 "The `type` value must be TYPE_CREDIT or TYPE_DEBIT")
 
-        if not builtin_type(date) == datetime:
+        if not builtin_type(date) is datetime:
             raise ValueError("The `date` value must be a datetime")
 
-        if not builtin_type(amount) == Decimal:
+        if not builtin_type(amount) is Decimal:
             raise ValueError("The `amount` value must be a Decimal")
 
         self.type = type
@@ -118,10 +118,16 @@ class InformationToAccountOwnerTotals(Field):
     tag = '86'
 
     def __init__(self, num_debit, num_credit, amount_debit, amount_credit):
-        if not builtin_type(amount_debit) == Decimal:
+        if not builtin_type(num_debit) is int:
+            raise ValueError("The `num_debit` value must be an int")
+
+        if not builtin_type(num_credit) is int:
+            raise ValueError("The `num_credit` value must be an int")
+
+        if not builtin_type(amount_debit) is Decimal:
             raise ValueError("The `amount_debit` value must be a Decimal")
 
-        if not builtin_type(amount_credit) == Decimal:
+        if not builtin_type(amount_credit) is Decimal:
             raise ValueError("The `amount_credit` value must be a Decimal")
 
         self.num_debit = num_debit
@@ -173,16 +179,16 @@ class StatementLine(Field):
         - original_amount_of_transaction
         '''
 
-        if not builtin_type(value_date) == datetime:
+        if not builtin_type(value_date) is datetime:
             raise ValueError("The `value_date` value must be a datetime")
 
-        if book_date is not None and not builtin_type(book_date) == datetime:
+        if book_date is not None and not builtin_type(book_date) is datetime:
             raise ValueError("The `book_date` value must be a datetime")
 
         if type not in (self.TYPE_CREDIT, self.TYPE_DEBIT):
             raise ValueError("The `type` value must be TYPE_CREDIT or TYPE_DEBIT")
 
-        if not builtin_type(amount) == Decimal:
+        if not builtin_type(amount) is Decimal:
             raise ValueError("The `amount` value must be a Decimal")
 
         swift_transaction_codes = SwiftTransactionCodes.get_instance()
@@ -197,7 +203,7 @@ class StatementLine(Field):
                     "Value `ing_transaction_code` is invalid: %s" % ing_transaction_code)
 
         if (original_amount_of_transaction is not None and
-            not builtin_type(original_amount_of_transaction) == OriginalAmountOfTransaction):
+            not builtin_type(original_amount_of_transaction) is OriginalAmountOfTransaction):
             raise ValueError("The `original_amount_of_transaction` value must "
                              "be an instance of OriginalAmountOfTransaction")
 

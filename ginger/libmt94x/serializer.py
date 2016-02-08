@@ -64,7 +64,7 @@ class Mt94xSerializer(object):
     def serialize_value(self, type, maxlen, value, leading_zeroes=0):
         # Even if the value represents a number it could have leading zeros, so
         # we manipulate it as a bytestring
-        if builtin_type(value) != bytes:
+        if builtin_type(value) is not bytes:
             raise ValueError("Must pass a bytestring")
 
         if len(value) > maxlen:
@@ -87,7 +87,7 @@ class Mt94xSerializer(object):
         return b'\r\n'
 
     def serialize_amount(self, maxlen, currency, amount):
-        if builtin_type(amount) != Decimal:
+        if builtin_type(amount) is not Decimal:
             raise ValueError("Must pass a Decimal")
 
         # FIXME: Decimal representation is currency and locale specific
@@ -101,7 +101,7 @@ class Mt94xSerializer(object):
         return bytes
 
     def serialize_date(self, format, value):
-        if builtin_type(value) != datetime:
+        if builtin_type(value) is not datetime:
             raise ValueError("Must pass a datetime")
 
         return value.strftime(format)
