@@ -85,7 +85,7 @@ class InformationToAccountOwner(Field):
     tag = '86'
 
     def __init__(self, code_words=None, free_form_text=None):
-        '''The parameters `code_words` and `free_form_text` are exclusively,
+        '''The parameters `code_words` and `free_form_text` are exclusive,
         meaning the content of this field is either structured (code_words) or
         unstructured.  The unstructured form is commonly used in the IBP
         dialect.'''
