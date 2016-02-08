@@ -1,6 +1,8 @@
+from decimal import Decimal
 from unittest import TestCase
 
 from ginger.libmt94x.textutil import break_at_width
+from ginger.libmt94x.textutil import format_amount
 
 
 class TextUtilTests(TestCase):
@@ -18,3 +20,11 @@ class TextUtilTests(TestCase):
 
         block = break_at_width(line, width=65, newline='\r\n')
         self.assertEquals(block, expected)
+
+    def test_format_amount_nl(self):
+        rv = format_amount(Decimal('1.23'), locale='nl_NL')
+        self.assertEquals('1,23', rv)
+
+    def test_format_amount_fr(self):
+        with self.assertRaises(NotImplementedError):
+            format_amount(Decimal('1.23'), locale='fr_FR')
