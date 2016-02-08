@@ -1,1 +1,1 @@
-# TODO: Pin your dependencies here
+pycountry==1.*  # provides currency codes

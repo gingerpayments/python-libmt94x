@@ -1,6 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
+from ginger.libmt94x.currency_codes import CurrencyCodes
 from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubField
 from ginger.libmt94x.statement_line_subfields import OriginalAmountOfTransaction
 from ginger.libmt94x.transaction_codes import IngTransactionCodes
@@ -31,6 +32,10 @@ class AbstractBalance(Field):
         if not builtin_type(date) is datetime:
             raise ValueError("The `date` value must be a datetime")
 
+        currency_codes = CurrencyCodes.get_instance()
+        if not currency_codes.code_is_valid(currency):
+            raise ValueError("Value `currency` is invalid: %s" % currency)
+
         if not builtin_type(amount) is Decimal:
             raise ValueError("The `amount` value must be a Decimal")
 
@@ -45,6 +50,12 @@ class AccountIdentification(Field):
     tag = '25'
 
     def __init__(self, iban, iso_currency_code=None):
+        currency_codes = CurrencyCodes.get_instance()
+        if (iso_currency_code is not None and
+            not currency_codes.code_is_valid(iso_currency_code)):
+            raise ValueError(
+                "Value `iso_currency_code` is invalid: %s" % iso_currency_code)
+
         self.iban = iban
         self.iso_currency_code = iso_currency_code
 
