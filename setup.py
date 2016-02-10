@@ -13,6 +13,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
+        'pycountry==1.*',
     ],
     extras_require={
         'test': [
