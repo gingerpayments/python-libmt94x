@@ -28,7 +28,7 @@ class Mt940Document(object):
                  info_to_acct_owner_totals=None):
 
         # entries: { statement_line -> [ info_to_acct_owner] }
-        entries = entries or []
+        entries = entries or OrderedDict()
         forward_available_balances = forward_available_balances or []
 
         if export_info is not None and not isinstance(export_info, ExportInformation):
