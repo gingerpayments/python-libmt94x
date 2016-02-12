@@ -281,9 +281,9 @@ class Mt94xWriter(object):
             .chars(1, b'C' if sl.type == sl.TYPE_CREDIT else b'D')
             .amount(15, None, sl.amount)
             .chars(4, b'N%s' % sl.transaction_code)
-            .chars(16, sl.reference_for_account_owner or b'NONREF')
-            .chars(16, (sl.account_servicing_institutions_reference
-                        if sl.account_servicing_institutions_reference else ''))
+            .chars_noslash(16, sl.reference_for_account_owner or b'NONREF')
+            .chars_noslash(16, (sl.account_servicing_institutions_reference
+                                if sl.account_servicing_institutions_reference else ''))
             # Supplementary Details
             .chars(34, supplementary_details)
             .newline()
@@ -300,8 +300,8 @@ class Mt94xWriter(object):
             .chars(1, b'C' if sl.type == sl.TYPE_CREDIT else b'D')
             .amount(15, None, sl.amount)
             .chars(4, b'N%s' % sl.transaction_code)
-            .chars(16, sl.reference_for_account_owner or b'NONREF')
-            .chars(16, b'//%s' % sl.transaction_reference)
+            .chars_noslash(16, sl.reference_for_account_owner or b'NONREF')
+            .chars(2, b'//').chars_noslash(14, sl.transaction_reference)
             .newline()
             .chars(34, b'/TRCD/%s/' % sl.ing_transaction_code)
             .newline()

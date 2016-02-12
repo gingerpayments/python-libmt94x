@@ -136,6 +136,12 @@ class Mt94xSerializer(object):
         self._buffer.append(bytes)
         return self
 
+    def chars_noslash(self, maxlen, value):
+        if '/' in value:
+            raise ValueError("Cannot use a slash here")
+
+        return self.chars(maxlen, value)
+
     def num(self, maxlen, value, leading_zero=False):
         bytes = self.serialize_value(self.TYPE_NUMERIC, maxlen, value,
                                      leading_zeroes=maxlen if leading_zero else False)

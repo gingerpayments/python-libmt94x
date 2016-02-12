@@ -117,3 +117,8 @@ class Mt94xSerializerTests(TestCase):
                .finish()
         )
         self.assertEquals(val, b':65:C140221EUR564,35\r\n')
+
+    def test_chars_noslash(self):
+        self.ser.start()
+        with self.assertRaises(ValueError):
+            self.ser.chars_noslash(45, 'A/B testing is cool')
