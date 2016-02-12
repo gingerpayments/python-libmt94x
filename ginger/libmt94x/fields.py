@@ -2,7 +2,30 @@ from datetime import datetime
 from decimal import Decimal
 
 from ginger.libmt94x.currency_codes import CurrencyCodes
+from ginger.libmt94x.info_acct_owner_subfields import BeneficiaryParty
+from ginger.libmt94x.info_acct_owner_subfields import BusinessPurpose
+from ginger.libmt94x.info_acct_owner_subfields import Charges
+from ginger.libmt94x.info_acct_owner_subfields import ClientReference
+from ginger.libmt94x.info_acct_owner_subfields import CounterPartyID
+from ginger.libmt94x.info_acct_owner_subfields import CounterPartyIdentification
+from ginger.libmt94x.info_acct_owner_subfields import CreditorID
+from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
+from ginger.libmt94x.info_acct_owner_subfields import ExchangeRate
 from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubField
+from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubFieldOrder
+from ginger.libmt94x.info_acct_owner_subfields import InstructionID
+from ginger.libmt94x.info_acct_owner_subfields import MandateReference
+from ginger.libmt94x.info_acct_owner_subfields import OrderingParty
+from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
+from ginger.libmt94x.info_acct_owner_subfields import PurposeCode
+from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
+from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
+from ginger.libmt94x.info_acct_owner_subfields import UltimateBeneficiary
+from ginger.libmt94x.info_acct_owner_subfields import UltimateCreditor
+from ginger.libmt94x.info_acct_owner_subfields import UltimateDebtor
+from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
+from ginger.libmt94x.remittance_info import IsoStructuredRemittanceInfo
+from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
 from ginger.libmt94x.statement_line_subfields import OriginalAmountOfTransaction
 from ginger.libmt94x.transaction_codes import IngTransactionCodes
 from ginger.libmt94x.transaction_codes import SwiftTransactionCodes
@@ -120,6 +143,78 @@ class InformationToAccountOwner(Field):
         for code_word in code_words:
             by_class[code_word.__class__] = code_word
         self.by_class = by_class
+
+    def flatten(self):
+        '''Transform code_words to free_form_text of values delimited by a
+        space (from IBP structured to IBP unstructured). Note that this is a
+        destructive update.'''
+
+        def maybe_add(elems, value):
+            if value:
+                elems.append(value)
+
+        elems = []
+        for code_word in self.code_words:
+            if isinstance(code_word, BeneficiaryParty):
+                maybe_add(elems, code_word.account_number)
+                maybe_add(elems, code_word.bic)
+                maybe_add(elems, code_word.name)
+                maybe_add(elems, code_word.city)
+            elif isinstance(code_word, BusinessPurpose):
+                maybe_add(elems, code_word.id_code)
+                maybe_add(elems, code_word.sepa_transaction_type)
+            elif isinstance(code_word, Charges):
+                maybe_add(elems, code_word.charges)
+            elif isinstance(code_word, ClientReference):
+                maybe_add(elems, code_word.client_reference)
+            elif isinstance(code_word, CounterPartyID):
+                maybe_add(elems, code_word.account_number)
+                maybe_add(elems, code_word.bic)
+                maybe_add(elems, code_word.name)
+                maybe_add(elems, code_word.city)
+            elif isinstance(code_word, CounterPartyIdentification):
+                maybe_add(elems, code_word.id_code)
+            elif isinstance(code_word, CreditorID):
+                maybe_add(elems, code_word.creditor_id)
+            elif isinstance(code_word, EndToEndReference):
+                maybe_add(elems, code_word.end_to_end_reference)
+            elif isinstance(code_word, ExchangeRate):
+                maybe_add(elems, code_word.exchange_rate)
+            elif isinstance(code_word, InstructionID):
+                maybe_add(elems, code_word.instruction_id)
+            elif isinstance(code_word, MandateReference):
+                maybe_add(elems, code_word.mandate_reference)
+            elif isinstance(code_word, OrderingParty):
+                maybe_add(elems, code_word.account_number)
+                maybe_add(elems, code_word.bic)
+                maybe_add(elems, code_word.name)
+                maybe_add(elems, code_word.city)
+            elif isinstance(code_word, PaymentInformationID):
+                maybe_add(elems, code_word.payment_information_id)
+            elif isinstance(code_word, PurposeCode):
+                maybe_add(elems, code_word.purpose_of_collection)
+            elif isinstance(code_word, RemittanceInformation):
+                if isinstance(code_word.remittance_info, UnstructuredRemittanceInfo):
+                    maybe_add(elems, code_word.remittance_info.remittance_info)
+                elif isinstance(code_word.remittance_info, DutchStructuredRemittanceInfo):
+                    maybe_add(elems, code_word.remittance_info.payment_reference)
+                elif isinstance(code_word.remittance_info, IsoStructuredRemittanceInfo):
+                    maybe_add(elems, code_word.remittance_info.iso_reference)
+            elif isinstance(code_word, ReturnReason):
+                maybe_add(elems, code_word.reason_code)
+            elif isinstance(code_word, UltimateBeneficiary):
+                maybe_add(elems, code_word.name)
+            elif isinstance(code_word, UltimateCreditor):
+                maybe_add(elems, code_word.name)
+                maybe_add(elems, code_word.id)
+            elif isinstance(code_word, UltimateDebtor):
+                maybe_add(elems, code_word.name)
+                maybe_add(elems, code_word.id)
+
+        line = ' '.join(elems)
+
+        self.free_form_text = line
+        self.code_words = []
 
     def get_code_word_by_cls(self, cls_obj):
         return self.by_class.get(cls_obj)

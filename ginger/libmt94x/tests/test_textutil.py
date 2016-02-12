@@ -21,6 +21,20 @@ class TextUtilTests(TestCase):
         block = break_at_width(line, width=65, newline='\r\n')
         self.assertEquals(block, expected)
 
+    def test_break_at_width_no_double_newline(self):
+        # Length: 130 chars + newline
+        line = (
+            b'500411584454 1.15791632 NL93ZZZ332656790051 NL12COBA0733959555 CO'
+            b'BANL2XXXX T-Mobile Netherlands BV Factuurnummer 901258406560 OTHR\r\n'
+        )
+        expected = (
+            b'500411584454 1.15791632 NL93ZZZ332656790051 NL12COBA0733959555 CO\r\n'
+            b'BANL2XXXX T-Mobile Netherlands BV Factuurnummer 901258406560 OTHR\r\n'
+        )
+
+        block = break_at_width(line, width=65, newline='\r\n')
+        self.assertEquals(block, expected)
+
     def test_format_amount_nl(self):
         rv = format_amount(Decimal('1.23'), locale='nl_NL')
         self.assertEquals('1,23', rv)

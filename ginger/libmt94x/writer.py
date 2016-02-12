@@ -75,10 +75,10 @@ class Mt94xWriter(object):
             if isinstance(code_word.remittance_info, UnstructuredRemittanceInfo):
                 serializer.chars(256, b'/USTD//%s'
                                  % code_word.remittance_info.remittance_info)
-            if isinstance(code_word.remittance_info, DutchStructuredRemittanceInfo):
+            elif isinstance(code_word.remittance_info, DutchStructuredRemittanceInfo):
                 serializer.chars(256, b'/STRD/CUR/%s'
                                  % code_word.remittance_info.payment_reference)
-            if isinstance(code_word.remittance_info, IsoStructuredRemittanceInfo):
+            elif isinstance(code_word.remittance_info, IsoStructuredRemittanceInfo):
                 serializer.chars(256, b'/STRD/ISO/%s'
                                  % code_word.remittance_info.iso_reference)
         elif isinstance(code_word, ReturnReason):
@@ -198,10 +198,6 @@ class Mt94xWriter(object):
             code_word = info.get_code_word_by_cls(code_word_cls)
             if code_word is not None:
                 self._write_code_word(self.serializer, code_word)
-
-        # Write out the free form text (note that this excludes subfields above)
-        if info.free_form_text:
-            self.serializer.chars(maxlen, info.free_form_text)
 
         # Terminate the record
         record = (self.serializer

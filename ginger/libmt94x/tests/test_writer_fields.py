@@ -96,7 +96,58 @@ class Mt94xWriterTests(TestCase):
                 free_form_text=b'a',
             )
 
-    def test_information_to_account_owner_ibp_unstructured(self):
+    def test_information_to_account_owner_ibp_structured(self):
+        info = InformationToAccountOwner(
+            code_words=[
+                EndToEndReference('500411584454'),
+                MandateReference('1.15791632'),
+                CreditorID('NL93ZZZ332656790051'),
+                CounterPartyID(
+                    account_number='NL12COBA0733959555',
+                    bic='COBANL2XXXX',
+                    name='T-Mobile Netherlands BV',
+                ),
+                RemittanceInformation(
+                    remittance_info=UnstructuredRemittanceInfo('Factuurnummer 901258406560'),
+                ),
+                PurposeCode('OTHR'),
+            ],
+        )
+        bytes = self.writer.write_information_to_account_owner_ibp(info)
+        expected = (
+            b':86:/EREF/500411584454//MARF/1.15791632//CSID/NL93ZZZ332656790051//CN\r\n'
+            b'TP/NL12COBA0733959555/COBANL2XXXX/T-Mobile Netherlands BV///REMI/\r\n'
+            b'USTD//Factuurnummer 901258406560//PURP/OTHR/\r\n'
+        )
+        self.assertEquals(bytes, expected)
+
+    def test_information_to_account_owner_ibp_unstructured_flattened(self):
+        info = InformationToAccountOwner(
+            code_words=[
+                EndToEndReference('500411584454'),
+                MandateReference('1.15791632'),
+                CreditorID('NL93ZZZ332656790051'),
+                CounterPartyID(
+                    account_number='NL12COBA0733959555',
+                    bic='COBANL2XXXX',
+                    name='T-Mobile Netherlands BV',
+                ),
+                RemittanceInformation(
+                    remittance_info=UnstructuredRemittanceInfo('Factuurnummer 901258406560'),
+                ),
+                PurposeCode('OTHR'),
+            ],
+        )
+        info.flatten()  # flatten the structured subfields to free form text
+
+        bytes = self.writer.write_information_to_account_owner_ibp(info)
+        expected = (
+            b':86:500411584454 1.15791632 NL93ZZZ332656790051 NL12COBA0733959555 CO\r\n'
+            b'BANL2XXXX T-Mobile Netherlands BV Factuurnummer 901258406560 OTHR\r\n'
+        )
+        self.assertEquals(bytes, expected)
+
+    def test_information_to_account_owner_ibp_unstructured_free_form(self):
         info = InformationToAccountOwner(
             free_form_text=(
                 b'NL20INGB0002222222 INGBNL2A Creditor Name 11 E2ENA0101b4ULT241020'
