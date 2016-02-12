@@ -12,7 +12,6 @@ from ginger.libmt94x.info_acct_owner_subfields import CreditorID
 from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
 from ginger.libmt94x.info_acct_owner_subfields import ExchangeRate
 from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubField
-from ginger.libmt94x.info_acct_owner_subfields import InfoToAcccountOwnerSubFieldOrder
 from ginger.libmt94x.info_acct_owner_subfields import InstructionID
 from ginger.libmt94x.info_acct_owner_subfields import MandateReference
 from ginger.libmt94x.info_acct_owner_subfields import OrderingParty
