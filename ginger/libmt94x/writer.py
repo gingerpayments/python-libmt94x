@@ -33,64 +33,128 @@ class Mt94xWriter(object):
         serializer.chars(5, b'/%s' % code_word.tag)
 
         if isinstance(code_word, BeneficiaryParty):
-            serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
-            serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
-            serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
-            serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.account_number if code_word.account_number else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(11, code_word.bic if code_word.bic else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(50, code_word.name if code_word.name else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.city if code_word.city else '')
+
         elif isinstance(code_word, BusinessPurpose):
-            serializer.chars(35, b'/%s/%s' % ((code_word.id_code if code_word.id_code else ''),
-                                              (code_word.sepa_transaction_type if
-                                               code_word.sepa_transaction_type else '')))
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(24, code_word.id_code if code_word.id_code else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(9, (code_word.sepa_transaction_type if
+                                         code_word.sepa_transaction_type else ''))
+
         elif isinstance(code_word, Charges):
-            serializer.chars(15, b'/%s' % code_word.charges)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(15, code_word.charges)
+
         elif isinstance(code_word, ClientReference):
-            serializer.chars(35, b'/%s' % code_word.client_reference)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.client_reference)
+
         elif isinstance(code_word, CounterPartyID):
-            serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
-            serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
-            serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
-            serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.account_number if code_word.account_number else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(11, code_word.bic if code_word.bic else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(50, code_word.name if code_word.name else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.city if code_word.city else '')
+
         elif isinstance(code_word, CounterPartyIdentification):
-            serializer.chars(35, b'/%s' % code_word.id_code)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.id_code if code_word.id_code else '')
+
         elif isinstance(code_word, CreditorID):
-            serializer.chars(35, b'/%s' % code_word.creditor_id)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.creditor_id if code_word.creditor_id else '')
+
         elif isinstance(code_word, EndToEndReference):
-            serializer.chars(35, b'/%s' % code_word.end_to_end_reference)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, (code_word.end_to_end_reference
+                                          if code_word.end_to_end_reference else ''))
+
         elif isinstance(code_word, ExchangeRate):
-            serializer.chars(12, b'/%s' % code_word.exchange_rate)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(12, code_word.exchange_rate)
+
         elif isinstance(code_word, InstructionID):
-            serializer.chars(35, b'/%s' % code_word.instruction_id)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.instruction_id)
+
         elif isinstance(code_word, MandateReference):
-            serializer.chars(35, b'/%s' % code_word.mandate_reference)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.mandate_reference)
+
         elif isinstance(code_word, OrderingParty):
-            serializer.chars(36, b'/%s' % (code_word.account_number if code_word.account_number else ''))
-            serializer.chars(12, b'/%s' % (code_word.bic if code_word.bic else ''))
-            serializer.chars(51, b'/%s' % (code_word.name if code_word.name else ''))
-            serializer.chars(36, b'/%s' % (code_word.city if code_word.city else ''))
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.account_number if code_word.account_number else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(11, code_word.bic if code_word.bic else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(50, code_word.name if code_word.name else '')
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.city if code_word.city else '')
+
         elif isinstance(code_word, PaymentInformationID):
-            serializer.chars(35, b'/%s' % code_word.payment_information_id)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.payment_information_id)
+
         elif isinstance(code_word, PurposeCode):
-            serializer.chars(5, b'/%s' % code_word.purpose_of_collection)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(4, code_word.purpose_of_collection)
+
         elif isinstance(code_word, RemittanceInformation):
+            # We allow slashes in this subfield
             if isinstance(code_word.remittance_info, UnstructuredRemittanceInfo):
-                serializer.chars(256, b'/USTD//%s'
+                serializer.chars(255, b'/USTD//%s'
                                  % code_word.remittance_info.remittance_info)
+
             elif isinstance(code_word.remittance_info, DutchStructuredRemittanceInfo):
-                serializer.chars(256, b'/STRD/CUR/%s'
+                serializer.chars(255, b'/STRD/CUR/%s'
                                  % code_word.remittance_info.payment_reference)
+
             elif isinstance(code_word.remittance_info, IsoStructuredRemittanceInfo):
-                serializer.chars(256, b'/STRD/ISO/%s'
+                serializer.chars(255, b'/STRD/ISO/%s'
                                  % code_word.remittance_info.iso_reference)
+
         elif isinstance(code_word, ReturnReason):
-            serializer.chars(5, b'/%s' % code_word.reason_code)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(4, code_word.reason_code)
+
         elif isinstance(code_word, UltimateBeneficiary):
-            serializer.chars(35, b'/%s' % code_word.name)
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.name)
+
         elif isinstance(code_word, UltimateCreditor):
-            serializer.chars(71, b'/%s' % (code_word.name if code_word.name else ''))
-            serializer.chars(36, b'/%s' % (code_word.id if code_word.id else ''))
+            serializer.chars(1, b'/')
+            serializer.chars(70, code_word.name if code_word.name else '')  # allow slash
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.id if code_word.id else '')
+
         elif isinstance(code_word, UltimateDebtor):
-            serializer.chars(71, b'/%s' % (code_word.name if code_word.name else ''))
-            serializer.chars(36, b'/%s' % (code_word.id if code_word.id else ''))
+            serializer.chars(1, b'/')
+            serializer.chars(70, code_word.name if code_word.name else '')  # allow slash
+
+            serializer.chars(1, b'/')
+            serializer.chars_noslash(35, code_word.id if code_word.id else '')
 
         serializer.chars(1, b'/')
 
