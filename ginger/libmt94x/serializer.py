@@ -90,6 +90,12 @@ class Mt94xSerializer(object):
         if builtin_type(amount) is not Decimal:
             raise ValueError("Must pass a Decimal")
 
+        # Amounts cannot have a negative sign
+        if amount < Decimal('0'):
+            raise ValueError(
+                "Cannot serialize a negative amount, "
+                "did you forget to use TYPE_DEBIT?")
+
         # FIXME: Decimal representation is currency and locale specific
         bytes = format_amount(amount, self.locale)
 

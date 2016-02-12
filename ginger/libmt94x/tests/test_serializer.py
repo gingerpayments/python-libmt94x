@@ -89,6 +89,10 @@ class Mt94xSerializerTests(TestCase):
         with self.assertRaises(ValueError):
             self.ser.serialize_amount(15, 'EUR', 12.32)
 
+    def test_amount_negative(self):
+        with self.assertRaises(ValueError):
+            self.ser.serialize_amount(15, 'EUR', Decimal('-101.45'))
+
     # Date tests
 
     def test_date_ok(self):
