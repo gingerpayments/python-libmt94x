@@ -8,6 +8,8 @@ from ginger.libmt94x.serializer import Mt94xSerializer
 
 
 def get_random_unicode_char(upper=0x10ffff):
+    '''NOTE: 0 - 0x10ffff is the domain of unichr'''
+
     n = random.randrange(upper)
     return unichr(n)
 
@@ -38,7 +40,9 @@ class ConvenienceTests(TestCase):
         self.assertEquals(b'abcdefghijklm', st)
 
     def test_coerce_random_unicode_chars(self):
-        # includes Basic Multilingual Plane
+        # Includes the Basic Multilingual Plane
+        # We don't want surrogate pairs since unidecode doesn't know how to
+        # handle them
         codepoint_upper = 0xfff
         length = codepoint_upper
 
