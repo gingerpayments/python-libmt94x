@@ -1,1 +1,1 @@
-pycountry<=2.0  # provides currency codes
+pycountry<2.0  # provides currency codes
