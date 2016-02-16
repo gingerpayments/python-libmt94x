@@ -1,2 +1,2 @@
-Unidecode==0.4.*  # translates accented characters to non-accented
-pycountry==1.*  # provides currency codes
+Unidecode<0.5  # translates accented characters to non-accented
+pycountry<2.0  # provides currency codes
