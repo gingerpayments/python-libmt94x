@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from ginger.libmt94x.transaction_codes import IngTransactionCodes
-from ginger.libmt94x.transaction_codes import InvalidIngTransactionCodeError
-from ginger.libmt94x.transaction_codes import InvalidSwiftTransactionCodeError
-from ginger.libmt94x.transaction_codes import SwiftTransactionCodes
+from ginger_libmt94x.transaction_codes import IngTransactionCodes
+from ginger_libmt94x.transaction_codes import InvalidIngTransactionCodeError
+from ginger_libmt94x.transaction_codes import InvalidSwiftTransactionCodeError
+from ginger_libmt94x.transaction_codes import SwiftTransactionCodes
 
 
 class IngTransactionCodesTests(TestCase):

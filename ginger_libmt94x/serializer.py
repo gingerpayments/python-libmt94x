@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 import re
 
-from ginger.libmt94x.textutil import format_amount
+from ginger_libmt94x.textutil import format_amount
 
 
 # NOTE: Module level binding since we want to use the name "type" in method

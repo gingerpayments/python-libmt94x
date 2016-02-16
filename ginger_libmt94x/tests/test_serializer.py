@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 from unittest import TestCase
 
-from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger_libmt94x.serializer import Mt94xSerializer
 
 
 class Mt94xSerializerTests(TestCase):

@@ -28,12 +28,12 @@ export AWS_SECRET_ACCESS_KEY=bbb
 
 # Run tests with code coverage. Note that running tests with coverage could be slow, so if
 # you notice issues, create a separate command for running only the tests.
-coverage run --source=./ginger --branch ./p-env/bin/nosetests --nocapture --nologcapture $@  --with-xunit
+coverage run --source=./ginger_libmt94x --branch ./p-env/bin/nosetests --nocapture --nologcapture $@  --with-xunit
 coverage report -m
 coverage xml
 
 # Performs PEP8, pyflakes and other checks
-flake8 ginger --max-line-length=120 --ignore=E124,E128,E129,E302,E303,F403
+flake8 ginger_libmt94x --max-line-length=120 --ignore=E124,E128,E129,E302,E303,F403
 
 # Coverage-less testing (not used anymore)
 #nosetests --with-xunit --nologcapture --nocapture $@

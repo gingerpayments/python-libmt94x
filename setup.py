@@ -8,7 +8,6 @@ setup(
     version=open('version.txt').read().strip(),
     url='',
     packages=find_packages(),
-    namespace_packages=['ginger'],
     include_package_data=True,
     zip_safe=False,
     install_requires=[

@@ -4,7 +4,7 @@ Changelog
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Remove namespaced package: ginger.libmt94x -> ginger_libmt94x.
 
 
 0.2 (2016-02-16)

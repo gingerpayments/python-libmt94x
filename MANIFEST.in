@@ -1,4 +1,5 @@
-graft ginger
+graft ginger_libmt94x
+prune specs
+
 include *.cfg *.rst *.in *.txt *.sh
 global-exclude *.pyc
-recursive-include docs *.pdf

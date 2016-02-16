@@ -2,7 +2,7 @@ import re
 
 from unidecode import unidecode
 
-from ginger.libmt94x.serializer import Mt94xSerializer
+from ginger_libmt94x.serializer import Mt94xSerializer
 
 
 class CharsetHelper(object):

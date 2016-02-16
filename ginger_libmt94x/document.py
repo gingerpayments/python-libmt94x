@@ -1,16 +1,16 @@
 from collections import OrderedDict
 
-from ginger.libmt94x.fields import AccountIdentification
-from ginger.libmt94x.fields import ClosingAvailableBalance
-from ginger.libmt94x.fields import ClosingBalance
-from ginger.libmt94x.fields import ExportInformation
-from ginger.libmt94x.fields import ForwardAvailableBalance
-from ginger.libmt94x.fields import ImportInformation
-from ginger.libmt94x.fields import InformationToAccountOwner
-from ginger.libmt94x.fields import InformationToAccountOwnerTotals
-from ginger.libmt94x.fields import OpeningBalance
-from ginger.libmt94x.fields import StatementNumber
-from ginger.libmt94x.fields import TransactionReferenceNumber
+from ginger_libmt94x.fields import AccountIdentification
+from ginger_libmt94x.fields import ClosingAvailableBalance
+from ginger_libmt94x.fields import ClosingBalance
+from ginger_libmt94x.fields import ExportInformation
+from ginger_libmt94x.fields import ForwardAvailableBalance
+from ginger_libmt94x.fields import ImportInformation
+from ginger_libmt94x.fields import InformationToAccountOwner
+from ginger_libmt94x.fields import InformationToAccountOwnerTotals
+from ginger_libmt94x.fields import OpeningBalance
+from ginger_libmt94x.fields import StatementNumber
+from ginger_libmt94x.fields import TransactionReferenceNumber
 
 
 class Mt940Document(object):

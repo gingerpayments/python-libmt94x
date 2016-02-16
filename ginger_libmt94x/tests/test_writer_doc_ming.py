@@ -4,28 +4,28 @@ from decimal import Decimal
 from unittest import TestCase
 import os
 
-from ginger.libmt94x.document import Mt940Document
-from ginger.libmt94x.fields import AccountIdentification
-from ginger.libmt94x.fields import ClosingAvailableBalance
-from ginger.libmt94x.fields import ClosingBalance
-from ginger.libmt94x.fields import ForwardAvailableBalance
-from ginger.libmt94x.fields import InformationToAccountOwner
-from ginger.libmt94x.fields import InformationToAccountOwnerTotals
-from ginger.libmt94x.fields import OpeningBalance
-from ginger.libmt94x.fields import StatementLine
-from ginger.libmt94x.fields import StatementNumber
-from ginger.libmt94x.fields import TransactionReferenceNumber
-from ginger.libmt94x.info_acct_owner_subfields import CounterPartyID
-from ginger.libmt94x.info_acct_owner_subfields import CreditorID
-from ginger.libmt94x.info_acct_owner_subfields import EndToEndReference
-from ginger.libmt94x.info_acct_owner_subfields import MandateReference
-from ginger.libmt94x.info_acct_owner_subfields import PaymentInformationID
-from ginger.libmt94x.info_acct_owner_subfields import RemittanceInformation
-from ginger.libmt94x.info_acct_owner_subfields import ReturnReason
-from ginger.libmt94x.remittance_info import DutchStructuredRemittanceInfo
-from ginger.libmt94x.remittance_info import UnstructuredRemittanceInfo
-from ginger.libmt94x.serializer import Mt94xSerializer
-from ginger.libmt94x.writer import Mt94xWriter
+from ginger_libmt94x.document import Mt940Document
+from ginger_libmt94x.fields import AccountIdentification
+from ginger_libmt94x.fields import ClosingAvailableBalance
+from ginger_libmt94x.fields import ClosingBalance
+from ginger_libmt94x.fields import ForwardAvailableBalance
+from ginger_libmt94x.fields import InformationToAccountOwner
+from ginger_libmt94x.fields import InformationToAccountOwnerTotals
+from ginger_libmt94x.fields import OpeningBalance
+from ginger_libmt94x.fields import StatementLine
+from ginger_libmt94x.fields import StatementNumber
+from ginger_libmt94x.fields import TransactionReferenceNumber
+from ginger_libmt94x.info_acct_owner_subfields import CounterPartyID
+from ginger_libmt94x.info_acct_owner_subfields import CreditorID
+from ginger_libmt94x.info_acct_owner_subfields import EndToEndReference
+from ginger_libmt94x.info_acct_owner_subfields import MandateReference
+from ginger_libmt94x.info_acct_owner_subfields import PaymentInformationID
+from ginger_libmt94x.info_acct_owner_subfields import RemittanceInformation
+from ginger_libmt94x.info_acct_owner_subfields import ReturnReason
+from ginger_libmt94x.remittance_info import DutchStructuredRemittanceInfo
+from ginger_libmt94x.remittance_info import UnstructuredRemittanceInfo
+from ginger_libmt94x.serializer import Mt94xSerializer
+from ginger_libmt94x.writer import Mt94xWriter
 
 
 class Mt94xWriterMINGTests(TestCase):

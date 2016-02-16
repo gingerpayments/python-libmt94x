@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from ginger.libmt94x.currency_codes import CurrencyCodes
+from ginger_libmt94x.currency_codes import CurrencyCodes
 
 
 class StatementLineSubField(object):
