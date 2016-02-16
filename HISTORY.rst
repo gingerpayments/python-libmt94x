@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2 (unreleased)
+0.2 (2016-02-16)
 ----------------
 
 - Added a convenience module for sanitization of input.
