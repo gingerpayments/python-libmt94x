@@ -4,7 +4,7 @@ Changelog
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Added a convenience module for sanitization of input.
 
 
 0.1 (2016-02-16)
