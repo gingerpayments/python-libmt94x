@@ -16,6 +16,10 @@ class CharsetHelper(object):
     def coerce(self, st):
         '''Strips out any characters outside the SWIFT character set.'''
 
+        # Do not accept a None value (probably an error in the caller)
+        if st is None:
+            raise ValueError("Must pass a string")
+
         # Return the empty string
         if not st:
             return st

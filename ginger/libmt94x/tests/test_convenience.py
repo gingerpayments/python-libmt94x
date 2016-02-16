@@ -26,6 +26,14 @@ class ConvenienceTests(TestCase):
         self.helper = CharsetHelper()
         self.serializer = Mt94xSerializer()
 
+    def test_coerce_invalid_none(self):
+        with self.assertRaises(ValueError):
+            self.helper.coerce(None)
+
+    def test_coerce_tolerate_empty(self):
+        st = self.helper.coerce(b'')
+        self.assertEquals(b'', st)
+
     def test_coerce_ascii(self):
         st = self.helper.coerce(b'abc')
         self.assertEquals(b'abc', st)
