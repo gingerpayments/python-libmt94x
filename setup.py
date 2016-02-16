@@ -12,8 +12,8 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Unidecode==0.4.*',
-        'pycountry==1.*',
+        'Unidecode<0.5',
+        'pycountry<2.0',
         'setuptools',
     ],
     extras_require={
