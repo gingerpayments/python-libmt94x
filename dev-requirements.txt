@@ -1,2 +1,8 @@
 -r requirements.txt
--e .[test,develop]
+
+# testing tools
+nose
+pytest
+mock
+coverage
+flake8

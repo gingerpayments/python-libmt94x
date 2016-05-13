@@ -1,17 +1,12 @@
-.coverage
-coverage.xml
 *.egg-info/
 *.pyc
+.coverage
 .env
-/bin/
 /build/
 /dist/
 /htmlcov/
-/include/
-/lib/
-/local/
-/man/
 /p-env/
+coverage.xml
 nosetests.xml
 
 # Elastic Beanstalk Files
