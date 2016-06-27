@@ -5,7 +5,9 @@ Changelog
 0.3.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add README.txt and HISTORY.rst to setup.py long_description for display on
+  ginger devpi.
+  [numerodix]
 
 
 0.3.1 (2016-05-13)

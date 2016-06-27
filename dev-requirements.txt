@@ -1,6 +1,9 @@
 -r requirements.txt
 
-# testing tools
+# Packaging/distribution tools
+zest.releaser[recommended]
+
+# Testing tools
 nose
 pytest
 mock
