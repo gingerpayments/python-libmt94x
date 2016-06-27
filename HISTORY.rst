@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-0.3.2 (unreleased)
+0.3.2 (2016-06-27)
 ------------------
 
 - Add README.txt and HISTORY.rst to setup.py long_description for display on
