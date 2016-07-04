@@ -1,8 +1,8 @@
 from decimal import Decimal
 from unittest import TestCase
 
-from ginger_libmt94x.textutil import break_at_width
-from ginger_libmt94x.textutil import format_amount
+from libmt94x.textutil import break_at_width
+from libmt94x.textutil import format_amount
 
 
 class TextUtilTests(TestCase):

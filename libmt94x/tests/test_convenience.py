@@ -3,8 +3,8 @@
 from unittest import TestCase
 import random
 
-from ginger_libmt94x.convenience import CharsetHelper
-from ginger_libmt94x.serializer import Mt94xSerializer
+from libmt94x.convenience import CharsetHelper
+from libmt94x.serializer import Mt94xSerializer
 
 
 def get_random_unicode_char(upper=0x10ffff):

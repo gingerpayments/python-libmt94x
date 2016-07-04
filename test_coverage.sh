@@ -23,9 +23,9 @@ then
 fi
 
 # Run tests with code coverage
-coverage run --source=./ginger_libmt94x --branch ./p-env/bin/nosetests --nocapture --nologcapture --with-xunit $@
+coverage run --source=./libmt94x --branch ./p-env/bin/nosetests --nocapture --nologcapture --with-xunit $@
 coverage report -m
 coverage xml
 
 # Perform PEP8, pyflakes and other checks
-flake8 ginger_libmt94x
+flake8 libmt94x

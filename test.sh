@@ -8,4 +8,4 @@ set -e
 p-env/bin/nosetests --nocapture --nologcapture --with-xunit $@
 
 # Run style checker
-p-env/bin/flake8 ginger_libmt94x
+p-env/bin/flake8 libmt94x

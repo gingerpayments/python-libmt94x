@@ -4,30 +4,30 @@ from decimal import Decimal
 from unittest import TestCase
 import os
 
-from ginger_libmt94x.document import Mt940Document
-from ginger_libmt94x.fields import AccountIdentification
-from ginger_libmt94x.fields import ClosingAvailableBalance
-from ginger_libmt94x.fields import ClosingBalance
-from ginger_libmt94x.fields import ExportInformation
-from ginger_libmt94x.fields import ForwardAvailableBalance
-from ginger_libmt94x.fields import ImportInformation
-from ginger_libmt94x.fields import InformationToAccountOwner
-from ginger_libmt94x.fields import InformationToAccountOwnerTotals
-from ginger_libmt94x.fields import OpeningBalance
-from ginger_libmt94x.fields import StatementLine
-from ginger_libmt94x.fields import StatementNumber
-from ginger_libmt94x.fields import TransactionReferenceNumber
-from ginger_libmt94x.info_acct_owner_subfields import BeneficiaryParty
-from ginger_libmt94x.info_acct_owner_subfields import BusinessPurpose
-from ginger_libmt94x.info_acct_owner_subfields import CreditorID
-from ginger_libmt94x.info_acct_owner_subfields import EndToEndReference
-from ginger_libmt94x.info_acct_owner_subfields import MandateReference
-from ginger_libmt94x.info_acct_owner_subfields import PaymentInformationID
-from ginger_libmt94x.info_acct_owner_subfields import RemittanceInformation
-from ginger_libmt94x.info_acct_owner_subfields import ReturnReason
-from ginger_libmt94x.remittance_info import UnstructuredRemittanceInfo
-from ginger_libmt94x.serializer import Mt94xSerializer
-from ginger_libmt94x.writer import Mt94xWriter
+from libmt94x.document import Mt940Document
+from libmt94x.fields import AccountIdentification
+from libmt94x.fields import ClosingAvailableBalance
+from libmt94x.fields import ClosingBalance
+from libmt94x.fields import ExportInformation
+from libmt94x.fields import ForwardAvailableBalance
+from libmt94x.fields import ImportInformation
+from libmt94x.fields import InformationToAccountOwner
+from libmt94x.fields import InformationToAccountOwnerTotals
+from libmt94x.fields import OpeningBalance
+from libmt94x.fields import StatementLine
+from libmt94x.fields import StatementNumber
+from libmt94x.fields import TransactionReferenceNumber
+from libmt94x.info_acct_owner_subfields import BeneficiaryParty
+from libmt94x.info_acct_owner_subfields import BusinessPurpose
+from libmt94x.info_acct_owner_subfields import CreditorID
+from libmt94x.info_acct_owner_subfields import EndToEndReference
+from libmt94x.info_acct_owner_subfields import MandateReference
+from libmt94x.info_acct_owner_subfields import PaymentInformationID
+from libmt94x.info_acct_owner_subfields import RemittanceInformation
+from libmt94x.info_acct_owner_subfields import ReturnReason
+from libmt94x.remittance_info import UnstructuredRemittanceInfo
+from libmt94x.serializer import Mt94xSerializer
+from libmt94x.writer import Mt94xWriter
 
 
 class Mt94xWriterIBPStructuredTests(TestCase):

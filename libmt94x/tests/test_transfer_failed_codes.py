@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from ginger_libmt94x.transfer_failed_codes import InvalidTransferFailedCodeError
-from ginger_libmt94x.transfer_failed_codes import TransferFailed
-from ginger_libmt94x.transfer_failed_codes import TransferFailedMisc
-from ginger_libmt94x.transfer_failed_codes import TransferFailedSEPA
+from libmt94x.transfer_failed_codes import InvalidTransferFailedCodeError
+from libmt94x.transfer_failed_codes import TransferFailed
+from libmt94x.transfer_failed_codes import TransferFailedMisc
+from libmt94x.transfer_failed_codes import TransferFailedSEPA
 
 
 class TransferFailedTests(TestCase):

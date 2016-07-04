@@ -2,7 +2,7 @@ from codecs import open
 from setuptools import setup
 from setuptools import find_packages
 
-from ginger_libmt94x import __version__
+from libmt94x import __version__
 
 
 def read_file(filepath):
@@ -13,7 +13,7 @@ def read_file(filepath):
 
 
 setup(
-    name='ginger-libmt94x',
+    name='libmt94x',
     description='This library generates bank statements in MT940/MT942 format',
     long_description=(
         '%s\n\n%s' % (
@@ -22,7 +22,7 @@ setup(
         )
     ),
     version=__version__,
-    url='https://bitbucket.org/gingerpayments/ginger-libmt94x',
+    url='https://github.com/gingerpayments/libmt94x',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

@@ -1,5 +1,5 @@
-from ginger_libmt94x.remittance_info import AbstractRemittanceInfo
-from ginger_libmt94x.transfer_failed_codes import TransferFailed
+from libmt94x.remittance_info import AbstractRemittanceInfo
+from libmt94x.transfer_failed_codes import TransferFailed
 
 
 class InfoToAcccountOwnerSubField(object):

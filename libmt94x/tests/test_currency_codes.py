@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from ginger_libmt94x.currency_codes import CurrencyCodes
-from ginger_libmt94x.currency_codes import InvalidCurrencyCodeError
+from libmt94x.currency_codes import CurrencyCodes
+from libmt94x.currency_codes import InvalidCurrencyCodeError
 
 
 class CurrencyCodesTests(TestCase):
