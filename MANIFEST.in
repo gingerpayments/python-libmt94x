@@ -1,4 +1,5 @@
-graft ginger_libmt94x
+graft docs
+graft libmt94x
 prune specs
 
 include *.cfg *.rst *.in *.txt *.sh
