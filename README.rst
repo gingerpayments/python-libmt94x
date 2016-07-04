@@ -9,3 +9,21 @@ given start date and end date.
 
 This library provides an API to define and serialize MT940/MT942 documents in
 Python. It does not provide a parser.
+
+
+Installation
+============
+
+TODO: pip install instructions
+
+
+Using
+=====
+
+TODO: link to a longer doc
+
+
+Running tests
+=============
+
+TODO: py.test and coverage instructions
