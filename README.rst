@@ -20,7 +20,7 @@ TODO: pip install instructions
 Using
 =====
 
-TODO: link to a longer doc
+To get started using libmt94x see docs/usage.rst.
 
 
 Developing on libmt94x
