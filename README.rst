@@ -23,7 +23,7 @@ Using
 TODO: link to a longer doc
 
 
-Running tests
-=============
+Developing on libmt94x
+======================
 
 TODO: py.test and coverage instructions
