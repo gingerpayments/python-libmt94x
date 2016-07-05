@@ -1,2 +1,3 @@
 -r requirements.txt
 -e .[test,develop]
+zest.releaser[recommended]

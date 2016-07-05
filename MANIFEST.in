@@ -1,2 +1,4 @@
 graft ginger
 include *.cfg *.rst *.in *.txt *.sh
+global-exclude *.pyc
+recursive-include docs *.pdf
