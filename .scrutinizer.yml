@@ -1,0 +1,15 @@
+build:
+  environment:
+    python: 2.7.7
+
+  dependencies:
+    before:
+      - pip install -r dev-requirements.txt
+
+  tests:
+    override:
+      -
+        command: 'tox'
+        coverage:
+          file: '.coverage'
+          format: 'py-cc'
