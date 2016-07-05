@@ -1,2 +1,5 @@
+# Code quality tools
+flake8
+
 # Testing tools
 pytest
