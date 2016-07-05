@@ -8,3 +8,4 @@
 /p-env/
 coverage.xml
 nosetests.xml
+.tox/
