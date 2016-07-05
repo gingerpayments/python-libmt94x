@@ -2,4 +2,5 @@
 flake8
 
 # Testing tools
+coverage
 pytest
