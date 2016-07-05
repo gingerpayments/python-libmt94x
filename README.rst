@@ -2,6 +2,11 @@
 libmt94x
 ========
 
+
+.. image:: https://api.travis-ci.org/gingerpayments/libmt94x.png?branch=develop
+    :target: https://travis-ci.org/gingerpayments/libmt94x
+
+
 MT940/MT942 is a text based data file format used in bank account statements
 (commonly used by banks in the Netherlands). A bank account statement contains
 your account balance as well as a listing of all the transactions between a
