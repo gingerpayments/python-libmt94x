@@ -1,4 +1,2 @@
--r requirements.txt
-
 # Testing tools
 pytest

@@ -84,4 +84,19 @@ How to find more info
 Developing on libmt94x
 ======================
 
-TODO: py.test and coverage instructions
+
+Running tests
+-------------
+
+It is recommended that you use a virtualenv when working on libmt94x. To run
+tests you will first need to install the development dependencies, which include
+``tox``::
+
+    $ pip install -r dev-requirements.txt 
+
+Now run the tests using tox (this will invoke py.test inside the tox-managed
+virtual test environment)::
+
+    $ tox
+
+TODO: coverage instructions
