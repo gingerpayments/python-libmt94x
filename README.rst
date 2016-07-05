@@ -106,3 +106,9 @@ This will run tests, collect test coverage and run the style checker
 ``flake8``. For a more lightweight test run you can run pytest directly::
 
     $ py.test
+
+
+Contributing
+------------
+
+Please see CONTRIBUTING.rst for guidelines on how to contribute to libmt94x.
