@@ -1,11 +1,4 @@
 -r requirements.txt
 
-# Packaging/distribution tools
-zest.releaser[recommended]
-
 # Testing tools
-nose
 pytest
-mock
-coverage
-flake8

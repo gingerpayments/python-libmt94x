@@ -1,6 +1,5 @@
 from codecs import open
 from setuptools import setup
-from setuptools import find_packages
 
 from libmt94x import __version__
 
@@ -12,8 +11,22 @@ def read_file(filepath):
     return content.strip()
 
 
+CLASSIFIERS = [
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Development Status :: 5 - Production/Stable',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 2.7',
+]
+
+
 setup(
     name='libmt94x',
+    version=__version__,
+    author='Ginger Payments',
+    author_email='dev@gingerpayments.com',
     description='This library generates bank statements in MT940/MT942 format',
     long_description=(
         '%s\n\n%s' % (
@@ -21,9 +34,15 @@ setup(
             read_file('HISTORY.rst'),
         )
     ),
-    version=__version__,
     url='https://github.com/gingerpayments/libmt94x',
-    packages=find_packages(),
+    license='MIT',
+    platforms=['OS Independent'],
+    classifiers=CLASSIFIERS,
+    packages=['libmt94x'],
     include_package_data=True,
     zip_safe=False,
+    install_requires=[
+        'Unidecode<0.5',  # translates unicode characters to ascii
+        'pycountry<2.0',  # provides currency codes
+    ],
 )
