@@ -12,8 +12,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'setuptools',
+        'Unidecode==0.4.*',
         'pycountry==1.*',
+        'setuptools',
     ],
     extras_require={
         'test': [
