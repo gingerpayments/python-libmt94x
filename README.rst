@@ -3,11 +3,11 @@ libmt94x
 ========
 
 
-.. image:: https://api.travis-ci.org/gingerpayments/libmt94x.png?branch=develop
-    :target: https://travis-ci.org/gingerpayments/libmt94x
+.. image:: https://api.travis-ci.org/gingerpayments/python-libmt94x.png?branch=develop
+    :target: https://travis-ci.org/gingerpayments/python-libmt94x
 
-.. image:: https://scrutinizer-ci.com/g/gingerpayments/libmt94x/badges/coverage.png?b=develop
-    :target: https://scrutinizer-ci.com/g/gingerpayments/libmt94x/
+.. image:: https://scrutinizer-ci.com/g/gingerpayments/python-libmt94x/badges/coverage.png?b=develop
+    :target: https://scrutinizer-ci.com/g/gingerpayments/python-libmt94x/
 
 
 MT940/MT942 is a text based data file format used in bank account statements
