@@ -25,3 +25,10 @@ source distribution, make sure nothing is missing or included by mistake.
 To actually push to PyPI (this will recreate the source distribution)::
 
     $ python setup.py sdist upload
+
+
+References
+==========
+
+* `Open Sourcing a Python Project the Right Way
+  <https://jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/>`_
