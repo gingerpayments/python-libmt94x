@@ -17,3 +17,6 @@ If you are interested in contributing to libmt94x please read this first. :)
   the code you are adding. Also make sure that all the existing tests are still
   passing (the entire ``tox`` execution should succeed, including the style
   checks).
+
+Note that libmt94x uses the git-flow development workflow, so our integration
+branch is develop and new features are developed in feature branches.
