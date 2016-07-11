@@ -29,7 +29,7 @@ TODO: pip install instructions
 
 
 
-Using
+Usage
 =====
 
 
