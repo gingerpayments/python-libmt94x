@@ -6,7 +6,6 @@ Changelog
 ------------------
 
 - First release to PyPI.
-  ginger devpi.
   [numerodix]
 
 
