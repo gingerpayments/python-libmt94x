@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-0.3.3 (unreleased)
+0.3.3 (2016-07-11)
 ------------------
 
 - First release to PyPI.
