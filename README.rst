@@ -45,8 +45,9 @@ Creating MT940 documents
 
 No matter which dialect your are using you first need to construct an
 ``MT940Document`` and then use the appropriate method to write it out
-to the target dialect::
+to the target dialect:
 
+.. code-block:: python
 
     from libmt94x.document import Mt940Document
     from libmt94x.fields import AccountIdentification
