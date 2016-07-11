@@ -22,7 +22,6 @@ You can now open the ``dist/python-libmt94x-*.zip`` file using an application
 like ``ark`` or similar to just do a basic sanity check on the contents of the
 source distribution, make sure nothing is missing or included by mistake.
 
-To actually push to PyPI (this will recreate the source distribution, so remove
-it first)::
+To actually push to PyPI (this will recreate the source distribution)::
 
     $ python setup.py sdist upload
