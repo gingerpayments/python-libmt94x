@@ -1,6 +1,8 @@
 graft docs
 graft libmt94x
 prune specs
+prune tests
 
-include *.cfg *.rst *.in *.txt *.sh
+include *.cfg *.rst *.in *.txt *.sh *.yml *.ini
+include LICENSE
 global-exclude *.pyc
