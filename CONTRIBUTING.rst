@@ -19,4 +19,5 @@ If you are interested in contributing to libmt94x please read this first. :)
   checks).
 
 Note that libmt94x uses the git-flow development workflow, so our integration
-branch is develop and new features are developed in feature branches.
+branch is develop and new features are developed in feature branches and merged
+into develop using pull requests.
