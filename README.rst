@@ -24,7 +24,7 @@ Python. It does not provide a parser.
 Installation
 ============
 
-Install using pip:
+Install using pip::
 
     $ pip install python-libmt94x
 
