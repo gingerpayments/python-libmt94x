@@ -3,6 +3,9 @@ libmt94x
 ========
 
 
+.. image:: https://badge.fury.io/py/python-libmt94x.png
+    :target: https://badge.fury.io/py/python-libmt94x
+
 .. image:: https://api.travis-ci.org/gingerpayments/python-libmt94x.png?branch=develop
     :target: https://travis-ci.org/gingerpayments/python-libmt94x
 
