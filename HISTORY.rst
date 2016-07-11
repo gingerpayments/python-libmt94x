@@ -5,7 +5,9 @@ Changelog
 0.3.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- First release to PyPI.
+  ginger devpi.
+  [numerodix]
 
 
 0.3.2 (2016-06-27)
