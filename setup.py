@@ -23,7 +23,7 @@ CLASSIFIERS = [
 
 
 setup(
-    name='libmt94x',
+    name='python-libmt94x',
     version=__version__,
     author='Ginger Payments',
     author_email='dev@gingerpayments.com',
@@ -34,7 +34,7 @@ setup(
             read_file('HISTORY.rst'),
         )
     ),
-    url='https://github.com/gingerpayments/libmt94x',
+    url='https://github.com/gingerpayments/python-libmt94x',
     license='MIT',
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
