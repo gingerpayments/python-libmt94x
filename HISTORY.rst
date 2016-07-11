@@ -2,6 +2,13 @@ Changelog
 =========
 
 
+0.3.4 (2016-07-11)
+------------------
+
+- Updating package metadata (no code changes).
+  [numerodix]
+
+
 0.3.3 (2016-07-11)
 ------------------
 
