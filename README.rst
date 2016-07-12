@@ -1,6 +1,6 @@
-========
-libmt94x
-========
+===============
+python-libmt94x
+===============
 
 
 .. image:: https://img.shields.io/pypi/v/python-libmt94x.svg
